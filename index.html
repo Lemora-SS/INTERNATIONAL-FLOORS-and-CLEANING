@@ -881,12 +881,18 @@ function expandGroupForView(view){
  const g=groups[view];
  if(g&&state.navCollapsed[g]){state.navCollapsed[g]=false;localStorage.setItem('bruno360-nav-collapsed',JSON.stringify(state.navCollapsed));}
 }
+function updateNavActive(view){
+  // Just update active class — much faster than full renderNav()
+  document.querySelectorAll('#nav button[data-key]').forEach(btn=>{
+    btn.classList.toggle('active', btn.dataset.key === view);
+  });
+}
 function navigate(view, force=false){
   if(!allowed(view)) view='dashboard';
   expandGroupForView(view);
   const sameView = (state.view === view);
   state.view = view;
-  renderNav();
+  updateNavActive(view);
   const title=tr(view), sub=tr(view+'Sub')||'';
   document.getElementById('pageTitle').textContent=title;
   document.getElementById('pageSub').textContent=sub;
@@ -3644,10 +3650,7 @@ ${getCompanyName()}`;
 
   var previousRender=window.render;
   if(typeof previousRender==='function'){
-    window.render=function(){
-      previousRender();
-      setTimeout(addEmployeesToMenu,0);
-    };
+    window.render=function(){ previousRender(); }; // simplified — sidebar handled by renderNav
   }
 
   document.addEventListener('DOMContentLoaded',function(){
@@ -3721,11 +3724,7 @@ ${getCompanyName()}`;
 
   var oldRender=window.render;
   if(typeof oldRender==='function'){
-    window.render=function(){
-      oldRender();
-      setTimeout(addEmployeesSidebarHard,0);
-      setTimeout(addEmployeesSidebarHard,100);
-    };
+    window.render=function(){ oldRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var oldNavigate=window.navigate;
@@ -4008,11 +4007,7 @@ ${getCompanyName()}`;
   }
   var prevRender31=window.render;
   if(typeof prevRender31==='function'){
-    window.render=function(){
-      prevRender31();
-      setTimeout(addTeamsSidebar,0);
-      setTimeout(addTeamsSidebar,150);
-    };
+    window.render=function(){ prevRender31(); }; // simplified — sidebar handled by renderNav
   }
   document.addEventListener('DOMContentLoaded',function(){
     setTimeout(addTeamsSidebar,200);
@@ -4128,12 +4123,7 @@ ${getCompanyName()}`;
 
   var prevRenderPersist=window.render;
   if(typeof prevRenderPersist==='function'){
-    window.render=function(){
-      prevRenderPersist();
-      setTimeout(ensurePersistentSidebarMenus,0);
-      setTimeout(ensurePersistentSidebarMenus,100);
-      setTimeout(ensurePersistentSidebarMenus,300);
-    };
+    window.render=function(){ prevRenderPersist(); }; // simplified — sidebar handled by renderNav
   }
 
   var prevNavigatePersist=window.navigate;
@@ -4249,10 +4239,7 @@ ${getCompanyName()}`;
 
   var prevRender=window.render;
   if(typeof prevRender==='function'){
-    window.render=function(){
-      prevRender();
-      scheduleMenuPatch();
-    };
+    window.render=function(){ prevRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var prevNavigate=window.navigate;
@@ -4709,10 +4696,7 @@ ${getCompanyName()}`;
 
   var prevRender=window.render;
   if(typeof prevRender==='function'){
-    window.render=function(){
-      prevRender();
-      scheduleFieldMenuPatch();
-    };
+    window.render=function(){ prevRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var prevNavigate=window.navigate;
@@ -5267,10 +5251,7 @@ ${getCompanyName()}`;
 
   var oldRender=window.render;
   if(typeof oldRender==='function'){
-    window.render=function(){
-      oldRender();
-      setTimeout(addNewJobButtons,50);
-    };
+    window.render=function(){ oldRender(); }; // simplified — sidebar handled by renderNav
   }
 })();
 
@@ -5353,11 +5334,7 @@ ${getCompanyName()}`;
 
   var previousRender=window.render;
   if(typeof previousRender === 'function'){
-    window.render=function(){
-      previousRender();
-      setTimeout(cleanupAndReadd,0);
-      setTimeout(cleanupAndReadd,150);
-    };
+    window.render=function(){ previousRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var previousNavigate=window.navigate;
