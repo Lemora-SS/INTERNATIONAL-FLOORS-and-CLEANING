@@ -708,6 +708,10 @@ async function doLogin() {
       if (noteEl) noteEl.textContent = `${user.name} · ${user.role}`;
     }
 
+    const _req=['customers','addresses','vendors','services','stores','jobs','estimates','estimate_lines','invoices','invoice_lines','payments','expenses','bills','inventory','tasks','users','auditLog','audits','contractors'];
+    _req.forEach(k=>{if(!Array.isArray(db[k]))db[k]=[];});
+    if(!db.company)db.company={};
+    if(!db.catalogs)db.catalogs={};
     navigate('dashboard');
 
   } catch (e) {
@@ -756,6 +760,7 @@ function demoData(){return {
     refundReasons:['Overpayment','Service Issue','Customer Credit','Other']
   },
   auditLog:[],
+  audits:[],
   contractors:[],
   counter:{customer:1000,vendor:1000,service:1000,store:1000,job:1000,estimate:1000,invoice:1000,payment:1000,expense:1000,task:1000,inventory:1000}
 }}
@@ -874,11 +879,11 @@ function setRole(r){state.role=r; if(!allowed(state.view))state.view='dashboard'
 function toggleLang(){state.lang=state.lang==='en'?'es':'en'; document.documentElement.lang=state.lang; document.getElementById('langBtn').textContent=state.lang==='en'?'ES':'EN'; init()}
 function toggleMenu(){document.getElementById('sidebar').classList.toggle('open')}
 function resetDemo(){ alert('Reset no disponible en producción. / Reset not available in production.'); }
-function log(module,action,before,after){db.auditLogs.unshift({id:uid('LOG'),module,action,user:state.role,date:new Date().toISOString(),before:JSON.stringify(before||''),after:JSON.stringify(after||'')}); save(db)}
+function log(module,action,before,after){if(!Array.isArray(db.auditLog))db.auditLog=[]; db.auditLog.unshift({id:uid('LOG'),module,action,user:state.role,date:new Date().toISOString(),before:JSON.stringify(before||''),after:JSON.stringify(after||'')});}
 function toolbar(module,canNew=true){return `<div class="toolbar"><div class="left"><input class="search" data-search="table" placeholder="${tr('search')}"></div><div class="right">${canNew?`<button class="btn" onclick="openForm('${module}')">+ ${tr('new')}</button>`:''}<button class="btn secondary" onclick="exportTable('${module}')">${tr('exportCsv')}</button><button class="btn secondary" onclick="printCurrent('${module}')">${tr('printPdf')}</button></div></div>`}
 function bindSearch(){document.querySelectorAll('[data-search="table"]').forEach(inp=>inp.oninput=()=>{const q=inp.value.toLowerCase(); document.querySelectorAll('tbody tr').forEach(tr=>{tr.style.display=tr.textContent.toLowerCase().includes(q)?'':'none'})})}
 function table(headers,rows){return `<div class="table-wrap"><table><thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.join('')}</tbody></table></div>`}
-function kpis(){const sales=db.invoices.reduce((a,x)=>a+x.total,0), paid=db.invoices.reduce((a,x)=>a+x.paid,0), ar=db.invoices.reduce((a,x)=>a+invoiceBalance(x),0), ap=db.bills.reduce((a,x)=>a+(x.amount-x.paid),0), exp=db.expenses.reduce((a,x)=>a+x.amount,0), low=db.inventory.filter(x=>x.qty<=x.min).length;return [{l:'Sales / Ventas',v:money(sales),s:'Invoices issued',target:'invoices'},{l:'Payments / Pagos',v:money(paid),s:'Cash received',target:'payments'},{l:'AR Open',v:money(ar),s:'Customer balance',target:'invoices'},{l:'AP Open',v:money(ap),s:'Vendor balance',target:'vendors'},{l:'Expenses / Gastos',v:money(exp),s:'Current demo',target:'expenses'},{l:'Completed no invoice',v:db.jobs.filter(j=>j.status==='Completed'&&!j.invoiceId).length,s:'Needs billing review',target:'calendar'},{l:'Low stock',v:low,s:'Inventory alerts',target:'inventory'},{l:'CSV differences',v:db.audits.reduce((a,x)=>a+x.differences,0),s:'Requires review',target:'audits'}]}
+function kpis(){const sales=db.invoices.reduce((a,x)=>a+x.total,0), paid=db.invoices.reduce((a,x)=>a+x.paid,0), ar=db.invoices.reduce((a,x)=>a+invoiceBalance(x),0), ap=db.bills.reduce((a,x)=>a+(x.amount-x.paid),0), exp=db.expenses.reduce((a,x)=>a+x.amount,0), low=db.inventory.filter(x=>x.qty<=x.min).length;return [{l:'Sales / Ventas',v:money(sales),s:'Invoices issued',target:'invoices'},{l:'Payments / Pagos',v:money(paid),s:'Cash received',target:'payments'},{l:'AR Open',v:money(ar),s:'Customer balance',target:'invoices'},{l:'AP Open',v:money(ap),s:'Vendor balance',target:'vendors'},{l:'Expenses / Gastos',v:money(exp),s:'Current demo',target:'expenses'},{l:'Completed no invoice',v:db.jobs.filter(j=>j.status==='Completed'&&!j.invoiceId).length,s:'Needs billing review',target:'calendar'},{l:'Low stock',v:low,s:'Inventory alerts',target:'inventory'},{l:'CSV differences',v:(db.audits||[]).reduce((a,x)=>a+x.differences,0),s:'Requires review',target:'audits'}]}
 function alertPanel(){let alerts=[]; db.invoices.filter(i=>invoiceBalance(i)>0&&new Date(i.due)<new Date()).forEach(i=>alerts.push(['red',`${i.id} ${tr('overdue')}`,`${customerName(i.customerId)} · ${money(invoiceBalance(i))}`,'invoices'])); db.jobs.filter(j=>j.status==='Completed'&&!j.invoiceId).forEach(j=>alerts.push(['red',`Service completed, no invoice`,`${customerName(j.customerId)} · ${j.date}`,'calendar'])); db.inventory.filter(x=>x.qty<=x.min).forEach(x=>alerts.push(['red',`Low stock: ${x.name}`,`${x.qty} on hand · minimum ${x.min}`,'inventory'])); db.payments.filter(p=>p.recon==='Pending Review').forEach(p=>alerts.push(['',`Payment pending reconciliation`,`${p.id} · ${money(p.amount)}`,'payments'])); db.bills.filter(b=>b.status==='Overdue').forEach(b=>alerts.push(['red',`Vendor bill overdue`,`${vendorName(b.vendorId)} · ${money(b.amount-b.paid)}`,'vendors'])); return `<div class="alert-list">${alerts.slice(0,8).map(a=>`<div class="alert ${a[0]} clickable-card" onclick="navigate('${a[3]}')" title="Open ${tr(a[3])}"><div class="mark"></div><div><strong>${a[1]}</strong><span>${a[2]}</span></div></div>`).join('')||'<p class="role-note">No alerts.</p>'}</div>`}
 
 const moduleMeta={
@@ -926,79 +931,6 @@ function quickCard(key){return `<div class="quick-card" onclick="navigate('${key
 function miniUsedIn(list){return list.map(k=>`<span class="mini-chip">${tr(k)}</span>`).join('')}
 
 
-function openCalendarForm(id=null){
-  const rec = id ? db.calendar.find(x=>x.id===id) : null;
-  const customers = db.customers || [];
-  const services = db.services || [];
-  const custOptions = customers.map(c=>`<option value="${c.name}" ${rec&&rec.customer===c.name?'selected':''}>${c.name}</option>`).join('');
-  const svcOptions = services.map(s=>`<option value="${s.name}" ${rec&&rec.service===s.name?'selected':''}>${s.name}</option>`).join('');
-  const statusList = ['Scheduled','Completed','Cancelled','No Show','Pending Invoice'];
-  const statusOptions = statusList.map(s=>`<option value="${s}" ${rec&&rec.status===s?'selected':''}>${s}</option>`).join('');
-  modal(`${id?'Edit Calendar Event / Editar Evento':'New Calendar Event / Nuevo Evento'}`,
-    `<div class="form-grid">
-      <label>Customer / Cliente<select id="cal-customer">${custOptions}<option value="__new__">+ Add new customer</option></select></label>
-      <label>Service / Servicio<select id="cal-service">${svcOptions}<option value="Other" ${rec&&rec.service==='Other'?'selected':''}>Other</option></select></label>
-      <label>Date / Fecha<input id="cal-date" type="date" value="${rec?esc(rec.date):new Date().toISOString().slice(0,10)}"></label>
-      <label>Time / Hora<input id="cal-time" type="time" value="${rec?esc(rec.time||'09:00'):'09:00'}"></label>
-      <label>Status / Estado<select id="cal-status">${statusOptions}</select></label>
-      <label>Assigned To / Asignado a<input id="cal-assigned" value="${rec?esc(rec.assigned||''):'Field Team'}"></label>
-      <label class="span-2">Location / Ubicación<input id="cal-location" value="${rec?esc(rec.location||''):'Customer site'}"></label>
-      <label class="span-2">Notes / Notas<textarea id="cal-notes">${rec?esc(rec.notes||''):''}</textarea></label>
-    </div>
-    <div id="cal-new-customer-wrap" style="display:none;margin-top:10px" class="card">
-      <h3>Add Customer / Agregar Cliente</h3>
-      <div class="form-grid">
-        <label>Name / Nombre<input id="cal-new-customer-name"></label>
-        <label>Phone / Teléfono<input id="cal-new-customer-phone"></label>
-        <label>Email<input id="cal-new-customer-email"></label>
-        <label>Type / Tipo<input id="cal-new-customer-type" value="Commercial"></label>
-      </div>
-    </div>`,
-    `<button class="btn secondary" onclick="closeModal()">Cancel</button><button class="btn primary" onclick="saveCalendarEvent('${id||''}')">${id?'Save Changes':'Create Event'}</button>`);
-  setTimeout(()=>{
-    const el=document.getElementById('cal-customer');
-    if(el){el.addEventListener('change',()=>{document.getElementById('cal-new-customer-wrap').style.display=el.value==='__new__'?'block':'none'})}
-  },50);
-}
-function saveCalendarEvent(id=''){
-  let customer = val('cal-customer');
-  if(customer==='__new__'){
-    const name = val('cal-new-customer-name');
-    if(!name){toast('Customer name is required');return}
-    const newCustomer={id:uid('CUS'),name,phone:val('cal-new-customer-phone'),email:val('cal-new-customer-email'),type:val('cal-new-customer-type')||'Commercial',status:'Active',address:val('cal-location')||''};
-    db.customers.push(newCustomer);
-    customer=name;
-    audit('customers','create',newCustomer.id,null,newCustomer);
-  }
-  const record={
-    id:id||uid('CAL'),
-    customer,
-    service:val('cal-service')||'Other',
-    date:val('cal-date'),
-    time:val('cal-time')||'09:00',
-    status:val('cal-status')||'Scheduled',
-    assigned:val('cal-assigned')||'Field Team',
-    location:val('cal-location'),
-    notes:val('cal-notes')
-  };
-  if(!record.customer || !record.date){toast('Customer and date are required');return}
-  if(id){
-    const idx=db.calendar.findIndex(x=>x.id===id);
-    if(idx>=0){const before=JSON.parse(JSON.stringify(db.calendar[idx])); db.calendar[idx]=record; audit('calendar','update',id,before,record);}
-  }else{
-    db.calendar.push(record);
-    audit('calendar','create',record.id,null,record);
-  }
-  save(); closeModal(); render(); toast(id?'Calendar event updated':'Calendar event created');
-}
-function deleteCalendarEvent(id){
-  const rec=db.calendar.find(x=>x.id===id);
-  if(!rec)return;
-  if(!confirm('Delete this calendar event?'))return;
-  db.calendar=db.calendar.filter(x=>x.id!==id);
-  audit('calendar','delete',id,rec,null);
-  save(); render(); toast('Calendar event deleted');
-}
 
 const views={
  dashboard(){const title=state.role==='Admin'?tr('adminDash'):state.role==='Manager'?tr('managerDash'):state.role==='Billing'?tr('billingDash'):state.role==='Field Team'?tr('fieldDash'):tr('readonlyDash'); return `<div class="role-note">${title}</div><div class="grid kpi-grid">${kpis().map(k=>`<div class="card kpi clickable-card" onclick="navigate('${k.target}')" title="Open ${tr(k.target)}"><div class="label">${k.l}</div><div class="value">${k.v}</div><div class="sub">${k.s}</div></div>`).join('')}</div><div class="grid two-col"><div class="card"><h3>Alerts / Alertas</h3>${alertPanel()}</div><div class="card"><h3>Today / Hoy</h3>${jobCards(db.jobs.filter(j=>j.date===today(0)).slice(0,4))}</div></div>`},
@@ -1042,7 +974,7 @@ const views={
  audits(){return `<div class="toolbar"><div class="left"><input type="file" id="csvFile" accept=".csv" onchange="importAuditCsv(this.files[0])"><button class="btn secondary" onclick="showCsvTemplate()">CSV Template</button></div><div class="right"><button class="btn secondary" onclick="exportTable('audits')">${tr('exportCsv')}</button></div></div>`+table(['Audit','Source',tr('date'),'Rows','Matches','Differences',tr('status'),tr('actions')],db.audits.map(a=>`<tr><td><strong>${a.id}</strong></td><td>${a.source}</td><td>${a.date}</td><td>${a.rows}</td><td>${a.matches}</td><td>${a.differences}</td><td>${badge(a.status)}</td><td><button class="btn small" onclick="createAuditTask('${a.id}')">Task</button></td></tr>`))},
  tasks(){return toolbar('tasks')+table(['Task','Owner',tr('due'),tr('status'),'Description',tr('actions')],db.tasks.map(t=>`<tr><td><strong>${t.title}</strong><br><span class="role-note">${t.id}</span></td><td>${t.owner}</td><td>${t.due}</td><td>${badge(t.status)}</td><td>${t.desc}</td><td>${editBtn('tasks',t.id)}</td></tr>`))},
  catalogs(){if(!['Admin','Manager'].includes(state.role)) return '<div class="card">Catalogs are editable by Admin and Manager only.</div>'; const entries=Object.entries(db.catalogs); return `<div class="mod-note">Modern catalog icons now show where each catalog is used in the workflow.</div><div class="catalog-grid">${entries.map(([k,items])=>{const meta=catalogMeta[k]||{icon:'⚙️',accent:'gray',used:['settings']}; const color=meta.accent==='blue'?'#2463a8':meta.accent==='amber'?'#d69c00':meta.accent==='red'?'#c44646':meta.accent==='purple'?'#7d5bc7':meta.accent==='gray'?'#75808a':'#1f6b3a'; return `<div class="card cat-card" style="--cat-accent:${color}"><div class="cat-card-head">${iconBadge(k)}<div><h4>${k}</h4><div class="cat-meta">Used in / Se usa en</div><div class="used-in">${miniUsedIn(meta.used||[])}</div></div></div><div class="chips">${items.map(x=>`<span class="chip">${x}</span>`).join('')}</div><div style="display:flex;gap:8px;margin-top:12px"><input id="cat-${k}" placeholder="New item"><button class="btn small" onclick="addCat('${k}')">+</button></div></div>`}).join('')}</div>`}, reports(){return `<div class="grid kpi-grid">${kpis().map(k=>`<div class="card kpi"><div class="label">${k.l}</div><div class="value">${k.v}</div><div class="sub">${k.s}</div></div>`).join('')}</div><div class="grid two-col"><div class="card"><h3>Monthly Trends / Tendencias</h3><div class="chart-bars">${[45,70,55,88,62,78].map((h,i)=>`<div class="bar" style="height:${h}%" data-label="M${i+1}"></div>`).join('')}</div></div><div class="card"><h3>Report Menu</h3><div class="alert-list">${['Sales Report','Payments Received','Open Invoices','AR Aging','AP Aging','Expenses Report','Basic P&L','Profitability by Client','Profitability by Service','Refunds','Write-Offs','Customer Credits','Cash Flow Basic'].map(x=>`<div class="alert green"><div class="mark"></div><div><strong>${x}</strong><span>CSV/PDF ready in final build</span></div></div>`).join('')}</div></div></div>`},
- settings(){return `<div class="card"><h3>${tr('settings')}</h3><div class="form-grid">${['name','address','phone','email','website'].map(k=>`<div class="fg"><label>${k}</label><input value="${db.company[k]||''}" onchange="db.company['${k}']=this.value;save(db)"></div>`).join('')}<div class="fg"><label>Default Language</label><select onchange="db.company.defaultLang=this.value;save(db)"><option>en</option><option ${db.company.defaultLang==='es'?'selected':''}>es</option></select></div><div class="fg"><label>Tax Rate %</label><input type="number" value="${db.company.taxRate}" onchange="db.company.taxRate=+this.value;save(db)"></div></div></div><div class="card"><h3>Audit Log</h3>${table(['Date','User','Module','Action','Before','After'],db.auditLogs.slice(0,20).map(l=>`<tr><td>${new Date(l.date).toLocaleString()}</td><td>${l.user}</td><td>${l.module}</td><td>${l.action}</td><td>${l.before.slice(0,80)}</td><td>${l.after.slice(0,80)}</td></tr>`))}</div>`}
+ settings(){return `<div class="card"><h3>${tr('settings')}</h3><div class="form-grid">${['name','address','phone','email','website'].map(k=>`<div class="fg"><label>${k}</label><input value="${db.company[k]||''}" onchange="db.company['${k}']=this.value;save(db)"></div>`).join('')}<div class="fg"><label>Default Language</label><select onchange="db.company.defaultLang=this.value;save(db)"><option>en</option><option ${db.company.defaultLang==='es'?'selected':''}>es</option></select></div><div class="fg"><label>Tax Rate %</label><input type="number" value="${db.company.taxRate}" onchange="db.company.taxRate=+this.value;save(db)"></div></div></div><div class="card"><h3>Audit Log</h3>${table(['Date','User','Module','Action','Before','After'],(db.auditLog||[]).slice(0,20).map(l=>`<tr><td>${new Date(l.date).toLocaleString()}</td><td>${l.user}</td><td>${l.module}</td><td>${l.action}</td><td>${l.before.slice(0,80)}</td><td>${l.after.slice(0,80)}</td></tr>`))}</div>`}
 };
 function jobCards(jobs){return jobs.map(j=>`<div class="alert ${j.status==='Completed'&&!j.invoiceId?'red':''}"><div class="mark"></div><div><strong>${j.id} · ${customerName(j.customerId)}</strong><span>${j.date} ${j.time} · ${serviceName(j.serviceId)} · ${j.team} · ${badge(j.status)}</span><span>Check-in: ${j.checkIn||'-'} · Check-out: ${j.checkOut||'-'} · Photos: ${j.photos}</span></div></div>`).join('')||'<p class="role-note">No jobs.</p>'}
 function calendarDays(){let out=''; for(let i=0;i<14;i++){const d=today(i-3); const dayJobs=db.jobs.filter(j=>j.date===d); out+=`<div class="day"><div class="num">${new Date(d+'T00:00:00').getDate()}</div>${dayJobs.map(j=>`<div class="event">${j.time} ${customerName(j.customerId).split(' ')[0]}</div>`).join('')}</div>`} return out}
@@ -1147,45 +1079,6 @@ function calendarAllEvents(){
  return [...serviceEvents,...jobEvents];
 }
 function eventsForDate(date){return calendarAllEvents().filter(x=>x.date===date).sort((a,b)=>(a.time||'').localeCompare(b.time||''))}
-function monthlyCalendarDays(){
- const first=calendarBaseMonth();
- const start=new Date(first);
- start.setDate(1-first.getDay());
- const todayIso=today(0);
- let html='';
- for(let i=0;i<42;i++){
-   const d=new Date(start); d.setDate(start.getDate()+i);
-   const iso=isoDate(d);
-   const evs=eventsForDate(iso);
-   const other=d.getMonth()!==first.getMonth();
-   const classes=['day',other?'other-month':'',iso===todayIso?'today':'',evs.length?'has-event':''].filter(Boolean).join(' ');
-   html+=`<div class="${classes}">
-     <div class="num"><span>${d.getDate()}</span><button class="add-day" title="Add event" onclick="openCalendarForm(null,'${iso}')">+</button></div>
-     ${evs.slice(0,4).map(e=>`<div class="event ${e._kind==='job'?'job':''} ${String(e.status).toLowerCase().includes('completed')?'done':''} ${String(e.status).toLowerCase().includes('cancel')?'cancelled':''}" onclick="${e._kind==='calendar' ? `openCalendarForm('${e.id}')` : `openCalendarJob('${e.id}')`}">${e.time||''} ${e.customer||''}</div>`).join('')}
-     ${evs.length>4?`<div class="event">+${evs.length-4} more</div>`:''}
-   </div>`;
- }
- return html;
-}
-function calendarEntryCard(x){
- const editable=x._kind==='calendar';
- return `<div class="card clickable">
-   <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
-     <div onclick="${editable?`openCalendarForm('${x.id}')`:`openCalendarJob('${x.id}')`}" style="flex:1">
-       <h3>${x.date} ${x.time||''}</h3>
-       <p><strong>${x.customer}</strong> · ${x.service}</p>
-       <p>${x.location||''}</p>
-       <p>${x.notes||''}</p>
-       <span class="badge bg-blue">${x.status||'Scheduled'}</span>
-       <span class="badge bg-green">${x.assigned||'Field Team'}</span>
-       ${x._kind==='job'?'<span class="badge bg-amber">Job record</span>':''}
-     </div>
-     <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
-       ${editable?`<button class="btn small secondary" onclick="openCalendarForm('${x.id}')">Edit</button><button class="btn small danger" onclick="deleteCalendarEvent('${x.id}')">Delete</button>`:`<button class="btn small secondary" onclick="openCalendarJob('${x.id}')">View</button>`}
-     </div>
-   </div>
- </div>`;
-}
 function calendarFieldValue(id){return (document.getElementById(id)?.value||'').trim()}
 function openCalendarJob(id){
  const j=(db.jobs||[]).find(x=>x.id===id);
@@ -1203,54 +1096,6 @@ function openCalendarJob(id){
  </div>`;
  openModal('Job Calendar Record / Registro de Trabajo',body,`<button class="btn secondary" onclick="closeModal()">Close</button><button class="btn" onclick="openEdit('jobs','${j.id}')">Edit Job</button>`);
 }
-function openCalendarForm(id=null,presetDate=''){
-  const rec = id ? (db.calendar||[]).find(x=>x.id===id) : null;
-  if(!db.calendar) db.calendar=[];
-  const customerOptionsHtml = db.customers.map(c=>`<option value="${c.name}" ${rec&&rec.customer===c.name?'selected':''}>${c.name}</option>`).join('');
-  const serviceOptionsHtml = db.services.map(s=>`<option value="${s.name}" ${rec&&rec.service===s.name?'selected':''}>${s.name}</option>`).join('');
-  const statusList = ['Scheduled','Completed','Cancelled','No Show','Pending Invoice','Rescheduled'];
-  const statusOptionsHtml = statusList.map(s=>`<option value="${s}" ${rec&&rec.status===s?'selected':''}>${s}</option>`).join('');
-  const body=`<div class="form-grid">
-    <div class="fg span-2"><label>Customer / Cliente</label><select id="cal-customer">${customerOptionsHtml}<option value="__new__">+ Add new customer / Agregar cliente</option></select></div>
-    <div class="fg"><label>Service / Servicio</label><select id="cal-service">${serviceOptionsHtml}<option value="Other" ${rec&&rec.service==='Other'?'selected':''}>Other</option></select></div>
-    <div class="fg"><label>Status / Estado</label><select id="cal-status">${statusOptionsHtml}</select></div>
-    <div class="fg"><label>Date / Fecha</label><input id="cal-date" type="date" value="${rec?rec.date:(presetDate||today(0))}"></div>
-    <div class="fg"><label>Time / Hora</label><input id="cal-time" type="time" value="${rec?(rec.time||'09:00'):'09:00'}"></div>
-    <div class="fg"><label>Assigned To / Asignado a</label><input id="cal-assigned" value="${rec?(rec.assigned||'Field Team'):'Field Team'}"></div>
-    <div class="fg"><label>Location / Ubicación</label><input id="cal-location" value="${rec?(rec.location||''):''}"></div>
-    <div class="fg span-2"><label>Notes / Notas</label><textarea id="cal-notes">${rec?(rec.notes||''):''}</textarea></div>
-  </div>
-  <div id="cal-new-customer-wrap" class="card" style="display:none;margin-top:12px">
-    <h3>Add Customer / Agregar Cliente</h3>
-    <div class="form-grid">
-      <div class="fg"><label>Name / Nombre</label><input id="cal-new-customer-name"></div>
-      <div class="fg"><label>Phone / Teléfono</label><input id="cal-new-customer-phone"></div>
-      <div class="fg"><label>Email</label><input id="cal-new-customer-email"></div>
-      <div class="fg"><label>Type / Tipo</label><select id="cal-new-customer-type"><option>Commercial</option><option>Residential</option></select></div>
-    </div>
-  </div>`;
-  openModal(id?'Edit Calendar Event / Editar Evento':'New Calendar Event / Nuevo Evento',body,`<button class="btn secondary" onclick="closeModal()">${tr('cancel')}</button><button class="btn" onclick="saveCalendarEvent('${id||''}')">${tr('save')}</button>`);
-  setTimeout(()=>{const el=document.getElementById('cal-customer'); if(el)el.onchange=()=>{document.getElementById('cal-new-customer-wrap').style.display=el.value==='__new__'?'block':'none'}},0);
-}
-function saveCalendarEvent(id=''){
-  if(!db.calendar) db.calendar=[];
-  let customer = calendarFieldValue('cal-customer');
-  if(customer==='__new__'){
-    const name=calendarFieldValue('cal-new-customer-name');
-    if(!name){alert('Customer name is required / Nombre del cliente requerido');return}
-    const c={id:uid('CUS'),name,type:calendarFieldValue('cal-new-customer-type')||'Commercial',contact:name,email:calendarFieldValue('cal-new-customer-email'),phone:calendarFieldValue('cal-new-customer-phone'),address:calendarFieldValue('cal-location'),terms:'Net 15',lang:state.lang,status:'Active',credit:0};
-    db.customers.unshift(c); log('Customers','Create from Calendar',null,c); customer=name;
-  }
-  const rec={id:id||uid('CAL'),customer,service:calendarFieldValue('cal-service')||'Other',date:calendarFieldValue('cal-date'),time:calendarFieldValue('cal-time')||'09:00',status:calendarFieldValue('cal-status')||'Scheduled',assigned:calendarFieldValue('cal-assigned')||'Field Team',location:calendarFieldValue('cal-location'),notes:calendarFieldValue('cal-notes')};
-  if(!rec.customer || !rec.date){alert('Customer and date are required / Cliente y fecha son requeridos');return}
-  if(id){
-    const idx=db.calendar.findIndex(x=>x.id===id);
-    if(idx>=0){const before={...db.calendar[idx]}; db.calendar[idx]=rec; log('Calendar','Edit',before,rec);}
-  }else{
-    db.calendar.unshift(rec); log('Calendar','Create',null,rec);
-  }
-  save(db); closeModal(); navigate('calendar');
-}
 function deleteCalendarEvent(id){
   if(!db.calendar) db.calendar=[];
   const rec=db.calendar.find(x=>x.id===id);
@@ -1262,57 +1107,6 @@ function deleteCalendarEvent(id){
 }
 
 
-function deleteCalendarEntry(kind,id){
-  if(kind==='job'){
-    const rec=(db.jobs||[]).find(x=>x.id===id);
-    if(!rec)return;
-    if(!confirm('Delete this job calendar entry? This will remove the job record from the calendar. / ¿Eliminar esta entrada tipo trabajo del calendario?'))return;
-    db.jobs=(db.jobs||[]).filter(x=>x.id!==id);
-    log('Jobs','Delete from Calendar',rec,null);
-    save(db); navigate('calendar');
-    return;
-  }
-  deleteCalendarEvent(id);
-}
-function calendarEntryCard(x){
- const editable=x._kind==='calendar';
- return `<div class="card clickable">
-   <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
-     <div onclick="${editable?`openCalendarForm('${x.id}')`:`openCalendarJob('${x.id}')`}" style="flex:1">
-       <h3>${x.date} ${x.time||''}</h3>
-       <p><strong>${x.customer}</strong> · ${x.service}</p>
-       <p>${x.location||''}</p>
-       <p>${x.notes||''}</p>
-       <span class="badge bg-blue">${x.status||'Scheduled'}</span>
-       <span class="badge bg-green">${x.assigned||'Field Team'}</span>
-       ${x._kind==='job'?'<span class="badge bg-amber">Job record</span>':''}
-     </div>
-     <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">
-       ${editable?`<button class="btn small secondary" onclick="openCalendarForm('${x.id}')">Edit</button><button class="btn small danger" onclick="deleteCalendarEntry('calendar','${x.id}')">Delete</button>`:`<button class="btn small secondary" onclick="openCalendarJob('${x.id}')">View</button><button class="btn small danger" onclick="deleteCalendarEntry('job','${x.id}')">Delete</button>`}
-     </div>
-   </div>
- </div>`;
-}
-function monthlyCalendarDays(){
- const first=calendarBaseMonth();
- const start=new Date(first);
- start.setDate(1-first.getDay());
- const todayIso=today(0);
- let html='';
- for(let i=0;i<42;i++){
-   const d=new Date(start); d.setDate(start.getDate()+i);
-   const iso=isoDate(d);
-   const evs=eventsForDate(iso);
-   const other=d.getMonth()!==first.getMonth();
-   const classes=['day',other?'other-month':'',iso===todayIso?'today':'',evs.length?'has-event':''].filter(Boolean).join(' ');
-   html+=`<div class="${classes}">
-     <div class="num"><span>${d.getDate()}</span><button class="add-day" title="Add event" onclick="openCalendarForm(null,'${iso}')">+</button></div>
-     ${evs.slice(0,4).map(e=>`<div class="event ${e._kind==='job'?'job':''} ${String(e.status).toLowerCase().includes('completed')?'done':''} ${String(e.status).toLowerCase().includes('cancel')?'cancelled':''}" title="Click to open / Double click to delete" onclick="${e._kind==='calendar' ? `openCalendarForm('${e.id}')` : `openCalendarJob('${e.id}')`}" ondblclick="event.stopPropagation();deleteCalendarEntry('${e._kind}','${e.id}')">${e.time||''} ${e.customer||''}</div>`).join('')}
-     ${evs.length>4?`<div class="event">+${evs.length-4} more</div>`:''}
-   </div>`;
- }
- return html;
-}
 
 
 /* =========================================================
