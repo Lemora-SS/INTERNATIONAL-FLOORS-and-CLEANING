@@ -718,151 +718,42 @@ const storageKey='bruno360_cleaning_suite_mockup_v13';
 function uid(prefix){return prefix+'-'+Math.random().toString(36).slice(2,8).toUpperCase()}
 function money(n){return '$'+Number(n||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}
 function today(offset=0){const d=new Date();d.setDate(d.getDate()+offset);return d.toISOString().slice(0,10)}
-function demoData(){return {company:{name:'Lemora Client Cleaning LLC',logo:'B360',address:'19814 Stanton Lake Drive, Cypress, TX 77433',phone:'346-213-9553',email:'billing@example.com',website:'www.example.com',defaultLang:'en',taxRate:8.25},
-customers:[
-{id:'CUS-1001',name:'Greenway Medical Office',type:'Commercial',contact:'Maria Torres',email:'maria@greenway.example',phone:'713-555-0101',address:'1200 Main St, Houston TX',terms:'Net 15',lang:'en',status:'Active',credit:150},
-{id:'CUS-1002',name:'Sarah Johnson Residence',type:'Residential',contact:'Sarah Johnson',email:'sarah@example.com',phone:'832-555-0112',address:'Cypress, TX',terms:'Due on receipt',lang:'en',status:'Active',credit:0},
-{id:'CUS-1003',name:'La Cocina Restaurant',type:'Commercial',contact:'Diego Ramos',email:'diego@lacocina.example',phone:'281-555-0199',address:'Katy, TX',terms:'Net 7',lang:'es',status:'Active',credit:0},
-{id:'CUS-1004',name:'Bright Kids Daycare',type:'Commercial',contact:'Ashley Nguyen',email:'ashley@brightkids.example',phone:'713-555-0144',address:'Sugar Land, TX',terms:'Net 15',lang:'en',status:'Active',credit:0},
-{id:'CUS-1005',name:'River Oaks Condo 12B',type:'Residential',contact:'Thomas Reed',email:'thomas@riveroaks.example',phone:'346-555-0166',address:'Houston, TX',terms:'Due on receipt',lang:'en',status:'Active',credit:25},
-{id:'CUS-1006',name:'North Park Retail Center',type:'Commercial',contact:'Sofia Hernandez',email:'sofia@northpark.example',phone:'832-555-0180',address:'Spring, TX',terms:'Net 30',lang:'en',status:'Active',credit:0},
-{id:'CUS-1007',name:'Blue Horizon Gym',type:'Commercial',contact:'Carlos Mendez',email:'carlos@bhgym.example',phone:'281-555-0188',address:'Houston, TX',terms:'Net 15',lang:'en',status:'Active',credit:0},
-{id:'CUS-1008',name:'Patel Family Residence',type:'Residential',contact:'Nina Patel',email:'nina@patelhome.example',phone:'713-555-0171',address:'The Woodlands, TX',terms:'Due on receipt',lang:'en',status:'Active',credit:0}
-],
-addresses:[
-{id:'ADDR-1',customerId:'CUS-1001',name:'Greenway Main Clinic',address:'1200 Main St, Houston TX',frequency:'Weekly',basePrice:580,notes:'After 7 PM, use side entrance.'},
-{id:'ADDR-2',customerId:'CUS-1002',name:'Johnson Home',address:'Cypress, TX',frequency:'Bi-weekly',basePrice:180,notes:'Gate code in notes.'},
-{id:'ADDR-3',customerId:'CUS-1003',name:'La Cocina Katy',address:'Katy, TX',frequency:'Weekly',basePrice:450,notes:'Kitchen degreasing every Friday.'},
-{id:'ADDR-4',customerId:'CUS-1004',name:'Bright Kids Main Campus',address:'Sugar Land, TX',frequency:'Daily',basePrice:390,notes:'EPA-safe products only.'},
-{id:'ADDR-5',customerId:'CUS-1006',name:'North Park Retail Center',address:'Spring, TX',frequency:'Nightly',basePrice:720,notes:'Common areas plus 8 restrooms.'},
-{id:'ADDR-6',customerId:'CUS-1007',name:'Blue Horizon Gym',address:'Houston, TX',frequency:'Daily',basePrice:410,notes:'Locker rooms require extra disinfection.'}
-],
-vendors:[
-{id:'VEN-1001',name:'Houston Janitorial Supply',category:'Supplies',email:'orders@hjs.example',phone:'713-555-0133',status:'Active',openBalance:420},
-{id:'VEN-1002',name:'Clean Machine Repair Co.',category:'Equipment Repair',email:'service@cmr.example',phone:'832-555-0134',status:'Active',openBalance:0},
-{id:'VEN-1003',name:'Prime Paper Goods',category:'Consumables',email:'sales@primepaper.example',phone:'281-555-0191',status:'Active',openBalance:610},
-{id:'VEN-1004',name:'Fleet Fuel Card Services',category:'Fuel',email:'support@fleetfuel.example',phone:'713-555-0162',status:'Active',openBalance:285},
-{id:'VEN-1005',name:'Lone Star Uniforms',category:'Uniforms',email:'orders@lsuniforms.example',phone:'832-555-0192',status:'Active',openBalance:145}
-],
-services:[
-{id:'SVC-1001',name:'Office Weekly Cleaning',type:'Commercial',pricing:'custom_contract',price:580,status:'Active'},
-{id:'SVC-1002',name:'Residential Deep Cleaning',type:'Residential',pricing:'fixed',price:260,status:'Active'},
-{id:'SVC-1003',name:'Special Project Hourly Cleaning',type:'Both',pricing:'hourly',price:45,status:'Active'},
-{id:'SVC-1004',name:'Move-In / Move-Out Cleaning',type:'Residential',pricing:'fixed',price:320,status:'Active'},
-{id:'SVC-1005',name:'Daycare Sanitation Program',type:'Commercial',pricing:'custom_contract',price:390,status:'Active'},
-{id:'SVC-1006',name:'Retail Center Floor Care',type:'Commercial',pricing:'custom_contract',price:720,status:'Active'},
-{id:'SVC-1007',name:'Gym Disinfection Service',type:'Commercial',pricing:'fixed',price:410,status:'Active'},
-{id:'SVC-1008',name:'Post-Construction Cleanup',type:'Both',pricing:'custom_quote',price:950,status:'Active'}
-],
-stores:[
-{id:'STORE-1001',activeStatus:'Active',type:'Service',itemDescription:'Office Weekly Cleaning',salesTaxCode:'TX-8.25',account:'Cleaning Income',price:580},
-{id:'STORE-1002',activeStatus:'Active',type:'Service',itemDescription:'Residential Deep Cleaning',salesTaxCode:'TX-8.25',account:'Cleaning Income',price:260},
-{id:'STORE-1003',activeStatus:'Active',type:'Product',itemDescription:'Disinfectant Gallon Resale',salesTaxCode:'TX-8.25',account:'Supply Sales',price:24.99},
-{id:'STORE-1004',activeStatus:'Inactive',type:'Other Charge',itemDescription:'Cancellation Fee',salesTaxCode:'NON',account:'Fee Income',price:50},
-{id:'STORE-1005',activeStatus:'Active',type:'Service',itemDescription:'Daycare Sanitation Program',salesTaxCode:'TX-8.25',account:'Cleaning Income',price:390},
-{id:'STORE-1006',activeStatus:'Active',type:'Service',itemDescription:'Retail Center Floor Care',salesTaxCode:'TX-8.25',account:'Cleaning Income',price:720},
-{id:'STORE-1007',activeStatus:'Active',type:'Service',itemDescription:'Gym Disinfection Service',salesTaxCode:'TX-8.25',account:'Cleaning Income',price:410},
-{id:'STORE-1008',activeStatus:'Active',type:'Bundle',itemDescription:'Monthly Office Cleaning Bundle',salesTaxCode:'TX-8.25',account:'Cleaning Income',price:2200},
-{id:'STORE-1009',activeStatus:'Active',type:'Product',itemDescription:'Microfiber Kit',salesTaxCode:'TX-8.25',account:'Supply Sales',price:39.99},
-{id:'STORE-1010',activeStatus:'Active',type:'Discount',itemDescription:'Loyalty Discount',salesTaxCode:'NON',account:'Discounts Given',price:-25}
-],
-employees:[
-{id:'EMP-1001',name:'Ana Lopez',team:'Team A',role:'Field Technician',status:'Active',phone:'713-555-2101',email:'ana.lopez@example.com',hireDate:today(-420),employmentType:'Full-time',payType:'Hourly',payRate:18.50,supervisor:'Elena Cruz',language:'Spanish / English',skills:'Office cleaning, floor care, sanitation',certifications:'OSHA Basics, Chemical Safety',emergencyContact:'Luis Lopez · 713-555-9101',notes:'Strong customer feedback. Preferred for medical office accounts.'},
-{id:'EMP-1002',name:'Jose Martinez',team:'Team A',role:'Field Technician',status:'Active',phone:'713-555-2102',email:'jose.martinez@example.com',hireDate:today(-365),employmentType:'Full-time',payType:'Hourly',payRate:18.00,supervisor:'Elena Cruz',language:'Spanish / English',skills:'Deep cleaning, equipment handling, post-construction',certifications:'Chemical Safety',emergencyContact:'Rosa Martinez · 713-555-9102',notes:'Available for evening commercial routes.'},
-{id:'EMP-1003',name:'Luisa Garcia',team:'Team B',role:'Lead Technician',status:'Active',phone:'832-555-2103',email:'luisa.garcia@example.com',hireDate:today(-610),employmentType:'Full-time',payType:'Hourly',payRate:21.00,supervisor:'Elena Cruz',language:'Spanish / English',skills:'Team lead, inspection, residential deep cleaning',certifications:'Supervisor Training, Customer Service',emergencyContact:'Marco Garcia · 832-555-9103',notes:'Can lead residential and move-out jobs.'},
-{id:'EMP-1004',name:'Miguel Soto',team:'Team B',role:'Field Technician',status:'Active',phone:'832-555-2104',email:'miguel.soto@example.com',hireDate:today(-250),employmentType:'Part-time',payType:'Hourly',payRate:17.25,supervisor:'Luisa Garcia',language:'Spanish',skills:'Residential cleaning, supplies setup, trash removal',certifications:'Chemical Safety',emergencyContact:'Laura Soto · 832-555-9104',notes:'Works mornings and weekends.'},
-{id:'EMP-1005',name:'Elena Cruz',team:'Team C',role:'Operations Supervisor',status:'Active',phone:'281-555-2105',email:'elena.cruz@example.com',hireDate:today(-900),employmentType:'Full-time',payType:'Salary',payRate:62000,supervisor:'Admin',language:'Spanish / English',skills:'Scheduling, quality control, customer escalations',certifications:'Quality Inspection, OSHA Basics',emergencyContact:'Carlos Cruz · 281-555-9105',notes:'Primary supervisor for field crews.'},
-{id:'EMP-1006',name:'Daniel Perez',team:'Team C',role:'Field Technician',status:'Active',phone:'281-555-2106',email:'daniel.perez@example.com',hireDate:today(-150),employmentType:'Contractor / 1099',payType:'Per Job',payRate:95,supervisor:'Elena Cruz',language:'English',skills:'Floor care, gym disinfection, equipment transport',certifications:'Floor Care Basics',emergencyContact:'Marta Perez · 281-555-9106',notes:'Best for gym and retail floor care jobs.'},
-{id:'EMP-1007',name:'Sofia Rivera',team:'Team D',role:'Field Technician',status:'Active',phone:'346-555-2107',email:'sofia.rivera@example.com',hireDate:today(-75),employmentType:'Part-time',payType:'Hourly',payRate:16.75,supervisor:'Elena Cruz',language:'English / Spanish',skills:'Residential cleaning, customer communication',certifications:'New Hire Training',emergencyContact:'Andres Rivera · 346-555-9107',notes:'Training in progress. Pair with lead technician.'},
-{id:'EMP-1008',name:'Rafael Gomez',team:'Team D',role:'Backup Technician',status:'Inactive',phone:'346-555-2108',email:'rafael.gomez@example.com',hireDate:today(-520),employmentType:'Contractor / 1099',payType:'Per Job',payRate:85,supervisor:'Elena Cruz',language:'Spanish',skills:'Backup coverage, weekend jobs',certifications:'Chemical Safety',emergencyContact:'Nora Gomez · 346-555-9108',notes:'Inactive until availability is confirmed.'}
-],
-jobs:[
-{id:'JOB-1001',customerId:'CUS-1001',serviceId:'SVC-1001',date:today(0),time:'19:00',team:'Team A',status:'Scheduled',invoiceId:null,checkIn:null,checkOut:null,photos:0,notes:'Weekly cleaning after hours.'},
-{id:'JOB-1002',customerId:'CUS-1002',serviceId:'SVC-1002',date:today(1),time:'09:00',team:'Team B',status:'Scheduled',invoiceId:null,checkIn:null,checkOut:null,photos:0,notes:'Deep cleaning before family event.'},
-{id:'JOB-1003',customerId:'CUS-1003',serviceId:'SVC-1003',date:today(-2),time:'14:00',team:'Team A',status:'Completed',invoiceId:null,checkIn:'14:05',checkOut:'17:10',photos:4,notes:'Completed, extra kitchen grease noted.'},
-{id:'JOB-1004',customerId:'CUS-1004',serviceId:'SVC-1005',date:today(0),time:'18:30',team:'Team C',status:'Scheduled',invoiceId:null,checkIn:null,checkOut:null,photos:0,notes:'Sanitize play zones and cafeteria.'},
-{id:'JOB-1005',customerId:'CUS-1006',serviceId:'SVC-1006',date:today(2),time:'21:00',team:'Team A',status:'Scheduled',invoiceId:null,checkIn:null,checkOut:null,photos:0,notes:'Include loading dock and common areas.'},
-{id:'JOB-1006',customerId:'CUS-1007',serviceId:'SVC-1007',date:today(-1),time:'22:00',team:'Team B',status:'Completed',invoiceId:'INV-1006',checkIn:'22:03',checkOut:'00:16',photos:6,notes:'Locker room deep disinfection completed.'},
-{id:'JOB-1007',customerId:'CUS-1008',serviceId:'SVC-1004',date:today(3),time:'10:00',team:'Team C',status:'Scheduled',invoiceId:null,checkIn:null,checkOut:null,photos:0,notes:'Move-out cleaning with oven detail.'},
-{id:'JOB-1008',customerId:'CUS-1005',serviceId:'SVC-1002',date:today(-6),time:'08:00',team:'Team B',status:'Completed',invoiceId:null,checkIn:'08:02',checkOut:'12:18',photos:5,notes:'Completed; customer requested add-on fridge clean.'},
-{id:'JOB-1009',customerId:'CUS-1001',serviceId:'SVC-1001',date:today(7),time:'19:00',team:'Team A',status:'Scheduled',invoiceId:null,checkIn:null,checkOut:null,photos:0,notes:'Next weekly service.'},
-{id:'JOB-1010',customerId:'CUS-1006',serviceId:'SVC-1008',date:today(5),time:'07:30',team:'Team C',status:'Scheduled',invoiceId:null,checkIn:null,checkOut:null,photos:0,notes:'Post-construction cleanup for new tenant space.'}
-],
-estimates:[
-{id:'EST-1001',customerId:'CUS-1002',date:today(-3),status:'Sent',subtotal:260,tax:21.45,total:281.45,notes:'Residential deep cleaning estimate.'},
-{id:'EST-1002',customerId:'CUS-1003',date:today(-10),status:'Accepted',subtotal:450,tax:37.13,total:487.13,notes:'Special post-event cleaning.'},
-{id:'EST-1003',customerId:'CUS-1004',date:today(-6),status:'Viewed',subtotal:390,tax:32.18,total:422.18,notes:'Daily sanitation program.'},
-{id:'EST-1004',customerId:'CUS-1006',date:today(-12),status:'Sent',subtotal:720,tax:59.4,total:779.4,notes:'Retail common area floor care.'},
-{id:'EST-1005',customerId:'CUS-1008',date:today(-1),status:'Draft',subtotal:320,tax:26.4,total:346.4,notes:'Move-out cleaning quote.'}
-],
-invoices:[
-{id:'INV-1001',customerId:'CUS-1001',date:today(-20),due:today(-5),status:'Overdue',subtotal:580,tax:47.85,total:627.85,paid:0,writeOff:0,notes:'Weekly commercial cleaning.',memo:'Customer prefers ACH payment; verify overdue balance before next billing run.'},
-{id:'INV-1002',customerId:'CUS-1002',date:today(-5),due:today(0),status:'Partially Paid',subtotal:260,tax:21.45,total:281.45,paid:100,writeOff:0,notes:'Deep cleaning.',memo:'Partial payment received; follow up if remaining balance is not cleared by due date.'},
-{id:'INV-1003',customerId:'CUS-1003',date:today(-2),due:today(5),status:'Sent',subtotal:450,tax:37.13,total:487.13,paid:0,writeOff:0,notes:'Restaurant special project.',memo:'Include project reference in monthly billing review.'},
-{id:'INV-1004',customerId:'CUS-1004',date:today(-34),due:today(-19),status:'Paid',subtotal:390,tax:32.18,total:422.18,paid:422.18,writeOff:0,notes:'Monthly daycare sanitation.',memo:'Auto-paid by card on file.'},
-{id:'INV-1005',customerId:'CUS-1006',date:today(-63),due:today(-33),status:'Overdue',subtotal:720,tax:59.4,total:779.4,paid:200,writeOff:0,notes:'Retail floor care cycle 1.',memo:'Escalate to collection call if not resolved this week.'},
-{id:'INV-1006',customerId:'CUS-1007',date:today(-15),due:today(-1),status:'Paid',subtotal:410,tax:33.83,total:443.83,paid:443.83,writeOff:0,notes:'Gym disinfection.',memo:'Paid by ACH.'},
-{id:'INV-1007',customerId:'CUS-1001',date:today(-92),due:today(-77),status:'Paid',subtotal:580,tax:47.85,total:627.85,paid:627.85,writeOff:0,notes:'Weekly commercial cleaning.',memo:'Collected in prior cycle.'},
-{id:'INV-1008',customerId:'CUS-1003',date:today(-121),due:today(-106),status:'Partially Paid',subtotal:530,tax:43.72,total:573.72,paid:300,writeOff:0,notes:'Kitchen degreasing and dining area cleanup.',memo:'Customer requested second copy of invoice.'},
-{id:'INV-1009',customerId:'CUS-1005',date:today(-149),due:today(-134),status:'Paid',subtotal:260,tax:21.45,total:281.45,paid:281.45,writeOff:0,notes:'Residential deep cleaning.',memo:'Paid same day via card.'},
-{id:'INV-1010',customerId:'CUS-1006',date:today(-175),due:today(-160),status:'Paid',subtotal:680,tax:56.1,total:736.1,paid:736.1,writeOff:0,notes:'Retail center janitorial launch month.',memo:'Initial onboarding billing.'},
-{id:'INV-1011',customerId:'CUS-1004',date:today(-210),due:today(-195),status:'Paid',subtotal:390,tax:32.18,total:422.18,paid:422.18,writeOff:0,notes:'Quarter start sanitation cycle.',memo:'Recurring contract account.'}
-],
-payments:[
-{id:'PAY-1001',invoiceId:'INV-1002',customerId:'CUS-1002',date:today(-2),origAmt:281.45,amountDue:281.45,amount:100,remaining:181.45,method:'Zelle',reference:'ZEL-8821',recon:'Pending Review',proof:'Screenshot received'},
-{id:'PAY-1002',invoiceId:'INV-1004',customerId:'CUS-1004',date:today(-18),origAmt:422.18,amountDue:422.18,amount:422.18,remaining:0,method:'Card',reference:'AUTH-4421',recon:'Reconciled',proof:'Processor batch attached'},
-{id:'PAY-1003',invoiceId:'INV-1005',customerId:'CUS-1006',date:today(-40),origAmt:779.4,amountDue:779.4,amount:200,remaining:579.4,method:'ACH',reference:'ACH-1005',recon:'Difference Found',proof:'Customer short paid'},
-{id:'PAY-1004',invoiceId:'INV-1006',customerId:'CUS-1007',date:today(-10),origAmt:443.83,amountDue:443.83,amount:443.83,remaining:0,method:'ACH',reference:'ACH-1006',recon:'Reconciled',proof:'Bank match complete'},
-{id:'PAY-1005',invoiceId:'INV-1008',customerId:'CUS-1003',date:today(-100),origAmt:573.72,amountDue:573.72,amount:300,remaining:273.72,method:'Check',reference:'CHK-1198',recon:'Pending Review',proof:'Deposit slip pending'}
-],
-expenses:[
-{id:'EXP-1001',vendorId:'VEN-1001',customerId:null,jobId:null,date:today(-7),category:'Supplies',amount:320,method:'Debit Card',status:'Reviewed',notes:'Chemicals and gloves.'},
-{id:'EXP-1002',vendorId:'VEN-1002',customerId:'CUS-1001',jobId:'JOB-1001',date:today(-4),category:'Equipment Repair',amount:180,method:'ACH',status:'Pending Review',notes:'Vacuum repair.'},
-{id:'EXP-1003',vendorId:'VEN-1004',customerId:null,jobId:null,date:today(-3),category:'Gas',amount:145,method:'Card',status:'Reviewed',notes:'Fuel for service fleet.'},
-{id:'EXP-1004',vendorId:'VEN-1005',customerId:null,jobId:null,date:today(-15),category:'Uniforms',amount:96,method:'Card',status:'Reviewed',notes:'Replacement shirts and aprons.'},
-{id:'EXP-1005',vendorId:'VEN-1001',customerId:'CUS-1004',jobId:'JOB-1004',date:today(-30),category:'Supplies',amount:210,method:'ACH',status:'Reviewed',notes:'Child-safe sanitizer and wipes.'},
-{id:'EXP-1006',vendorId:'VEN-1003',customerId:null,jobId:null,date:today(-46),category:'Supplies',amount:412,method:'ACH',status:'Reviewed',notes:'Paper goods and liners.'},
-{id:'EXP-1007',vendorId:'VEN-1004',customerId:null,jobId:null,date:today(-72),category:'Gas',amount:133,method:'Card',status:'Reviewed',notes:'Fuel cost month -2.'},
-{id:'EXP-1008',vendorId:'VEN-1002',customerId:'CUS-1006',jobId:null,date:today(-96),category:'Repairs',amount:265,method:'ACH',status:'Pending Review',notes:'Auto scrubber service.'}
-],
-bills:[
-{id:'BILL-1001',vendorId:'VEN-1001',date:today(-12),due:today(-2),status:'Overdue',amount:420,paid:0},
-{id:'BILL-1002',vendorId:'VEN-1003',date:today(-22),due:today(3),status:'Open',amount:610,paid:0},
-{id:'BILL-1003',vendorId:'VEN-1004',date:today(-9),due:today(6),status:'Open',amount:285,paid:0}
-],
-inventory:[
-{id:'INVITEM-1',sku:'CHEM-001',name:'Disinfectant Gallon',category:'Chemical',type:'Supply',qty:8,min:10,cost:14.5,vendorId:'VEN-1001',status:'Active'},
-{id:'INVITEM-2',sku:'BAG-013',name:'Heavy Trash Bags',category:'Consumable',type:'Supply',qty:35,min:20,cost:0.35,vendorId:'VEN-1001',status:'Active'},
-{id:'INVITEM-3',sku:'EQP-007',name:'Commercial Vacuum',category:'Equipment',type:'Equipment',qty:3,min:1,cost:220,vendorId:'VEN-1002',status:'Active'},
-{id:'INVITEM-4',sku:'PAPR-110',name:'Paper Towels Case',category:'Consumable',type:'Supply',qty:4,min:8,cost:22.75,vendorId:'VEN-1003',status:'Active'},
-{id:'INVITEM-5',sku:'MOP-051',name:'Microfiber Mop Heads',category:'Equipment',type:'Supply',qty:12,min:12,cost:8.5,vendorId:'VEN-1001',status:'Active'},
-{id:'INVITEM-6',sku:'PPE-020',name:'Nitrile Gloves Box',category:'Safety',type:'Supply',qty:6,min:10,cost:6.2,vendorId:'VEN-1001',status:'Active'},
-{id:'INVITEM-7',sku:'EQP-021',name:'Floor Scrubber Battery',category:'Equipment',type:'Equipment',qty:1,min:2,cost:180,vendorId:'VEN-1002',status:'Active'}
-],
-audits:[
-{id:'AUD-1001',source:'pending_payments_may.csv',date:today(-1),rows:24,matches:18,differences:6,status:'Requires Review'},
-{id:'AUD-1002',source:'open_ar_april.csv',date:today(-8),rows:31,matches:27,differences:4,status:'Requires Review'},
-{id:'AUD-1003',source:'service_completion_to_invoice.csv',date:today(-2),rows:19,matches:15,differences:4,status:'Requires Review'}
-],
-tasks:[
-{id:'TASK-1001',title:'Review payment difference for Greenway',desc:'CSV audit shows missing payment against INV-1001.',owner:'Billing',due:today(1),status:'Open'},
-{id:'TASK-1002',title:'Check low stock disinfectant',desc:'Disinfectant below minimum quantity.',owner:'Manager',due:today(0),status:'Open'},
-{id:'TASK-1003',title:'Call North Park on overdue balance',desc:'Follow up on INV-1005 partial payment.',owner:'Collections',due:today(0),status:'Open'},
-{id:'TASK-1004',title:'Approve repair expense',desc:'EXP-1008 pending management review.',owner:'Admin',due:today(2),status:'Open'},
-{id:'TASK-1005',title:'Convert completed job to invoice',desc:'JOB-1008 was completed and still not invoiced.',owner:'Billing',due:today(1),status:'Open'},
-{id:'TASK-1006',title:'Reorder paper towels',desc:'Paper towels case below minimum.',owner:'Operations',due:today(1),status:'Open'}
-],
-calendar:[
-{id:'CAL-1001',date:today(0),time:'19:00',customer:'Greenway Medical Office',service:'Office Weekly Cleaning',assigned:'Team A',status:'Scheduled',notes:'After hours service'},
-{id:'CAL-1002',date:today(1),time:'09:00',customer:'Sarah Johnson Residence',service:'Residential Deep Cleaning',assigned:'Team B',status:'Scheduled',notes:'Customer home all morning'},
-{id:'CAL-1003',date:today(0),time:'18:30',customer:'Bright Kids Daycare',service:'Daycare Sanitation Program',assigned:'Team C',status:'Scheduled',notes:'Use child-safe products'},
-{id:'CAL-1004',date:today(2),time:'21:00',customer:'North Park Retail Center',service:'Retail Center Floor Care',assigned:'Team A',status:'Scheduled',notes:'Night shift'},
-{id:'CAL-1005',date:today(3),time:'10:00',customer:'Patel Family Residence',service:'Move-In / Move-Out Cleaning',assigned:'Team C',status:'Scheduled',notes:'Move-out with add-ons'},
-{id:'CAL-1006',date:today(5),time:'07:30',customer:'North Park Retail Center',service:'Post-Construction Cleanup',assigned:'Team C',status:'Scheduled',notes:'New tenant buildout'},
-{id:'CAL-1007',date:today(7),time:'19:00',customer:'Greenway Medical Office',service:'Office Weekly Cleaning',assigned:'Team A',status:'Scheduled',notes:'Recurring visit'}
-],
-catalogs:{customerTypes:['Residential','Commercial','Both'],storeItemTypes:['Service','Product','Bundle','Discount','Other Charge'],salesTaxCodes:['TX-8.25','NON','EXEMPT'],accounts:['Cleaning Income','Supply Sales','Fee Income','Discounts Given','Other Income'],serviceFrequencies:['One-time','Weekly','Bi-weekly','Monthly','Quarterly'],paymentMethods:['Cash','Zelle','Check','Card','ACH','Transfer','Other'],invoiceStatuses:['Draft','Approved','Sent','Viewed','Partially Paid','Paid','Overdue','Disputed','Voided','Written Off'],estimateStatuses:['Draft','Sent','Viewed','Accepted','Rejected','Expired','Converted to Invoice'],reconStatuses:['Pending Review','Reconciled','Difference Found','Rejected'],expenseCategories:['Gas','Supplies','Equipment','Uniforms','Repairs','Insurance','Software','Phone','Other'],cancelReasons:['Client Request','Weather','No Access','Staffing','Emergency','Other'],writeOffReasons:['Uncollectible','Customer Dispute','Management Decision','Small Balance','Other'],refundReasons:['Overpayment','Service Issue','Customer Credit','Other']},
-auditLogs:[{id:'LOG-1',module:'System',action:'Demo Created',user:'Admin',date:new Date().toISOString(),before:'',after:'Expanded rich demo dataset for Command Center and module walkthroughs'}]};}
+function demoData(){return {
+  company:{name:'',logo:'',address:'',phone:'',email:'',website:'',defaultLang:'en',taxRate:8.25},
+  customers:[],
+  addresses:[],
+  vendors:[],
+  services:[],
+  stores:[],
+  jobs:[],
+  estimates:[],
+  estimate_lines:[],
+  invoices:[],
+  invoice_lines:[],
+  payments:[],
+  expenses:[],
+  bills:[],
+  inventory:[],
+  tasks:[],
+  users:[],
+  catalogs:{
+    storeItemTypes:['Service','Product','Bundle','Discount','Other Charge'],
+    salesTaxCodes:['TX-8.25','NON','EXEMPT'],
+    accounts:['Cleaning Income','Supply Sales','Fee Income','Discounts Given','Other Income'],
+    serviceFrequencies:['One-time','Weekly','Bi-weekly','Monthly','Quarterly'],
+    paymentMethods:['Cash','Zelle','Check','Card','ACH','Transfer','Other'],
+    invoiceStatuses:['Draft','Approved','Sent','Viewed','Partially Paid','Paid','Overdue','Disputed','Voided','Written Off'],
+    estimateStatuses:['Draft','Sent','Viewed','Accepted','Rejected','Expired','Converted to Invoice'],
+    reconStatuses:['Pending Review','Reconciled','Difference Found','Rejected'],
+    expenseCategories:['Gas','Supplies','Equipment','Uniforms','Repairs','Insurance','Software','Phone','Other'],
+    cancelReasons:['Client Request','Weather','No Access','Staffing','Emergency','Other'],
+    writeOffReasons:['Uncollectible','Customer Dispute','Management Decision','Small Balance','Other'],
+    refundReasons:['Overpayment','Service Issue','Customer Credit','Other']
+  },
+  auditLog:[],
+  contractors:[],
+  counter:{customer:1000,vendor:1000,service:1000,store:1000,job:1000,estimate:1000,invoice:1000,payment:1000,expense:1000,task:1000,inventory:1000}
+}}
 // load() — cache local; la fuente de verdad es Supabase (cargado en doLogin)
 function load() {
   try {
