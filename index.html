@@ -584,7 +584,7 @@ body.collapsed .ftv-menu-persist span:last-child,
     <header class="topbar">
       <div class="top-left"><button class="btn secondary small mobile-menu" onclick="toggleMenu()">☰</button><h2 id="pageTitle">Dashboard</h2><p id="pageSub">Executive and operational overview</p></div>
       <div class="top-actions">
-        <span class="pill"><span class="status-dot"></span><span data-i18n="localMode">Local Mode</span></span>
+        <span class="pill" id="local-mode-pill"><span class="status-dot"></span><span data-i18n="localMode">Local Mode</span></span>
         <select id="roleSelect" onchange="setRole(this.value)"></select>
         <button class="btn secondary" onclick="toggleLang()" id="langBtn">ES</button>
         <button class="btn secondary" onclick="resetDemo()" data-i18n="resetDemo">Reset Demo</button>
@@ -695,6 +695,11 @@ async function doLogin() {
     document.getElementById('login-overlay').style.display = 'none';
     document.getElementById('main-app').style.display = '';
     document.body.style.overflow = '';
+    // Ocultar "Local Mode" si el login fue via Supabase
+    if (cloudUser) {
+      const pill = document.getElementById('local-mode-pill');
+      if (pill) pill.style.display = 'none';
+    }
 
     // Actualizar nombre en sidebar
     const footerEl = document.querySelector('.sidebar-footer');
