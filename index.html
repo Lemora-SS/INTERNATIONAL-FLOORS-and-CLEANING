@@ -6,530 +6,928 @@
 <title>BRUNO360 Business Cleaning Suite</title>
 <style>
 :root{--bg:#f4f7f3;--card:#fff;--ink:#172116;--muted:#667064;--line:#dbe4d8;--green:#1f6b3a;--green2:#e8f4eb;--blue:#2463a8;--amber:#9a6500;--red:#a12828;--purple:#6941a3;--shadow:0 12px 35px rgba(20,40,20,.08);--radius:18px;--side:280px;}
-*{box-sizing:border-box} body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);height:100vh;overflow:hidden}.app{display:grid;grid-template-columns:var(--side) 1fr;height:100vh}.sidebar{background:#111910;color:white;padding:18px;display:flex;flex-direction:column;gap:14px;overflow:auto}.brand{border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px}.brand .logo{display:none}.brand .brand-top{display:flex;justify-content:center;align-items:center;margin-bottom:10px}.brand .mascot{width:100%;max-width:175px;height:auto;display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.32));border-radius:10px}.brand h1{display:none}.brand p{display:none}.sidebar-footer .powered-wrap{display:flex;justify-content:center;align-items:center;padding:10px 0 10px}.sidebar-footer .powered-logo{width:100%;max-width:280px;height:auto;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,.22));border-radius:14px;background:#fff;padding:8px}.sidebar-footer .footer-note{text-align:center}.nav-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.38);margin:10px 0 2px}.nav button{width:100%;border:0;background:transparent;color:rgba(255,255,255,.72);padding:11px 10px;border-radius:12px;display:flex;gap:10px;align-items:center;font-size:14px;cursor:pointer;text-align:left}.nav button:hover,.nav button.active{background:rgba(255,255,255,.10);color:white}.nav .ico{width:22px;text-align:center}.nav-group{border-radius:14px;margin:4px 0 8px;overflow:hidden}.nav-group-head{width:100%;border:0;background:rgba(255,255,255,.04);color:rgba(255,255,255,.76);padding:10px 10px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;text-transform:uppercase;letter-spacing:.10em;font-weight:800;cursor:pointer}.nav-group-head:hover{background:rgba(255,255,255,.08);color:white}.nav-group-title{display:flex;align-items:center;gap:8px}.nav-count{font-size:10px;color:rgba(255,255,255,.42);letter-spacing:0;text-transform:none}.nav-chev{font-size:12px;transition:transform .18s ease;color:rgba(255,255,255,.55)}.nav-group.open .nav-chev{transform:rotate(90deg);color:white}.nav-group-body{display:none;padding-top:5px}.nav-group.open .nav-group-body{display:block}.sidebar-footer{margin-top:auto;font-size:11px;color:rgba(255,255,255,.42);border-top:1px solid rgba(255,255,255,.10);padding-top:12px;line-height:1.45}.main{display:flex;flex-direction:column;height:100vh;min-width:0}.topbar{height:72px;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;gap:16px}.top-left{min-width:0}.top-left h2{margin:0;font-size:22px}.top-left p{margin:3px 0 0;color:var(--muted);font-size:13px}.top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.pill,.select,select,input,textarea{border:1px solid var(--line);border-radius:12px;background:white;padding:10px 12px;font-size:13px;color:var(--ink)}.pill{display:inline-flex;align-items:center;gap:8px}.status-dot{width:8px;height:8px;border-radius:50%;background:#52b86a}.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:10px 14px;font-weight:700;cursor:pointer}.btn.secondary{background:white;color:var(--green);border:1px solid var(--line)}.btn.danger{background:var(--red)}.btn.small{font-size:12px;padding:7px 10px;border-radius:10px}.content{padding:22px;overflow:auto}.view{display:none}.view.active{display:block}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(4,minmax(160px,1fr));margin-bottom:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}.kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}.kpi .value{font-size:28px;font-weight:900;margin-top:6px}.kpi .sub{color:var(--muted);font-size:12px;margin-top:3px}.span-2{grid-column:span 2}.span-3{grid-column:span 3}.module-grid{grid-template-columns:repeat(3,minmax(220px,1fr))}.module-card{cursor:pointer;transition:.15s}.module-card:hover{transform:translateY(-2px);border-color:#aad5b4}.module-card .icon{font-size:28px}.module-card h3{margin:8px 0 6px}.module-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}.toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}.toolbar .left,.toolbar .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.search{min-width:260px}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:white}table{border-collapse:collapse;width:100%;min-width:760px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:11px 12px;font-size:13px;vertical-align:top}th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:#f7faf6;position:sticky;top:0}tr:last-child td{border-bottom:0}.badge{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800}.bg-green{background:var(--green2);color:var(--green)}.bg-blue{background:#e9f1fb;color:var(--blue)}.bg-amber{background:#fff4da;color:var(--amber)}.bg-red{background:#fdeaea;color:var(--red)}.bg-purple{background:#f1ebfb;color:var(--purple)}.two-col{grid-template-columns:1.25fr .75fr}.three-col{grid-template-columns:repeat(3,1fr)}.alert-list{display:flex;flex-direction:column;gap:10px}.alert{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}.alert .mark{width:10px;height:10px;border-radius:50%;background:var(--amber);margin-top:4px;flex:0 0 auto}.alert.red .mark{background:var(--red)}.alert.green .mark{background:var(--green)}.alert strong{display:block;font-size:13px}.alert span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}.day{min-height:112px;border:1px solid var(--line);border-radius:16px;background:white;padding:10px}.day .num{font-weight:900}.event{margin-top:8px;padding:7px 8px;border-radius:10px;background:var(--green2);font-size:11px;color:var(--green);font-weight:800}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.fg{display:flex;flex-direction:column;gap:5px}.fg label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:900}.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.42);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}.modal-backdrop.open{display:flex}.modal{width:min(860px,100%);max-height:90vh;overflow:auto;background:white;border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.25)}.modal-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h3{margin:0}.modal-body{padding:20px}.modal-foot{padding:16px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}.x{background:transparent;border:0;font-size:26px;cursor:pointer;color:var(--muted)}.catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(210px,1fr));gap:14px}.cat-card h4{margin:0 0 10px}.chips{display:flex;gap:7px;flex-wrap:wrap}.chip{background:#f3f6f2;border:1px solid var(--line);border-radius:999px;padding:6px 9px;font-size:12px}.chart-bars{height:190px;display:flex;align-items:flex-end;gap:10px}.bar{flex:1;background:linear-gradient(180deg,#5aae72,#1f6b3a);border-radius:12px 12px 0 0;min-height:12px;position:relative}.bar::after{content:attr(data-label);position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}.print-doc{font-family:Arial,sans-serif;background:white;color:#111;padding:30px;max-width:850px;margin:auto}.print-doc .doc-head{display:flex;justify-content:space-between;border-bottom:3px solid #1f6b3a;padding-bottom:14px}.print-doc h1{margin:0;color:#1f6b3a}.print-doc table{min-width:0}.hidden{display:none!important}.mobile-menu{display:none}.role-note{font-size:12px;color:var(--muted)}
+
+*{box-sizing:border-box}
+.brand{border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:16px}
+.brand .logo{display:none}
+.brand .brand-top{display:flex;justify-content:center;align-items:center;margin-bottom:10px}
+.brand .mascot{width:100%;max-width:175px;height:auto;display:block;filter:drop-shadow(0 10px 18px rgba(0,0,0,.32));border-radius:10px}
+.brand h1{display:none}
+.brand p{display:none}
+.sidebar-footer .powered-wrap{display:flex;justify-content:center;align-items:center;padding:10px 0 10px}
+.sidebar-footer .powered-logo{width:100%;max-width:280px;height:auto;display:block;filter:drop-shadow(0 6px 12px rgba(0,0,0,.22));border-radius:14px;background:#fff;padding:8px}
+.sidebar-footer .footer-note{text-align:center}
+.nav-section-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.38);margin:10px 0 2px}
+.nav button:hover,.nav button.active{background:rgba(255,255,255,.10);color:white}
+.nav .ico{width:22px;text-align:center}
+.nav-group{border-radius:14px;margin:4px 0 8px;overflow:hidden}
+.nav-group-head{width:100%;border:0;background:rgba(255,255,255,.04);color:rgba(255,255,255,.76);padding:10px 10px;border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;text-transform:uppercase;letter-spacing:.10em;font-weight:800;cursor:pointer}
+.nav-group-head:hover{background:rgba(255,255,255,.08);color:white}
+.nav-group-title{display:flex;align-items:center;gap:8px}
+.nav-count{font-size:10px;color:rgba(255,255,255,.42);letter-spacing:0;text-transform:none}
+.nav-chev{font-size:12px;transition:transform .18s ease;color:rgba(255,255,255,.55)}
+.nav-group.open .nav-chev{transform:rotate(90deg);color:white}
+.nav-group-body{display:none;padding-top:5px}
+.nav-group.open .nav-group-body{display:block}
+.sidebar-footer{margin-top:auto;font-size:11px;color:rgba(255,255,255,.42);border-top:1px solid rgba(255,255,255,.10);padding-top:12px;line-height:1.45}
+.main{display:flex;flex-direction:column;height:100vh;min-width:0}
+.top-left{min-width:0}
+.top-left h2{margin:0;font-size:22px}
+.top-left p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.pill,.select,select,input,textarea{border:1px solid var(--line);border-radius:12px;background:white;padding:10px 12px;font-size:13px;color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:8px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#52b86a}
+.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:10px 14px;font-weight:700;cursor:pointer}
+.btn.secondary{background:white;color:var(--green);border:1px solid var(--line)}
+.btn.danger{background:var(--red)}
+.btn.small{font-size:12px;padding:7px 10px;border-radius:10px}
+.view{display:none}
+.view.active{display:block}
+.grid{display:grid;gap:14px}
+.kpi-grid{grid-template-columns:repeat(4,minmax(160px,1fr));margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+.kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:800}
+.kpi .value{font-size:28px;font-weight:900;margin-top:6px}
+.kpi .sub{color:var(--muted);font-size:12px;margin-top:3px}
+.span-2{grid-column:span 2}
+.span-3{grid-column:span 3}
+.module-card{cursor:pointer;transition:.15s}
+.module-card:hover{transform:translateY(-2px);border-color:#aad5b4}
+.module-card .icon{font-size:28px}
+.module-card h3{margin:8px 0 6px}
+.module-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
+.toolbar{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap}
+.toolbar .left,.toolbar .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:white}
+th,td{text-align:left;border-bottom:1px solid var(--line);padding:11px 12px;font-size:13px;vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:#f7faf6;position:sticky;top:0}
+tr:last-child td{border-bottom:0}
+.badge{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:800}
+.bg-green{background:var(--green2);color:var(--green)}
+.bg-blue{background:#e9f1fb;color:var(--blue)}
+.bg-amber{background:#fff4da;color:var(--amber)}
+.bg-red{background:#fdeaea;color:var(--red)}
+.bg-purple{background:#f1ebfb;color:var(--purple)}
+.two-col{grid-template-columns:1.25fr .75fr}
+.three-col{grid-template-columns:repeat(3,1fr)}
+.alert-list{display:flex;flex-direction:column;gap:10px}
+.alert{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px}
+.alert .mark{width:10px;height:10px;border-radius:50%;background:var(--amber);margin-top:4px;flex:0 0 auto}
+.alert.red .mark{background:var(--red)}
+.alert.green .mark{background:var(--green)}
+.alert strong{display:block;font-size:13px}
+.alert span{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+.day{min-height:112px;border:1px solid var(--line);border-radius:16px;background:white;padding:10px}
+.day .num{font-weight:900}
+.event{margin-top:8px;padding:7px 8px;border-radius:10px;background:var(--green2);font-size:11px;color:var(--green);font-weight:800}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:900}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.42);display:none;align-items:center;justify-content:center;z-index:99;padding:20px}
+.modal-backdrop.open{display:flex}
+.modal{width:min(860px,100%);max-height:90vh;overflow:auto;background:white;border-radius:22px;box-shadow:0 30px 90px rgba(0,0,0,.25)}
+.modal-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.modal-head h3{margin:0}
+.modal-body{padding:20px}
+.modal-foot{padding:16px 20px;border-top:1px solid var(--line);display:flex;justify-content:flex-end;gap:10px}
+.x{background:transparent;border:0;font-size:26px;cursor:pointer;color:var(--muted)}
+.chart-bars{height:190px;display:flex;align-items:flex-end;gap:10px}
+.bar{flex:1;background:linear-gradient(180deg,#5aae72,#1f6b3a);border-radius:12px 12px 0 0;min-height:12px;position:relative}
+.bar::after{content:attr(data-label);position:absolute;bottom:-22px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
+.print-doc .doc-head{display:flex;justify-content:space-between;border-bottom:3px solid #1f6b3a;padding-bottom:14px}
+.print-doc h1{margin:0;color:#1f6b3a}
+.print-doc table{min-width:0}
+.hidden{display:none!important}
+.role-note{font-size:12px;color:var(--muted)}
 
 .module-grid{grid-template-columns:1fr;gap:16px}
-.module-map{display:flex;flex-direction:column;gap:18px}
-.flow-section{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 16px 14px;box-shadow:var(--shadow)}
-.flow-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-.flow-section-head h3{margin:0;font-size:17px}
-.flow-section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
-.flow-tag{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;background:#f6f8f6;border:1px solid var(--line);color:var(--ink)}
-.flow-track{display:flex;align-items:center;gap:8px;overflow:auto;padding:4px 2px 8px;scrollbar-width:thin}
-.flow-node{min-width:168px;background:#fbfcfb;border:1px solid var(--line);border-radius:18px;padding:14px 14px 12px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;position:relative}
-.flow-node:hover{transform:translateY(-2px);border-color:#b7d9c0;box-shadow:0 10px 18px rgba(18,50,20,.08)}
-.flow-node::after{content:'';position:absolute;inset:0;border-radius:18px;border-top:3px solid var(--node-accent, #1f6b3a);opacity:.95}
-.flow-node .node-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.flow-node h4{margin:0;font-size:14px;line-height:1.2}
-.flow-node p{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
-.flow-arrow{position:relative;flex:0 0 34px;height:2px;background:linear-gradient(90deg,#d2ddd2,#8eb79a);border-radius:999px}
-.flow-arrow::after{content:'›';position:absolute;right:-1px;top:50%;transform:translateY(-51%);font-size:18px;color:#7c9982;font-weight:900}
-.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px}
-.quick-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.15s}
-.quick-card:hover{transform:translateY(-2px);border-color:#b7d9c0;box-shadow:0 10px 18px rgba(18,50,20,.08)}
-.quick-card h4{margin:0 0 4px;font-size:14px}.quick-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
-.icon-badge{width:44px;height:44px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:21px;font-weight:900;flex:0 0 auto;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
-.icon-badge.small{width:32px;height:32px;border-radius:10px;font-size:16px}
-.icon-badge.green{background:linear-gradient(180deg,#ecf8ef,#d8efdf);color:#1d6a39}
-.icon-badge.blue{background:linear-gradient(180deg,#eef5fd,#dceaf9);color:#2463a8}
-.icon-badge.amber{background:linear-gradient(180deg,#fff8e7,#ffedbf);color:#9a6500}
-.icon-badge.red{background:linear-gradient(180deg,#fff0f0,#ffd9d9);color:#a12828}
-.icon-badge.purple{background:linear-gradient(180deg,#f5efff,#e6d9ff);color:#6941a3}
-.icon-badge.gray{background:linear-gradient(180deg,#f4f5f6,#e7eaed);color:#49535b}
-.node-step{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
-.nav button{padding:9px 10px}
-.nav button .ico{width:auto;text-align:left;display:inline-flex}
-.nav button .label{font-weight:700}
-.nav-group-head .group-ico{width:24px;height:24px;border-radius:8px;background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;font-size:13px}
-.catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(230px,1fr));gap:14px}
-.cat-card{position:relative;overflow:hidden;padding:15px}
-.cat-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cat-accent,#1f6b3a)}
-.cat-card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
-.cat-card h4{margin:0;font-size:15px}.cat-card .cat-meta{font-size:12px;color:var(--muted);margin-top:4px}
-.cat-card .used-in{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}.mini-chip{background:#f7f8f7;border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:11px;color:var(--muted)}
-.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.chip{background:#f3f6f2;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px}
-.mod-note{font-size:12px;color:var(--muted);margin-bottom:10px}
-@media(max-width:1020px){.quick-grid,.catalog-grid{grid-template-columns:1fr}.flow-track{flex-direction:column;align-items:stretch}.flow-node{min-width:0}.flow-arrow{width:2px;height:18px;align-self:center;background:linear-gradient(180deg,#d2ddd2,#8eb79a)}.flow-arrow::after{content:'⌄';right:auto;left:50%;top:auto;bottom:-8px;transform:translateX(-50%);font-size:14px}.flow-section-head{margin-bottom:10px}}
 
-@media(max-width:1020px){.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:80;inset:0 auto 0 0;width:280px;transform:translateX(-105%);transition:.2s}.sidebar.open{transform:translateX(0)}.mobile-menu{display:inline-flex}.kpi-grid,.module-grid,.two-col,.three-col,.catalog-grid{grid-template-columns:1fr}.topbar{height:auto;padding:14px;align-items:flex-start}.top-actions{justify-content:flex-start}.content{padding:14px}.form-grid{grid-template-columns:1fr}.search{min-width:180px}.span-2,.span-3{grid-column:auto}}
-@media print{body{height:auto;overflow:visible;background:white}.app,.modal-backdrop{display:none}.print-only{display:block!important}.print-doc{display:block!important}.no-print{display:none!important}}
-.clickable-card{cursor:pointer;transition:.15s}.clickable-card:hover{transform:translateY(-2px);border-color:#aad5b4}.clickable-card:active{transform:translateY(0)}.alert.clickable-card{cursor:pointer}
+.module-map{display:flex;flex-direction:column;gap:18px}
+
+.flow-section{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px 16px 14px;box-shadow:var(--shadow)}
+
+.flow-section-head h3{margin:0;font-size:17px}
+
+.flow-section-head p{margin:5px 0 0;color:var(--muted);font-size:13px}
+
+.flow-tag{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;background:#f6f8f6;border:1px solid var(--line);color:var(--ink)}
+
+.flow-node:hover{transform:translateY(-2px);border-color:#b7d9c0;box-shadow:0 10px 18px rgba(18,50,20,.08)}
+
+.flow-node::after{content:'';position:absolute;inset:0;border-radius:18px;border-top:3px solid var(--node-accent, #1f6b3a);opacity:.95}
+
+.flow-node .node-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+
+.flow-node h4{margin:0;font-size:14px;line-height:1.2}
+
+.flow-node p{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
+
+.quick-grid{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px}
+
+.quick-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;display:flex;align-items:flex-start;gap:12px;cursor:pointer;transition:.15s}
+
+.quick-card:hover{transform:translateY(-2px);border-color:#b7d9c0;box-shadow:0 10px 18px rgba(18,50,20,.08)}
+
+.quick-card h4{margin:0 0 4px;font-size:14px}
+.quick-card p{margin:0;color:var(--muted);font-size:12px;line-height:1.35}
+
+.icon-badge{width:44px;height:44px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:21px;font-weight:900;flex:0 0 auto;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+
+.icon-badge.small{width:32px;height:32px;border-radius:10px;font-size:16px}
+
+.icon-badge.green{background:linear-gradient(180deg,#ecf8ef,#d8efdf);color:#1d6a39}
+
+.icon-badge.blue{background:linear-gradient(180deg,#eef5fd,#dceaf9);color:#2463a8}
+
+.icon-badge.amber{background:linear-gradient(180deg,#fff8e7,#ffedbf);color:#9a6500}
+
+.icon-badge.red{background:linear-gradient(180deg,#fff0f0,#ffd9d9);color:#a12828}
+
+.icon-badge.purple{background:linear-gradient(180deg,#f5efff,#e6d9ff);color:#6941a3}
+
+.icon-badge.gray{background:linear-gradient(180deg,#f4f5f6,#e7eaed);color:#49535b}
+
+.node-step{font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+
+.nav button{padding:9px 10px}
+
+.nav button .ico{width:auto;text-align:left;display:inline-flex}
+
+.nav button .label{font-weight:700}
+
+.nav-group-head .group-ico{width:24px;height:24px;border-radius:8px;background:rgba(255,255,255,.1);display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+
+.catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(230px,1fr));gap:14px}
+
+.cat-card{position:relative;overflow:hidden;padding:15px}
+
+.cat-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--cat-accent,#1f6b3a)}
+
+.cat-card-head{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+
+.cat-card h4{margin:0;font-size:15px}
+.cat-card .cat-meta{font-size:12px;color:var(--muted);margin-top:4px}
+
+.cat-card .used-in{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.mini-chip{background:#f7f8f7;border:1px solid var(--line);border-radius:999px;padding:5px 8px;font-size:11px;color:var(--muted)}
+
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.chip{background:#f3f6f2;border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:12px}
+
+.mod-note{font-size:12px;color:var(--muted);margin-bottom:10px}
+.quick-grid,.catalog-grid{grid-template-columns:1fr}
+.flow-track{flex-direction:column;align-items:stretch}
+.flow-node{min-width:0}
+.flow-arrow{width:2px;height:18px;align-self:center;background:linear-gradient(180deg,#d2ddd2,#8eb79a)}
+.flow-arrow::after{content:'⌄';right:auto;left:50%;top:auto;bottom:-8px;transform:translateX(-50%);font-size:14px}
+.flow-section-head{margin-bottom:10px}
+.app{grid-template-columns:1fr}
+.sidebar{position:fixed;z-index:80;inset:0 auto 0 0;width:280px;transform:translateX(-105%);transition:.2s}
+.sidebar.open{transform:translateX(0)}
+.mobile-menu{display:inline-flex}
+.kpi-grid,.module-grid,.two-col,.three-col,.catalog-grid{grid-template-columns:1fr}
+.topbar{height:auto;padding:14px;align-items:flex-start}
+.top-actions{justify-content:flex-start}
+.content{padding:14px}
+.form-grid{grid-template-columns:1fr}
+.search{min-width:180px}
+.span-2,.span-3{grid-column:auto}
+.app,.modal-backdrop{display:none}
+.print-only{display:block!important}
+.print-doc{display:block!important}
+.no-print{display:none!important}
+
+.clickable-card{cursor:pointer;transition:.15s}
+.clickable-card:hover{transform:translateY(-2px);border-color:#aad5b4}
+.clickable-card:active{transform:translateY(0)}
+.alert.clickable-card{cursor:pointer}
 
 .calendar-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-.calendar-title{font-size:20px;font-weight:900}
-.calendar-actions{display:flex;gap:8px;flex-wrap:wrap}
-.calendar-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:8px}
-.calendar-dow div{font-size:11px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;text-align:center}
-.calendar .day{position:relative;min-height:118px}
-.calendar .day.other-month{background:#f7faf6;color:#9aa7a0}
-.calendar .day.today{border-color:var(--green);box-shadow:0 0 0 2px rgba(31,107,58,.12)}
-.calendar .day.has-event{cursor:pointer}
-.calendar .day .num{display:flex;align-items:center;justify-content:space-between;gap:6px}
-.calendar .day .add-day{border:0;background:var(--green2);color:var(--green);border-radius:999px;width:24px;height:24px;font-weight:900;cursor:pointer}
-.calendar .event{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.calendar .event.job{background:#e9f1fb;color:var(--blue)}
-.calendar .event.done{background:#e9f8ee;color:var(--green)}
-.calendar .event.cancelled{background:#fdeaea;color:var(--red)}
-.calendar-list{margin-top:16px}
-.calendar-list .card h3{margin-bottom:4px}
-@media(max-width:760px){
-  .calendar{grid-template-columns:1fr}
-  .calendar-dow{display:none}
-  .calendar .day.other-month{display:none}
-}
 
+.calendar-title{font-size:20px;font-weight:900}
+
+.calendar-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+.calendar-dow div{font-size:11px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;text-align:center}
+
+.calendar .day{position:relative;min-height:118px}
+
+.calendar .day.today{border-color:var(--green);box-shadow:0 0 0 2px rgba(31,107,58,.12)}
+
+.calendar .day.has-event{cursor:pointer}
+
+.calendar .day .num{display:flex;align-items:center;justify-content:space-between;gap:6px}
+
+.calendar .day .add-day{border:0;background:var(--green2);color:var(--green);border-radius:999px;width:24px;height:24px;font-weight:900;cursor:pointer}
+
+.calendar .event{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.calendar .event.job{background:#e9f1fb;color:var(--blue)}
+
+.calendar .event.done{background:#e9f8ee;color:var(--green)}
+
+.calendar .event.cancelled{background:#fdeaea;color:var(--red)}
+
+.calendar-list{margin-top:16px}
+
+.calendar-list .card h3{margin-bottom:4px}
+
+  .calendar{grid-template-columns:1fr}
+
+  .calendar-dow{display:none}
+
+  .calendar .day.other-month{display:none}
 
 .btn.danger,.btn.small.danger{background:#b42318;color:#fff;border-color:#b42318}
+
 .btn.danger:hover,.btn.small.danger:hover{background:#8f1d13}
 
-
-/* v20 Supabase model readiness additions */
 .line-summary{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+
 .line-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#f8faf8;border-radius:999px;padding:5px 8px;font-size:11px;color:var(--muted)}
+
 .location-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+
 .location-card{border:1px solid var(--line);background:#fbfcfb;border-radius:12px;padding:8px;font-size:12px}
+
 .warning-note{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:10px 12px;font-size:13px;margin:10px 0}
+
 .supabase-note{background:#eef7ff;border:1px solid #bfdbfe;color:#1e3a8a;border-radius:12px;padding:10px 12px;font-size:13px;margin:10px 0}
+
 .table-wrap .btn.micro{font-size:11px;padding:5px 8px}
 
-
-/* v22 archive/deactivate workflow fixed */
 .filter-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 14px}
+
 .filter-row .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:#fff}
+
 .filter-row .seg button{border:0;background:#fff;padding:8px 12px;cursor:pointer;font-weight:700;color:var(--muted)}
+
 .filter-row .seg button.active{background:var(--green);color:#fff}
+
 .status-muted{opacity:.58}
+
 .action-note{font-size:12px;color:var(--muted);margin-top:4px}
+
 .btn.warn,.btn.small.warn,.btn.micro.warn{background:#f59e0b;color:#fff;border-color:#f59e0b}
+
 .btn.warn:hover,.btn.small.warn:hover,.btn.micro.warn:hover{background:#d97706}
+
 .btn.reverse,.btn.small.reverse,.btn.micro.reverse{background:#7c3aed;color:#fff;border-color:#7c3aed}
+
 .btn.reverse:hover,.btn.small.reverse:hover,.btn.micro.reverse:hover{background:#6d28d9}
+
 .lifecycle-note{background:#f8fafc;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;margin:10px 0}
 
-
-/* v23 print/email workflow */
 .print-email-bar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+
 .email-preview-box{background:#f8fafc;border:1px solid var(--line);border-radius:14px;padding:12px;white-space:pre-wrap;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;max-height:260px;overflow:auto}
-@media print{
+
   .sidebar,.topbar,.toolbar,.print-email-bar,.btn,.filter-row,.calendar-actions,.nav,.modal-backdrop{display:none!important}
+
   .main,.content,.card,.table-wrap{box-shadow:none!important;border:none!important}
+
   body{background:white!important}
+
   table{page-break-inside:auto}
+
   tr{page-break-inside:avoid;page-break-after:auto}
-}
 
-
-/* v24 dependency drilldown */
 .dep-list{display:flex;flex-direction:column;gap:10px}
+
 .dep-group{border:1px solid var(--line);border-radius:14px;background:#fff;overflow:hidden}
+
 .dep-group h3{margin:0;padding:11px 12px;background:#f8faf8;border-bottom:1px solid var(--line);font-size:14px}
-.dep-row{display:grid;grid-template-columns:1.2fr 1fr .8fr auto;gap:10px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);font-size:13px}
+
 .dep-row:last-child{border-bottom:0}
+
 .dep-row .muted{color:var(--muted);font-size:12px}
-.dep-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-@media(max-width:760px){.dep-row{grid-template-columns:1fr}.dep-actions{justify-content:flex-start}}
+.dep-row{grid-template-columns:1fr}
+.dep-actions{justify-content:flex-start}
 
-
-/* v25 Home Command Center */
 .command-hero{display:grid;grid-template-columns:1.3fr .7fr;gap:16px;margin-bottom:16px}
+
 .command-panel{background:linear-gradient(135deg,#12351f,#1f6b3a);color:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+
 .command-panel::after{content:'';position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:999px;background:rgba(255,255,255,.08)}
-.command-panel h2{font-size:28px;margin:0 0 8px;letter-spacing:-.03em}
+
 .command-panel p{color:rgba(255,255,255,.78);max-width:720px;line-height:1.45;margin:0 0 16px}
+
 .command-actions{display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+
 .command-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
+
 .command-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
+
 .health-card{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow)}
-.health-score{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.score-ring{width:104px;height:104px;border-radius:50%;background:conic-gradient(var(--green) calc(var(--score)*1%),#e8eee8 0);display:flex;align-items:center;justify-content:center;position:relative}
-.score-ring::before{content:'';position:absolute;width:76px;height:76px;border-radius:50%;background:#fff}
-.score-ring span{position:relative;font-size:28px;font-weight:1000;color:var(--green)}
+
 .health-card h3{margin:0 0 4px}
+
 .health-card p{margin:0;color:var(--muted);font-size:13px}
-.command-grid{display:grid;grid-template-columns:repeat(4,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+
 .command-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04);cursor:pointer;transition:.15s}
+
 .command-kpi:hover{transform:translateY(-2px);border-color:#b7d9c0;box-shadow:0 12px 22px rgba(18,50,20,.08)}
+
 .command-kpi .top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+
 .command-kpi .value{font-size:23px;font-weight:1000;margin:10px 0 4px}
+
 .command-kpi .label{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.06em}
+
 .command-kpi .hint{font-size:12px;color:var(--muted)}
+
 .command-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
 .command-list{display:flex;flex-direction:column;gap:8px}
+
 .command-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+
 .command-item:last-child{border-bottom:0}
+
 .command-item strong{display:block}
+
 .command-item .meta{font-size:12px;color:var(--muted);margin-top:3px}
+
 .command-badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
 .command-empty{color:var(--muted);font-size:13px;padding:8px 0}
-.priority-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+
 .priority-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04);cursor:pointer;transition:.15s}
+
 .priority-card:hover{transform:translateY(-2px);border-color:#b7d9c0}
+
 .priority-card h3{margin:0 0 8px;font-size:15px}
+
 .priority-card .big{font-size:24px;font-weight:1000}
+
 .priority-card .desc{font-size:12px;color:var(--muted);margin-top:3px}
+
 .audit-ribbon{background:#f8fafc;border:1px dashed var(--line);border-radius:14px;padding:10px 12px;margin-bottom:14px;color:var(--muted);font-size:13px}
-@media(max-width:1100px){.command-hero,.command-sections{grid-template-columns:1fr}.command-grid{grid-template-columns:repeat(2,1fr)}.priority-strip{grid-template-columns:1fr}}
-@media(max-width:640px){.command-grid{grid-template-columns:1fr}.command-panel h2{font-size:23px}.health-score{align-items:flex-start}.score-ring{width:88px;height:88px}.score-ring::before{width:64px;height:64px}.score-ring span{font-size:24px}}
+.command-hero,.command-sections{grid-template-columns:1fr}
+.priority-strip{grid-template-columns:1fr}
+.command-grid{grid-template-columns:1fr}
+.command-panel h2{font-size:23px}
+.health-score{align-items:flex-start}
+.score-ring{width:88px;height:88px}
+.score-ring::before{width:64px;height:64px}
+.score-ring span{font-size:24px}
 
-
-/* v26 Customer 360 View */
 .customer360-hero{background:linear-gradient(135deg,#12351f,#1f6b3a);color:#fff;border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+
 .customer360-hero::after{content:'';position:absolute;right:-80px;top:-90px;width:240px;height:240px;border-radius:999px;background:rgba(255,255,255,.08)}
+
 .customer360-title{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;position:relative;z-index:1;flex-wrap:wrap}
-.customer360-title h2{font-size:28px;margin:0 0 6px}
+
 .customer360-title p{margin:0;color:rgba(255,255,255,.78)}
+
 .customer360-actions{display:flex;gap:8px;flex-wrap:wrap}
+
 .customer360-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
+
 .customer360-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
-.customer360-kpis{display:grid;grid-template-columns:repeat(5,minmax(140px,1fr));gap:12px;margin:16px 0}
+
 .customer360-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .customer360-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
 .customer360-kpi .value{font-size:22px;font-weight:1000;margin-top:6px}
-.customer360-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
 .customer360-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .customer360-card h3{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}
+
 .customer360-list{display:flex;flex-direction:column;gap:8px}
+
 .customer360-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}
+
 .customer360-row:last-child{border-bottom:0}
+
 .customer360-row strong{display:block}
+
 .customer360-row .meta{font-size:12px;color:var(--muted);margin-top:3px}
+
 .customer360-row .right{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.customer360-profile{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+
 .profile-field{background:#f8faf8;border:1px solid var(--line);border-radius:14px;padding:10px}
+
 .profile-field .label{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+
 .profile-field .value{font-weight:800;margin-top:4px;word-break:break-word}
+
 .customer360-empty{color:var(--muted);font-size:13px;padding:8px 0}
+
 .customer360-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+
 .customer360-tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 12px;cursor:pointer;font-weight:800;color:var(--muted)}
+
 .customer360-tabs button.active{background:var(--green);color:#fff;border-color:var(--green)}
-@media(max-width:1100px){.customer360-grid{grid-template-columns:1fr}.customer360-kpis{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.customer360-kpis{grid-template-columns:1fr}.customer360-profile{grid-template-columns:1fr}.customer360-title h2{font-size:23px}}
+.customer360-grid{grid-template-columns:1fr}
+.customer360-kpis{grid-template-columns:1fr}
+.customer360-profile{grid-template-columns:1fr}
+.customer360-title h2{font-size:23px}
 
-
-/* v27 Work Order / Job Detail */
 .workorder-hero{background:linear-gradient(135deg,#18345f,#1f6b3a);color:#fff;border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+
 .workorder-hero::after{content:'';position:absolute;right:-80px;top:-90px;width:240px;height:240px;border-radius:999px;background:rgba(255,255,255,.08)}
+
 .workorder-title{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;position:relative;z-index:1;flex-wrap:wrap}
-.workorder-title h2{font-size:28px;margin:0 0 6px}
+
 .workorder-title p{margin:0;color:rgba(255,255,255,.78)}
+
 .workorder-actions{display:flex;gap:8px;flex-wrap:wrap}
+
 .workorder-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
+
 .workorder-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
-.workorder-kpis{display:grid;grid-template-columns:repeat(4,minmax(140px,1fr));gap:12px;margin:16px 0}
+
 .workorder-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .workorder-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
 .workorder-kpi .value{font-size:20px;font-weight:1000;margin-top:6px}
-.workorder-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
 .workorder-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .workorder-card h3{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px}
+
 .workorder-list{display:flex;flex-direction:column;gap:8px}
+
 .workorder-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}
+
 .workorder-row:last-child{border-bottom:0}
+
 .workorder-row strong{display:block}
+
 .workorder-row .meta{font-size:12px;color:var(--muted);margin-top:3px}
+
 .check-item{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:#fbfcfb;border-radius:14px;padding:10px}
+
 .check-item input{width:18px;height:18px}
+
 .check-item.done{background:#eefaf1;border-color:#b7e4c2}
+
 .photo-box{border:1px dashed #b7c6b9;background:#f8faf8;border-radius:16px;padding:14px;text-align:center;color:var(--muted)}
+
 .signature-box{height:92px;border:1px dashed #b7c6b9;background:#fff;border-radius:16px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-style:italic}
-.workorder-profile{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+
 .workorder-field{background:#f8faf8;border:1px solid var(--line);border-radius:14px;padding:10px}
+
 .workorder-field .label{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+
 .workorder-field .value{font-weight:800;margin-top:4px;word-break:break-word}
-@media(max-width:1100px){.workorder-grid{grid-template-columns:1fr}.workorder-kpis{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.workorder-kpis{grid-template-columns:1fr}.workorder-profile{grid-template-columns:1fr}.workorder-title h2{font-size:23px}}
+.workorder-grid{grid-template-columns:1fr}
+.workorder-kpis{grid-template-columns:1fr}
+.workorder-profile{grid-template-columns:1fr}
+.workorder-title h2{font-size:23px}
 
-
-/* v29.1 Command Center Charts FIXED */
 .cc291-wrap{display:flex;flex-direction:column;gap:16px}
+
 .cc291-hero{background:linear-gradient(135deg,#12351f,#1f6b3a);color:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+
 .cc291-hero::after{content:'';position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:999px;background:rgba(255,255,255,.08)}
+
 .cc291-hero-inner{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;position:relative;z-index:1}
-.cc291-hero h2{font-size:30px;margin:0 0 8px;letter-spacing:-.03em}
+
 .cc291-hero p{color:rgba(255,255,255,.78);max-width:780px;line-height:1.45;margin:0}
+
 .cc291-actions{display:flex;gap:10px;flex-wrap:wrap}
+
 .cc291-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
+
 .cc291-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
+
 .cc291-top{display:grid;grid-template-columns:1fr 340px;gap:16px}
+
 .cc291-health{background:#fff;border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow)}
+
 .cc291-health-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
-.cc291-score-ring{width:118px;height:118px;border-radius:50%;background:conic-gradient(var(--score-color,#1f6b3a) calc(var(--score)*1%),#e8eee8 0);display:flex;align-items:center;justify-content:center;position:relative}
-.cc291-score-ring::before{content:'';position:absolute;width:86px;height:86px;border-radius:50%;background:#fff}
-.cc291-score-ring span{position:relative;font-size:30px;font-weight:1000;color:var(--score-color,#1f6b3a)}
+
 .cc291-health h3{margin:0 0 6px}
+
 .cc291-health p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
-.cc291-grid{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:12px}
+
 .cc291-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04);cursor:pointer;transition:.15s}
+
 .cc291-kpi:hover{transform:translateY(-2px);border-color:#b7d9c0;box-shadow:0 12px 22px rgba(18,50,20,.08)}
+
 .cc291-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
 .cc291-kpi .value{font-size:24px;font-weight:1000;margin:8px 0 4px}
+
 .cc291-kpi .hint{font-size:12px;color:var(--muted)}
+
 .cc291-charts{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
 .cc291-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .cc291-card h3{margin:0 0 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+
 .cc291-bars{display:flex;flex-direction:column;gap:10px}
-.cc291-bar-row{display:grid;grid-template-columns:110px 1fr 80px;gap:10px;align-items:center;font-size:13px}
+
 .cc291-bar-label{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 .cc291-bar-track{height:12px;border-radius:999px;background:#eef2ef;overflow:hidden}
+
 .cc291-bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#1f6b3a,#78b982);width:var(--w)}
+
 .cc291-bar-fill.warn{background:linear-gradient(90deg,#d97706,#fbbf24)}
+
 .cc291-bar-fill.danger{background:linear-gradient(90deg,#b42318,#fb7185)}
-.cc291-bar-val{text-align:right;color:var(--muted);font-weight:800}
+
 .cc291-donut-wrap{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+
 .cc291-donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(#1f6b3a 0 var(--a), #d97706 var(--a) var(--b), #b42318 var(--b) var(--c), #dbe4dc var(--c) 100%);position:relative}
+
 .cc291-donut::after{content:'';position:absolute;inset:34px;background:#fff;border-radius:50%}
+
 .cc291-legend{display:flex;flex-direction:column;gap:8px;font-size:13px}
+
 .cc291-legend span{display:flex;align-items:center;gap:8px}
+
 .cc291-dot{width:10px;height:10px;border-radius:999px;background:#1f6b3a;display:inline-block}
-.cc291-dot.warn{background:#d97706}.cc291-dot.danger{background:#b42318}.cc291-dot.gray{background:#dbe4dc}
+
+.cc291-dot.warn{background:#d97706}
+.cc291-dot.danger{background:#b42318}
+.cc291-dot.gray{background:#dbe4dc}
+
 .cc291-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
 .cc291-list{display:flex;flex-direction:column;gap:8px}
+
 .cc291-item{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+
 .cc291-item:last-child{border-bottom:0}
+
 .cc291-item strong{display:block}
+
 .cc291-item .meta{font-size:12px;color:var(--muted);margin-top:3px}
+
 .cc291-item-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
 .cc291-empty{color:var(--muted);font-size:13px;padding:8px 0}
-@media(max-width:1120px){.cc291-top,.cc291-charts,.cc291-sections{grid-template-columns:1fr}.cc291-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:640px){.cc291-grid{grid-template-columns:1fr}.cc291-bar-row{grid-template-columns:1fr}.cc291-bar-val{text-align:left}.cc291-score-ring{width:96px;height:96px}.cc291-score-ring::before{width:70px;height:70px}.cc291-score-ring span{font-size:25px}.cc291-hero h2{font-size:24px}}
+.cc291-top,.cc291-charts,.cc291-sections{grid-template-columns:1fr}
+.cc291-grid{grid-template-columns:1fr}
+.cc291-bar-row{grid-template-columns:1fr}
+.cc291-bar-val{text-align:left}
+.cc291-score-ring{width:96px;height:96px}
+.cc291-score-ring::before{width:70px;height:70px}
+.cc291-score-ring span{font-size:25px}
+.cc291-hero h2{font-size:24px}
 
-
-/* v29.3 Rich Demo Data Control */
 .rich-data-strip{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:14px;padding:11px 13px;margin-bottom:12px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px}
+
 .rich-data-strip strong{color:#7c2d12}
+
 .rich-data-strip .btn{min-height:34px;padding:7px 11px}
 
-
-/* v30 Employees Module */
 .emp30-hero{background:linear-gradient(135deg,#12351f,#1f6b3a);color:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px;position:relative;overflow:hidden}
+
 .emp30-hero::after{content:'';position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:999px;background:rgba(255,255,255,.08)}
+
 .emp30-hero-inner{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;position:relative;z-index:1}
-.emp30-hero h2{font-size:30px;margin:0 0 8px;letter-spacing:-.03em}
+
 .emp30-hero p{color:rgba(255,255,255,.78);max-width:780px;line-height:1.45;margin:0}
+
 .emp30-actions{display:flex;gap:10px;flex-wrap:wrap}
+
 .emp30-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
+
 .emp30-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
+
 .emp30-grid{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+
 .emp30-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .emp30-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
 .emp30-kpi .value{font-size:24px;font-weight:1000;margin:8px 0 4px}
+
 .emp30-kpi .hint{font-size:12px;color:var(--muted)}
+
 .emp30-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04);margin-bottom:12px}
+
 .emp30-card h3{margin:0 0 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+
 .emp30-list{display:flex;flex-direction:column;gap:8px}
-.emp30-person{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+
 .emp30-person:last-child{border-bottom:0}
+
 .emp30-avatar{width:48px;height:48px;border-radius:999px;background:#e7f3ea;color:#1f6b3a;display:flex;align-items:center;justify-content:center;font-weight:1000}
+
 .emp30-name{font-weight:1000}
+
 .emp30-meta{font-size:12px;color:var(--muted);margin-top:3px}
+
 .emp30-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
-.emp30-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
 .emp30-profile{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+
 .emp30-field{background:#f8faf8;border:1px solid var(--line);border-radius:14px;padding:10px}
+
 .emp30-field .label{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+
 .emp30-field .value{font-weight:800;margin-top:4px;word-break:break-word}
+
 .emp30-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
 .emp30-team-row{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:center}
+
 .emp30-team-row:last-child{border-bottom:0}
+
 .emp30-empty{color:var(--muted);font-size:13px;padding:8px 0}
-@media(max-width:1120px){.emp30-grid,.emp30-sections{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.emp30-grid,.emp30-sections,.emp30-profile{grid-template-columns:1fr}.emp30-person{grid-template-columns:48px 1fr}.emp30-buttons{grid-column:1 / -1;justify-content:flex-start}.emp30-hero h2{font-size:24px}}
+.emp30-grid,.emp30-sections{grid-template-columns:repeat(2,1fr)}
+.emp30-grid,.emp30-sections,.emp30-profile{grid-template-columns:1fr}
+.emp30-person{grid-template-columns:48px 1fr}
+.emp30-buttons{grid-column:1 / -1;justify-content:flex-start}
+.emp30-hero h2{font-size:24px}
 
-
-/* v30.1 Employees Menu Fix */
 .emp-menu-fallback{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
 .emp-menu-fallback strong{color:#1f6b3a}
 
-
-/* v30.2 Employees Sidebar Fix */
 .employee-sidebar-direct{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .employee-sidebar-direct:hover{background:rgba(255,255,255,.10)}
+
 .employee-sidebar-direct.active{background:rgba(255,255,255,.16)}
 
-
-/* v31 Teams / Crews Module */
 .team31-hero{background:linear-gradient(135deg,#12351f,#1f6b3a);color:#fff;border-radius:24px;padding:22px;box-shadow:var(--shadow);margin-bottom:16px;position:relative;overflow:hidden}
+
 .team31-hero::after{content:'';position:absolute;right:-70px;top:-70px;width:220px;height:220px;border-radius:999px;background:rgba(255,255,255,.08)}
+
 .team31-hero-inner{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;position:relative;z-index:1}
-.team31-hero h2{font-size:30px;margin:0 0 8px;letter-spacing:-.03em}
+
 .team31-hero p{color:rgba(255,255,255,.78);max-width:780px;line-height:1.45;margin:0}
+
 .team31-actions{display:flex;gap:10px;flex-wrap:wrap}
+
 .team31-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
+
 .team31-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
+
 .team31-grid{display:grid;grid-template-columns:repeat(4,minmax(160px,1fr));gap:12px;margin-bottom:16px}
+
 .team31-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .team31-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
 .team31-kpi .value{font-size:24px;font-weight:1000;margin:8px 0 4px}
+
 .team31-kpi .hint{font-size:12px;color:var(--muted)}
+
 .team31-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04);margin-bottom:12px}
+
 .team31-card h3{margin:0 0 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+
 .team31-list{display:flex;flex-direction:column;gap:8px}
-.team31-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+
 .team31-row:last-child{border-bottom:0}
+
 .team31-row strong{display:block}
+
 .team31-meta{font-size:12px;color:var(--muted);margin-top:3px}
+
 .team31-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px}
-.team31-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
 .team31-sections{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
 .team31-profile{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+
 .team31-field{background:#f8faf8;border:1px solid var(--line);border-radius:14px;padding:10px}
+
 .team31-field .label{font-size:11px;color:var(--muted);font-weight:900;text-transform:uppercase;letter-spacing:.06em}
+
 .team31-field .value{font-weight:800;margin-top:4px;word-break:break-word}
+
 .team31-member-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;background:#f8faf8;padding:7px 10px;font-size:12px;font-weight:800;margin:3px}
-.team31-route{display:grid;grid-template-columns:90px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+
 .team31-route:last-child{border-bottom:0}
+
 .team-sidebar-direct{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .team-sidebar-direct:hover{background:rgba(255,255,255,.10)}
-@media(max-width:1120px){.team31-grid,.team31-sections{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.team31-grid,.team31-sections,.team31-profile{grid-template-columns:1fr}.team31-row{grid-template-columns:1fr}.team31-buttons{justify-content:flex-start}.team31-route{grid-template-columns:1fr}.team31-hero h2{font-size:24px}}
+.team31-grid,.team31-sections{grid-template-columns:repeat(2,1fr)}
+.team31-grid,.team31-sections,.team31-profile{grid-template-columns:1fr}
+.team31-row{grid-template-columns:1fr}
+.team31-buttons{justify-content:flex-start}
+.team31-route{grid-template-columns:1fr}
+.team31-hero h2{font-size:24px}
 
-
-/* v31.1 Persistent Sidebar Menu Fix */
 .team-sidebar-direct-persist{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .team-sidebar-direct-persist:hover{background:rgba(255,255,255,.10)}
+
 .team-sidebar-direct-persist.active{background:rgba(255,255,255,.16)}
+
 .employee-sidebar-direct-persist{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .employee-sidebar-direct-persist:hover{background:rgba(255,255,255,.10)}
+
 .employee-sidebar-direct-persist.active{background:rgba(255,255,255,.16)}
 
-
-/* v31.2 Collapse Menu Persistence */
 .menu-persist-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .menu-persist-item:hover{background:rgba(255,255,255,.10)}
+
 .menu-persist-item.active{background:rgba(255,255,255,.16)}
+
 .menu-persist-item .mini-icon{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+
 body.collapsed .menu-persist-item span:last-child,
 .sidebar.collapsed .menu-persist-item span:last-child,
 .collapsed .menu-persist-item span:last-child{display:none}
 
-
-/* v32.3 Field Team View Clean */
 .ftv-hero{background:linear-gradient(135deg,#0f172a,#1f6b3a);color:#fff;border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow)}
+
 .ftv-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
-.ftv-hero h2{font-size:30px;margin:0 0 8px}
+
 .ftv-hero p{color:rgba(255,255,255,.78);margin:0}
+
 .ftv-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+
 .ftv-actions select{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px 12px;font-weight:800}
+
 .ftv-actions select option{color:#111;background:#fff}
+
 .ftv-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
-.ftv-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+
 .ftv-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .ftv-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
 .ftv-kpi .value{font-size:24px;font-weight:1000;margin:8px 0 4px}
+
 .ftv-kpi .hint{font-size:12px;color:var(--muted)}
-.ftv-layout{display:grid;grid-template-columns:360px 1fr;gap:16px}
-.ftv-phone{background:#0f172a;border-radius:32px;padding:14px;box-shadow:0 18px 35px rgba(15,23,42,.25);align-self:start}
+
 .ftv-screen{background:#f8faf8;border-radius:24px;min-height:540px;padding:14px}
+
 .ftv-card,.ftv-section{background:#fff;border:1px solid var(--line);border-radius:18px;padding:13px;margin-bottom:10px;box-shadow:0 6px 14px rgba(18,50,20,.04)}
+
 .ftv-section{border-radius:20px;padding:16px}
+
 .ftv-card h4,.ftv-card h3,.ftv-section h3{margin:0 0 5px}
+
 .ftv-meta{font-size:12px;color:var(--muted);line-height:1.45;margin-bottom:8px}
+
 .ftv-tags{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+
 .ftv-buttons{display:flex;gap:6px;flex-wrap:wrap}
+
 .ftv-buttons .btn{padding:7px 9px;font-size:12px}
+
 .ftv-note{background:#f8faf8;border:1px dashed #b7c6b9;border-radius:14px;padding:10px;color:var(--muted);font-size:13px;margin-bottom:12px}
+
 .ftv-toast{position:fixed;right:18px;bottom:18px;background:#12351f;color:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 18px 35px rgba(15,23,42,.25);z-index:99999;font-weight:900}
+
 .ftv-side{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .ftv-side:hover{background:rgba(255,255,255,.10)}
+
 .ftv-side .mini-icon{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;justify-content:center}
-@media(max-width:1120px){.ftv-layout{grid-template-columns:1fr}.ftv-grid{grid-template-columns:repeat(2,1fr)}.ftv-phone{max-width:380px}}
-@media(max-width:720px){.ftv-grid{grid-template-columns:1fr}.ftv-hero h2{font-size:24px}}
+.ftv-layout{grid-template-columns:1fr}
+.ftv-phone{max-width:380px}
+.ftv-grid{grid-template-columns:1fr}
+.ftv-hero h2{font-size:24px}
 
-
-/* v32.4 Field View Access Fix */
 .field-access-strip{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
 .field-access-strip strong{color:#1f6b3a}
+
 .field-access-strip .btn{min-height:34px;padding:7px 11px}
+
 .ftv-menu-persist{display:flex!important;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .ftv-menu-persist:hover{background:rgba(255,255,255,.10)}
+
 .ftv-menu-persist.active{background:rgba(255,255,255,.16)}
+
 .ftv-menu-persist .mini-icon{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+
 body.collapsed .ftv-menu-persist span:last-child,
 .sidebar.collapsed .ftv-menu-persist span:last-child,
 .collapsed .ftv-menu-persist span:last-child{display:none}
 
-
-/* v33 Job Assignments + Employee Field Access FIXED */
 .assign33-hero{background:linear-gradient(135deg,#0f172a,#1f6b3a);color:#fff;border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow)}
+
 .assign33-hero h2{font-size:30px;margin:0 0 8px}
+
 .assign33-hero p{color:rgba(255,255,255,.78);margin:0}
+
 .assign33-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+
 .assign33-actions{display:flex;gap:8px;flex-wrap:wrap}
+
 .assign33-actions .btn{background:#fff;color:#1f6b3a;border-color:#fff;font-weight:900}
-.assign33-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+
 .assign33-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .assign33-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
 .assign33-kpi .value{font-size:24px;font-weight:1000;margin:8px 0 4px}
+
 .assign33-kpi .hint{font-size:12px;color:var(--muted)}
+
 .assign33-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04);margin-bottom:12px}
+
 .assign33-card h3{margin:0 0 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.assign33-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start;padding:13px;border:1px solid var(--line);border-radius:18px;background:#fff;margin-bottom:10px}
+
 .assign33-meta{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}
+
 .assign33-tags,.assign33-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
 .assign33-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;background:#f8faf8;padding:6px 9px;font-size:12px;font-weight:800}
-.assign33-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+
 .assign33-select-list{display:grid;grid-template-columns:repeat(2,minmax(160px,1fr));gap:8px}
+
 .assign33-check{border:1px solid var(--line);border-radius:14px;background:#f8faf8;padding:9px;font-size:13px;font-weight:800}
+
 .assign33-check input{margin-right:7px}
+
 .assign33-note{background:#f8faf8;border:1px dashed #b7c6b9;border-radius:14px;padding:10px;color:var(--muted);font-size:13px;margin-bottom:12px}
+
 .assign33-menu{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
 .assign33-menu:hover{background:rgba(255,255,255,.10)}
+
 .assign33-menu .mini-icon{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;justify-content:center}
-@media(max-width:1120px){.assign33-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:720px){.assign33-grid,.assign33-select-list{grid-template-columns:1fr}.assign33-row{grid-template-columns:1fr}.assign33-buttons{justify-content:flex-start}}
+.assign33-grid{grid-template-columns:repeat(2,1fr)}
+.assign33-grid,.assign33-select-list{grid-template-columns:1fr}
+.assign33-row{grid-template-columns:1fr}
+.assign33-buttons{justify-content:flex-start}
 
-
-/* v34 New Job / Work Order Creation Flow */
 .job34-strip{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
 .job34-strip strong{color:#1f6b3a}
+
 .job34-grid{display:grid;grid-template-columns:repeat(2,minmax(220px,1fr));gap:12px}
+
 .job34-employee-list{display:grid;grid-template-columns:repeat(2,minmax(160px,1fr));gap:8px}
+
 .job34-check{border:1px solid var(--line);border-radius:14px;background:#f8faf8;padding:9px;font-size:13px;font-weight:800}
+
 .job34-check input{margin-right:7px}
+
 .job34-note{background:#f8faf8;border:1px dashed #b7c6b9;border-radius:14px;padding:10px;color:var(--muted);font-size:13px;margin:10px 0}
+
 .job34-result{background:#ecfdf3;border:1px solid #bbf7d0;color:#14532d;border-radius:14px;padding:10px;font-size:13px;font-weight:800;margin-top:10px}
-@media(max-width:720px){.job34-grid,.job34-employee-list{grid-template-columns:1fr}}
+.job34-grid,.job34-employee-list{grid-template-columns:1fr}
 
-
-/* v34.1 New Job Visible Access Fix */
 .job34-visible-strip{background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
 .job34-visible-strip strong{color:#1f6b3a}
+
 .job34-visible-strip .btn{min-height:34px;padding:8px 12px}
-.job34-floating-btn{position:fixed;right:18px;bottom:78px;z-index:9999;background:#1f6b3a;color:#fff;border:1px solid #1f6b3a;border-radius:999px;padding:12px 16px;font-weight:1000;box-shadow:0 18px 35px rgba(15,23,42,.25);cursor:pointer}
+
 .job34-floating-btn:hover{filter:brightness(.95)}
-@media(max-width:720px){.job34-floating-btn{right:12px;bottom:72px;padding:10px 13px;font-size:13px}}
+.job34-floating-btn{right:12px;bottom:72px;padding:10px 13px;font-size:13px}
 
-
-/* v35 Contractor / 1099 Tracking FIXED */
 .c1099-hero{background:linear-gradient(135deg,#0f172a,#7c2d12);color:#fff;border-radius:24px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow)}
-.c1099-hero h2{font-size:30px;margin:0 0 8px}
-.c1099-hero p{color:rgba(255,255,255,.78);margin:0;line-height:1.45}
-.c1099-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
-.c1099-actions{display:flex;gap:8px;flex-wrap:wrap}
-.c1099-actions .btn{background:#fff;color:#7c2d12;border-color:#fff;font-weight:900}
-.c1099-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
-.c1099-grid{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:12px;margin-bottom:16px}
-.c1099-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
-.c1099-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
-.c1099-kpi .value{font-size:24px;font-weight:1000;margin:8px 0 4px}
-.c1099-kpi .hint{font-size:12px;color:var(--muted)}
-.c1099-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04);margin-bottom:12px}
-.c1099-card h3{margin:0 0 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.c1099-row{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:start;padding:13px;border:1px solid var(--line);border-radius:18px;background:#fff;margin-bottom:10px}
-.c1099-meta{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}
-.c1099-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.c1099-buttons{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
-.c1099-note{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:14px;padding:10px;font-size:13px;margin-bottom:12px}
-.c1099-secure-note{background:#f8faf8;border:1px dashed #b7c6b9;border-radius:14px;padding:10px;color:var(--muted);font-size:13px;margin-bottom:12px}
-.c1099-menu{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
-.c1099-menu:hover{background:rgba(255,255,255,.10)}
-.c1099-menu .mini-icon{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;justify-content:center}
-.c1099-table-wrap{overflow:auto}.c1099-table{width:100%;border-collapse:collapse;font-size:13px}
-.c1099-table th,.c1099-table td{padding:9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
-.c1099-table th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-@media(max-width:1120px){.c1099-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:720px){.c1099-grid{grid-template-columns:1fr}.c1099-row{grid-template-columns:1fr}.c1099-buttons{justify-content:flex-start}.c1099-hero h2{font-size:24px}}
 
-</style>
+.c1099-hero p{color:rgba(255,255,255,.78);margin:0;line-height:1.45}
+
+.c1099-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+
+.c1099-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+.c1099-actions .btn{background:#fff;color:#7c2d12;border-color:#fff;font-weight:900}
+
+.c1099-actions .btn.secondary{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.25)}
+
+.c1099-kpi{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 18px rgba(18,50,20,.04)}
+
+.c1099-kpi .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:var(--muted)}
+
+.c1099-kpi .value{font-size:24px;font-weight:1000;margin:8px 0 4px}
+
+.c1099-kpi .hint{font-size:12px;color:var(--muted)}
+
+.c1099-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:0 8px 18px rgba(18,50,20,.04);margin-bottom:12px}
+
+.c1099-card h3{margin:0 0 10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+
+.c1099-meta{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}
+
+.c1099-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+
+.c1099-note{background:#fff7ed;border:1px solid #fed7aa;color:#7c2d12;border-radius:14px;padding:10px;font-size:13px;margin-bottom:12px}
+
+.c1099-secure-note{background:#f8faf8;border:1px dashed #b7c6b9;border-radius:14px;padding:10px;color:var(--muted);font-size:13px;margin-bottom:12px}
+
+.c1099-menu{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;cursor:pointer;color:#fff;font-weight:900}
+
+.c1099-menu:hover{background:rgba(255,255,255,.10)}
+
+.c1099-menu .mini-icon{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.14);display:inline-flex;align-items:center;justify-content:center}
+
+.c1099-table-wrap{overflow:auto}
+.c1099-table{width:100%;border-collapse:collapse;font-size:13px}
+
+.c1099-table th,.c1099-table td{padding:9px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+
+.c1099-table th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.c1099-grid{grid-template-columns:1fr}
+.c1099-row{grid-template-columns:1fr}
+.c1099-buttons{justify-content:flex-start}
+.c1099-hero h2{font-size:24px}</style>
 </head>
 <body>
 <!-- ═══ LOGIN OVERLAY ═══ -->
@@ -621,17 +1019,15 @@ async function dbCall(action, table, payload = {}) {
     if (!json.success) throw new Error(json.error || 'DB error');
     return json.data;
   } catch (e) {
-    console.error(`❌ [${action}/${table || ''}]`, e.message);
+
     return null;
   }
 }
 
-// Genera IDs únicos por prefijo
 function genIdCloud(prefix) {
   return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
 }
 
-// Usuario logueado en la sesión actual
 let currentUser = null;
 
 // ── doLogin() — PASO 4 ──────────────────────────────────────
@@ -651,7 +1047,6 @@ async function doLogin() {
   errEl.textContent = '';
 
   // ── LOCAL USERS — funciona sin Supabase ──────────────────
-  // Cuando configures Supabase, estos usuarios se manejarán desde la tabla users
   const LOCAL_USERS = [
     { id:'USR-0001', name:'Admin',   email:'admin@empresa.com',   password:'admin123', role:'Admin',    language:'en' },
     { id:'USR-0002', name:'Manager', email:'manager@empresa.com', password:'pass123',  role:'Manager',  language:'en' },
@@ -659,13 +1054,11 @@ async function doLogin() {
   ];
 
   try {
-    // Intentar autenticar contra Supabase primero
     let user = null;
     const cloudUser = await dbCall('login', null, { data: { email, password } });
     if (cloudUser) {
       user = cloudUser;
     } else {
-      // Fallback: verificar contra usuarios locales hardcodeados
       user = LOCAL_USERS.find(u => u.email === email && u.password === password) || null;
     }
 
@@ -678,34 +1071,26 @@ async function doLogin() {
 
     currentUser = user;
 
-    // Cargar datos desde Supabase
     btn.textContent = 'Loading data…';
     const cloudData = await loadFromSupabase();
     if (cloudData && cloudData.customers !== undefined) {
-      // Supabase respondió bien — usar esos datos
       db = cloudData;
-      // Actualizar localStorage con datos frescos de Supabase
       try { localStorage.setItem(storageKey, JSON.stringify(db)); } catch(e) {}
     } else {
-      // Fallback a localStorage si Supabase falla completamente
       db = load();
     }
 
-    // Aplicar rol del usuario
     state.role = user.role || 'Admin';
     state.lang = user.language || 'en';
 
-    // Ocultar login, mostrar app
     document.getElementById('login-overlay').style.display = 'none';
     document.getElementById('main-app').style.display = '';
     document.body.style.overflow = '';
-    // Ocultar "Local Mode" si el login fue via Supabase
     if (cloudUser) {
       const pill = document.getElementById('local-mode-pill');
       if (pill) pill.style.display = 'none';
     }
 
-    // Actualizar nombre en sidebar
     const footerEl = document.querySelector('.sidebar-footer');
     if (footerEl) {
       const noteEl = footerEl.querySelector('.footer-note');
@@ -771,7 +1156,6 @@ function demoData(){return {
   calendar:[],
   counter:{customer:1000,vendor:1000,service:1000,store:1000,job:1000,estimate:1000,invoice:1000,payment:1000,expense:1000,task:1000,inventory:1000}
 }}
-// load() — cache local; la fuente de verdad es Supabase (cargado en doLogin)
 function load() {
   try {
     const raw = localStorage.getItem(storageKey);
@@ -779,13 +1163,11 @@ function load() {
   } catch(e) { return demoData(); }
 }
 
-// save() — escribe en localStorage inmediatamente + sync a Supabase en background
 function save(db) {
   try { localStorage.setItem(storageKey, JSON.stringify(db)); } catch(e) {}
   syncDirtyRecords(db);
 }
 
-// Control de registros pendientes de sincronizar
 let _pendingSync = new Set();
 let _syncTimer = null;
 function markDirty(table, id) {
@@ -807,21 +1189,23 @@ function findRecord(db, table, id) {
   return db[table].find(r => r.id === id) || null;
 }
 function syncDirtyRecords(db) {
-  // no-op — dirty sync goes through markDirty/flushDirty
 }
 
 async function loadFromSupabase() {
   const data = await dbCall('loadAll', null);
   if (!data) return null;
-  // Merge con estructura local (para catálogos y defaults)
   const local = demoData();
   data.catalogs = data.catalogs || local.catalogs;
   if (!data.stores || data.stores.length === 0) data.stores = local.stores;
-  // Guardar en localStorage como caché
   try { localStorage.setItem(storageKey, JSON.stringify(data)); } catch(e) {}
   return data;
 }
 let db=load();
+
+// ── Global helper functions (used by all modules) ──────────
+function rows(name){ return Array.isArray(db && db[name]) ? db[name] : []; }
+function arr(name){ return rows(name); }
+
 function tr(k){return (T[state.lang]&&T[state.lang][k])||k}
 function tStatus(s){const map={'Partially Paid':'partial','Written Off':'writeoff','In Progress':'inprogress','Converted to Invoice':'converted','Pending Review':'open','Requires Review':'open'};return tr(map[s]||String(s).toLowerCase().replaceAll(' ','').replaceAll('/',''))||s}
 function badge(s){let cls='bg-blue'; if(['Active','Paid','Accepted','Completed','Reconciled','Reviewed'].includes(s))cls='bg-green'; if(['Overdue','Voided','Rejected','Cancelled','Difference Found','Low Stock','Requires Review','Disputed'].includes(s))cls='bg-red'; if(['Draft','Sent','Scheduled','Open','Pending Review','Partially Paid'].includes(s))cls='bg-amber'; if(['Viewed','Approved','Converted to Invoice','Written Off'].includes(s))cls='bg-purple'; return `<span class="badge ${cls}">${tStatus(s)}</span>`}
@@ -882,10 +1266,8 @@ function expandGroupForView(view){
  if(g&&state.navCollapsed[g]){state.navCollapsed[g]=false;localStorage.setItem('bruno360-nav-collapsed',JSON.stringify(state.navCollapsed));}
 }
 function updateNavActive(view){
-  // Just update active class — much faster than full renderNav()
   const btns = document.querySelectorAll('#nav button[data-key]');
   if(!btns.length){
-    // Nav not built yet — do full renderNav
     renderNav();
     return;
   }
@@ -902,11 +1284,18 @@ function navigate(view, force=false){
   const title=tr(view), sub=tr(view+'Sub')||'';
   document.getElementById('pageTitle').textContent=title;
   document.getElementById('pageSub').textContent=sub;
-  // Only re-render content if view changed OR force=true OR content is empty
   const contentEl = document.getElementById('content');
   if(!sameView || force || !contentEl.innerHTML.trim()){
-    contentEl.innerHTML = views[view] ? views[view]() : '';
-    bindSearch();
+    if(force){
+      contentEl.innerHTML = views[view] ? views[view]() : '';
+      bindSearch();
+    } else {
+      contentEl.innerHTML = '<div style="padding:32px;color:#9ca3af;font-size:14px;">Loading…</div>';
+      requestAnimationFrame(()=>{
+        contentEl.innerHTML = views[view] ? views[view]() : '';
+        bindSearch();
+      });
+    }
   }
   if(window.innerWidth<1020)document.getElementById('sidebar').classList.remove('open');
 }
@@ -964,8 +1353,6 @@ function flowNode(key){const m=moduleMeta[key]||{step:'',accent:'green'}; return
 function flowRow(keys){return keys.map((k,i)=>flowNode(k)+(i<keys.length-1?'<span class="flow-arrow"></span>':'' )).join('')}
 function quickCard(key){return `<div class="quick-card" onclick="navigate('${key}')">${iconBadge(key)}<div><h4>${tr(key)}</h4><p>${tr(key+'Sub')}</p></div></div>`}
 function miniUsedIn(list){return list.map(k=>`<span class="mini-chip">${tr(k)}</span>`).join('')}
-
-
 
 const views={
  dashboard(){const title=state.role==='Admin'?tr('adminDash'):state.role==='Manager'?tr('managerDash'):state.role==='Billing'?tr('billingDash'):state.role==='Field Team'?tr('fieldDash'):tr('readonlyDash'); return `<div class="role-note">${title}</div><div class="grid kpi-grid">${kpis().map(k=>`<div class="card kpi clickable-card" onclick="navigate('${k.target}')" title="Open ${tr(k.target)}"><div class="label">${k.l}</div><div class="value">${k.v}</div><div class="sub">${k.s}</div></div>`).join('')}</div><div class="grid two-col"><div class="card"><h3>Alerts / Alertas</h3>${alertPanel()}</div><div class="card"><h3>Today / Hoy</h3>${jobCards(db.jobs.filter(j=>j.date===today(0)).slice(0,4))}</div></div>`},
@@ -1047,7 +1434,7 @@ function editFieldHtml(f,type,value){value=value??''; const label=f.replace(/([A
  const inputType=type==='number'?'number':type==='date'?'date':'text'; const step=type==='number'?' step="0.01"':''; return `<div class="fg"><label>${label}</label><input id="edit-${f}" type="${inputType}"${step} value="${String(value).replaceAll('"','&quot;')}"></div>`;
 }
 function openEdit(module,id){const list=module==='jobs'?'jobs':module; const rec=db[list]?.find(x=>x.id===id); if(!rec){alert('Record not found / Registro no encontrado');return} if(!canEditModule(module)){alert('You do not have permission to edit this record. / No tienes permiso para editar este registro.');return} const fields=editableMap[module]; if(!fields){alert('Edit not available for this module yet. / Edición no disponible para este módulo.');return} const body=`<p class="role-note">Editing / Editando: <strong>${id}</strong></p><div class="form-grid">${fields.map(([f,t])=>editFieldHtml(f,t,rec[f])).join('')}</div>`; openModal(`Edit ${tr(module)} / Editar ${tr(module)}`,body,`<button class="btn secondary" onclick="closeModal()">${tr('cancel')}</button><button class="btn" onclick="saveEdit('${module}','${id}')">Save Changes</button>`)}
-function saveEdit(module,id){const list=module==='jobs'?'jobs':module; const rec=db[list]?.find(x=>x.id===id); if(!rec)return; const before=JSON.parse(JSON.stringify(rec)); (editableMap[module]||[]).forEach(([f,t])=>{const el=document.getElementById('edit-'+f); if(!el)return; let val=el.value; if(t==='number')val=+val||0; rec[f]=val}); if(module==='invoices'||module==='estimates'){rec.subtotal=+rec.subtotal||0; rec.tax=+(rec.subtotal*db.company.taxRate/100).toFixed(2); rec.total=rec.subtotal+rec.tax; if(module==='invoices')recalcInvoicePaymentStatus(rec.id)} if(module==='stores')rec.price=+rec.price||0; if(module==='services')rec.price=+rec.price||0; log(module,'Edit',before,rec); save(db); closeModal(); navigate(state.view, true); const _syncTable=module==='jobs'?'jobs':module; dbCall('upsert',_syncTable,{data:rec}); }
+function saveEdit(module,id){const list=module==='jobs'?'jobs':module; const rec=db[list]?.find(x=>x.id===id); if(!rec)return; const before=JSON.parse(JSON.stringify(rec)); (editableMap[module]||[]).forEach(([f,t])=>{const el=document.getElementById('edit-'+f); if(!el)return; let val=el.value; if(t==='number')val=+val||0; rec[f]=val}); if(module==='invoices'||module==='estimates'){rec.subtotal=+rec.subtotal||0; rec.tax=+(rec.subtotal*db.company.taxRate/100).toFixed(2); rec.total=rec.subtotal+rec.tax; if(module==='invoices')recalcInvoicePaymentStatus(rec.id)} if(module==='stores')rec.price=+rec.price||0; if(module==='services')rec.price=+rec.price||0; log(module,'Edit',before,rec); save(db); closeModal(); requestAnimationFrame(()=>{ navigate(state.view, true); }); const _syncTable=module==='jobs'?'jobs':module; dbCall('upsert',_syncTable,{data:rec}); }
 
 function openForm(module){const simple={customers:['name','type','email','phone','address'],vendors:['name','category','email','phone'],services:['name','type','pricing','price'],stores:['activeStatus','type','itemDescription','salesTaxCode','account','price'],jobs:['customerId','serviceId','date','time','team'],estimates:['customerId','subtotal','notes'],invoices:['customerId','subtotal','due','notes','memo'],payments:['invoiceId','date','origAmt','amountDue','amount','remaining','method','reference'],expenses:['vendorId','customerId','category','amount','notes'],inventory:['sku','name','category','type','qty','min','cost'],tasks:['title','desc','owner','due']};
  let body='';
@@ -1060,7 +1447,7 @@ function openForm(module){const simple={customers:['name','type','email','phone'
   const fields=simple[module]||['name']; body=`<div class="form-grid">${fields.map(f=>`<div class="fg"><label>${f}</label><input id="f-${f}" type="${['date','due'].includes(f)?'date':'text'}"></div>`).join('')}</div>`;
  }
  const foot=`<button class="btn secondary" onclick="closeModal()">${tr('cancel')}</button><button class="btn" onclick="saveSimple('${module}')">${tr('save')}</button>`; openModal(`${tr('new')} ${module}`,body,foot)}
-function saveSimple(module){const values={}; document.querySelectorAll('#modalBody input,#modalBody select,#modalBody textarea').forEach(i=>{if(i.id&&i.id.startsWith('f-'))values[i.id.replace('f-','')]=i.value}); const map={customers:'CUS',vendors:'VEN',services:'SVC',stores:'STORE',jobs:'JOB',estimates:'EST',invoices:'INV',payments:'PAY',expenses:'EXP',inventory:'INVITEM',tasks:'TASK'}; values.id=uid(map[module]||'REC'); if(module==='invoices'){let c=resolveCustomerLookup(values.customerLookup)||db.customers.find(x=>x.id===values.customerId); if(!c){alert('Customer not found. Add the customer before saving the invoice. / Cliente no encontrado. Agrega el cliente antes de guardar la factura.');return} values.customerId=c.id; delete values.customerLookup; values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax;values.paid=0;values.writeOff=0} if(module==='estimates'){values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax} if(module==='payments'){const inv=db.invoices.find(i=>i.id===document.getElementById('pay-invoice')?.value||values.invoiceId); if(!inv){alert('Select a valid invoice / Selecciona una factura válida');return} values.invoiceId=inv.id;values.customerId=inv.customerId;values.date=document.getElementById('pay-date')?.value||today(0);values.origAmt=+document.getElementById('pay-orig')?.value||(+inv.total||0);values.amountDue=+document.getElementById('pay-dueamt')?.value||invoiceBalance(inv);values.amount=+document.getElementById('pay-amount')?.value||0;values.remaining=+document.getElementById('pay-remaining')?.value||Math.max(0,values.amountDue-values.amount);values.method=document.getElementById('pay-method')?.value||values.method;values.reference=document.getElementById('pay-ref')?.value||values.reference;values.proof=document.getElementById('pay-proof')?.value||'';values.recon='Pending Review';} if(module==='inventory'){values.qty=+values.qty||0;values.min=+values.min||0;values.cost=+values.cost||0;values.status='Active'} if(module==='jobs'){values.status='Scheduled';values.invoiceId=null;values.checkIn=null;values.checkOut=null;values.photos=0} if(module==='expenses'){values.date=today(0);values.amount=+values.amount||0;values.status='Pending Review'} if(module==='stores'){values.price=+values.price||0; values.activeStatus=values.activeStatus||'Active'} if(module==='customers'||module==='vendors'||module==='services'){values.status='Active'} const list=module==='jobs'?'jobs':module; db[list].unshift(values); if(module==='payments')recalcInvoicePaymentStatus(values.invoiceId); log(module,'Create',null,values); save(db); closeModal(); navigate(state.view, true); dbCall('upsert', module==='jobs'?'jobs':module, { data: values }); }
+function saveSimple(module){const values={}; document.querySelectorAll('#modalBody input,#modalBody select,#modalBody textarea').forEach(i=>{if(i.id&&i.id.startsWith('f-'))values[i.id.replace('f-','')]=i.value}); const map={customers:'CUS',vendors:'VEN',services:'SVC',stores:'STORE',jobs:'JOB',estimates:'EST',invoices:'INV',payments:'PAY',expenses:'EXP',inventory:'INVITEM',tasks:'TASK'}; values.id=uid(map[module]||'REC'); if(module==='invoices'){let c=resolveCustomerLookup(values.customerLookup)||db.customers.find(x=>x.id===values.customerId); if(!c){alert('Customer not found. Add the customer before saving the invoice. / Cliente no encontrado. Agrega el cliente antes de guardar la factura.');return} values.customerId=c.id; delete values.customerLookup; values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax;values.paid=0;values.writeOff=0} if(module==='estimates'){values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax} if(module==='payments'){const inv=db.invoices.find(i=>i.id===document.getElementById('pay-invoice')?.value||values.invoiceId); if(!inv){alert('Select a valid invoice / Selecciona una factura válida');return} values.invoiceId=inv.id;values.customerId=inv.customerId;values.date=document.getElementById('pay-date')?.value||today(0);values.origAmt=+document.getElementById('pay-orig')?.value||(+inv.total||0);values.amountDue=+document.getElementById('pay-dueamt')?.value||invoiceBalance(inv);values.amount=+document.getElementById('pay-amount')?.value||0;values.remaining=+document.getElementById('pay-remaining')?.value||Math.max(0,values.amountDue-values.amount);values.method=document.getElementById('pay-method')?.value||values.method;values.reference=document.getElementById('pay-ref')?.value||values.reference;values.proof=document.getElementById('pay-proof')?.value||'';values.recon='Pending Review';} if(module==='inventory'){values.qty=+values.qty||0;values.min=+values.min||0;values.cost=+values.cost||0;values.status='Active'} if(module==='jobs'){values.status='Scheduled';values.invoiceId=null;values.checkIn=null;values.checkOut=null;values.photos=0} if(module==='expenses'){values.date=today(0);values.amount=+values.amount||0;values.status='Pending Review'} if(module==='stores'){values.price=+values.price||0; values.activeStatus=values.activeStatus||'Active'} if(module==='customers'||module==='vendors'||module==='services'){values.status='Active'} const list=module==='jobs'?'jobs':module; db[list].unshift(values); if(module==='payments')recalcInvoicePaymentStatus(values.invoiceId); log(module,'Create',null,values); save(db); closeModal(); requestAnimationFrame(()=>{ navigate(state.view, true); }); dbCall('upsert', module==='jobs'?'jobs':module, { data: values }); }
 function paymentFormHtml(invId='',p=null){
  const selectedId=p?.invoiceId||invId||'';
  const opts=db.invoices.map(i=>`<option value="${i.id}" ${i.id===selectedId?'selected':''}>${i.id} · ${customerName(i.customerId)} · Open ${money(invoiceBalance(i))}</option>`).join('');
@@ -1073,7 +1460,7 @@ function savePayment(){
  if(amount<=0){alert('Enter a payment amount greater than zero. / Ingresa un pago mayor a cero.');return;}
  if(amount>amountDue){if(!confirm('Payment is greater than amount due. Continue? / El pago es mayor al saldo. ¿Continuar?'))return;}
  const p={id:uid('PAY'),invoiceId:inv.id,customerId:inv.customerId,date:document.getElementById('pay-date').value||today(0),origAmt:+document.getElementById('pay-orig').value||(+inv.total||0),amountDue,amount,remaining:Math.max(0,amountDue-amount),method:document.getElementById('pay-method').value,reference:document.getElementById('pay-ref').value,recon:'Pending Review',proof:document.getElementById('pay-proof').value};
- db.payments.unshift(p); recalcInvoicePaymentStatus(inv.id); log('Payments','Create',null,p); log('Invoices','Apply Payment',before,inv); save(db); closeModal(); navigate('payments', true)
+ db.payments.unshift(p); recalcInvoicePaymentStatus(inv.id); log('Payments','Create',null,p); log('Invoices','Apply Payment',before,inv); save(db); closeModal(); requestAnimationFrame(()=>navigate('payments', true));
 }
 function editPayment(id){
  const p=db.payments.find(x=>x.id===id); if(!p)return; const inv=db.invoices.find(i=>i.id===p.invoiceId);
@@ -1087,7 +1474,7 @@ function savePaymentEdit(id){
  if(amount<=0){alert('Enter a payment amount greater than zero. / Ingresa un pago mayor a cero.');return;}
  if(amount>amountDue){if(!confirm('Payment is greater than amount due. Continue? / El pago es mayor al saldo. ¿Continuar?'))return;}
  p.date=document.getElementById('pay-date').value||p.date; p.origAmt=+document.getElementById('pay-orig').value||p.origAmt; p.amountDue=amountDue; p.amount=amount; p.remaining=Math.max(0,amountDue-p.amount); p.method=document.getElementById('pay-method').value; p.reference=document.getElementById('pay-ref').value; p.proof=document.getElementById('pay-proof').value; p.recon='Pending Review';
- recalcInvoicePaymentStatus(p.invoiceId); log('Payments','Edit',before,p); save(db); closeModal(); navigate('payments', true)
+ recalcInvoicePaymentStatus(p.invoiceId); log('Payments','Edit',before,p); save(db); closeModal(); requestAnimationFrame(()=>navigate('payments', true))
 }
 function convertEstimate(id){const e=db.estimates.find(x=>x.id===id); if(!e)return; const inv={id:uid('INV'),customerId:e.customerId,date:today(0),due:today(15),status:'Draft',subtotal:e.subtotal,tax:e.tax,total:e.total,paid:0,writeOff:0,notes:'Converted from '+e.id,memo:'Created from accepted estimate '+e.id}; const before={...e}; e.status='Converted to Invoice'; db.invoices.unshift(inv); log('Estimates','Convert to Invoice',before,e); save(db); navigate('invoices')}
 function simulateCheckin(){const j=db.jobs.find(x=>x.status==='Scheduled'); if(!j)return alert('No scheduled jobs'); const before={...j}; j.status='Completed'; j.checkIn='09:03'; j.checkOut='11:18'; j.photos=6; log('Calendar','Check-in/out',before,j); save(db); navigate('calendar')}
@@ -1143,13 +1530,6 @@ function deleteCalendarEvent(id){
   log('Calendar','Delete',rec,null);
   save(db); navigate('calendar');
 }
-
-
-
-
-/* =========================================================
-   v20 - Supabase Model Ready Enhancements
-   ========================================================= */
 
 function ensureV20Data(){
   if(!db.customerLocations) db.customerLocations=[];
@@ -1440,7 +1820,7 @@ function saveCalendarEvent(id=''){
   if(!rec.customer || !rec.date){alert('Customer and date are required / Cliente y fecha son requeridos');return}
   if(id){const idx=db.calendar.findIndex(x=>x.id===id); if(idx>=0){const before={...db.calendar[idx]}; db.calendar[idx]=rec; log('Calendar','Edit',before,rec);}}
   else{db.calendar.unshift(rec); log('Calendar','Create',null,rec);}
-  ensureV20Data(); save(db); closeModal(); navigate('calendar', true);
+  ensureV20Data(); save(db); closeModal(); requestAnimationFrame(()=>navigate('calendar', true));
 }
 
 views.customers=function(){ensureV20Data(); return toolbar('customers')+`<div class="supabase-note">v20 update: customer locations were added to prepare the future customer_locations table.</div>`+table([tr('customer'),tr('type'),'Locations',tr('email'),tr('phone'),'Terms',tr('status'),tr('balance'),tr('actions')],db.customers.map(c=>`<tr><td><strong>${c.name}</strong><br><span class="role-note">${c.address}</span></td><td>${c.type}</td><td>${customerLocations(c.id).length} location(s)<br><button class="btn micro secondary" onclick="openCustomerLocations('${c.id}')">Locations</button></td><td>${c.email}</td><td>${c.phone}</td><td>${c.terms}</td><td>${badge(c.status)}</td><td>${money(db.invoices.filter(i=>i.customerId===c.id).reduce((a,i)=>a+invoiceBalance(i),0)-c.credit)}</td><td>${editBtn('customers',c.id)}</td></tr>`))};
@@ -1480,14 +1860,7 @@ saveSimple=function(module){
 }
 ensureV20Data();
 
-
-/* =========================================================
-   v22 - Archive / Deactivate / Void / Reverse Workflow FIXED
-   Safe version: defensive functions, no risky init-time render breaks.
-   ========================================================= */
-
 (function(){
-  function arr(name){ return Array.isArray(db && db[name]) ? db[name] : []; }
   window.getRecordFilter = function(module){
     if(!state.recordFilters) state.recordFilters={};
     return state.recordFilters[module] || 'Active';
@@ -1565,7 +1938,7 @@ ensureV20Data();
       }
       return [];
     }catch(e){
-      console.warn('Dependency review failed', e);
+
       return [];
     }
   };
@@ -1651,7 +2024,6 @@ ensureV20Data();
     save(db); render();
   };
 
-  /* Patch views only after all helper functions exist. */
   var originalViews = {};
   ['customers','vendors','services','stores','expenses','inventory','tasks','payments','invoices'].forEach(function(k){ if(views && views[k]) originalViews[k]=views[k]; });
 
@@ -1665,7 +2037,7 @@ ensureV20Data();
         var bal=0; try{ bal=arr('invoices').filter(function(i){return i.customerId===c.id}).reduce(function(a,i){return a+invoiceBalance(i)},0)-(c.credit||0); }catch(e){}
         return `<tr class="${isArchivedLike(c)?'status-muted':''}"><td><strong>${c.name||c.customer_name||c.id}</strong><br><span class="role-note">${c.address||c.billing_address||''}</span></td><td>${c.type||c.customer_type||''}</td><td>${locCount} location(s)<br>${typeof openCustomerLocations==='function'?`<button class="btn micro secondary" onclick="openCustomerLocations('${c.id}')">Locations</button>`:''}</td><td>${c.email||''}</td><td>${c.phone||''}</td><td>${c.terms||c.payment_terms||''}</td><td>${safeStatusCell(c)}</td><td>${money(bal)}</td><td>${editBtn('customers',c.id)} ${lifecycleButtons('customers',c.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Customers view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Customers view error: ${e.message}</div>`; }
   };
 
   views.vendors=function(){
@@ -1675,7 +2047,7 @@ ensureV20Data();
       table(['Vendor','Type','Email','Phone','Status','Actions'],rows.map(function(v){
         return `<tr class="${isArchivedLike(v)?'status-muted':''}"><td><strong>${v.name||v.vendorName||v.vendor_name||v.id}</strong></td><td>${v.type||v.vendorType||v.vendor_type||''}</td><td>${v.email||''}</td><td>${v.phone||''}</td><td>${safeStatusCell(v)}</td><td>${editBtn('vendors',v.id)} ${lifecycleButtons('vendors',v.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Vendors view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Vendors view error: ${e.message}</div>`; }
   };
 
   views.services=function(){
@@ -1685,7 +2057,7 @@ ensureV20Data();
       table(['Service','Category','Frequency','Price','Taxable','Status','Actions'],rows.map(function(s){
         return `<tr class="${isArchivedLike(s)?'status-muted':''}"><td><strong>${s.name||s.service_name||s.id}</strong><br><span class="role-note">${s.description||''}</span></td><td>${s.category||s.service_category||''}</td><td>${s.frequency||s.default_frequency||''}</td><td>${money(s.price||s.base_price||0)}</td><td>${s.taxable===false?'No':'Yes'}</td><td>${safeStatusCell(s)}</td><td>${editBtn('services',s.id)} ${lifecycleButtons('services',s.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Services view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Services view error: ${e.message}</div>`; }
   };
 
   views.stores=function(){
@@ -1695,7 +2067,7 @@ ensureV20Data();
       table(['Active Status','Type','Item Description','Sales Tax Code','Account','Price','Actions'],rows.map(function(s){
         return `<tr class="${isArchivedLike(s)?'status-muted':''}"><td>${safeStatusCell(s)}</td><td>${s.type||s.itemType||''}</td><td><strong>${s.itemDescription||s.description||s.name||''}</strong></td><td>${s.salesTaxCode||s.taxCode||''}</td><td>${s.account||''}</td><td>${money(s.price||0)}</td><td>${editBtn('stores',s.id)} ${lifecycleButtons('stores',s.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Stores view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Stores view error: ${e.message}</div>`; }
   };
 
   views.expenses=function(){
@@ -1705,7 +2077,7 @@ ensureV20Data();
       table(['Expense','Vendor','Date','Category','Amount','Status','Actions'],rows.map(function(e){
         return `<tr class="${isArchivedLike(e)?'status-muted':''}"><td><strong>${e.id}</strong></td><td>${safeVendorName(e.vendorId)||e.vendor||''}</td><td>${e.date||e.expense_date||''}</td><td>${e.category||''}</td><td>${money(e.amount||0)}</td><td>${safeStatusCell(e)}</td><td>${editBtn('expenses',e.id)} ${lifecycleButtons('expenses',e.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Expenses view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Expenses view error: ${e.message}</div>`; }
   };
 
   views.inventory=function(){
@@ -1715,7 +2087,7 @@ ensureV20Data();
       table(['SKU','Item','Qty','Reorder','Vendor','Status','Actions'],rows.map(function(i){
         return `<tr class="${isArchivedLike(i)?'status-muted':''}"><td><strong>${i.sku||i.id}</strong></td><td>${i.name||i.item_name||''}</td><td>${i.qty||i.quantity||i.quantity_on_hand||0}</td><td>${i.reorder||i.reorder_point||0}</td><td>${i.vendor||safeVendorName(i.vendorId)||''}</td><td>${safeStatusCell(i)}</td><td>${editBtn('inventory',i.id)} ${lifecycleButtons('inventory',i.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Inventory view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Inventory view error: ${e.message}</div>`; }
   };
 
   views.tasks=function(){
@@ -1725,7 +2097,7 @@ ensureV20Data();
       table(['Task','Owner','Due','Priority','Status','Actions'],rows.map(function(t){
         return `<tr class="${isArchivedLike(t)?'status-muted':''}"><td><strong>${t.title||t.name||t.id}</strong><br><span class="role-note">${t.description||''}</span></td><td>${t.owner||t.assigned||''}</td><td>${t.due||t.due_date||''}</td><td>${t.priority||'Normal'}</td><td>${safeStatusCell(t)}</td><td>${editBtn('tasks',t.id)} ${lifecycleButtons('tasks',t.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Tasks view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Tasks view error: ${e.message}</div>`; }
   };
 
   views.payments=function(){
@@ -1740,7 +2112,7 @@ ensureV20Data();
         var rem=+(p.remaining||p.remaining_amount||Math.max(0,due-payAmt));
         return `<tr class="${isArchivedLike(p)?'status-muted':''}"><td><strong>${p.id}</strong></td><td>${p.invoiceId||''}</td><td>${customerName(inv.customerId)||p.customer||''}</td><td>${p.date||p.payment_date||''}</td><td>${money(orig)}</td><td>${money(due)}</td><td>${money(payAmt)}</td><td>${money(rem)}</td><td>${p.method||p.payment_method||''}</td><td>${safeStatusCell(p)}</td><td>${p.status==='Locked'?'Locked':`<button class="btn small secondary" onclick="editPayment('${p.id}')">Edit</button>`} ${paymentLifecycleButtons(p.id)}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Payments view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Payments view error: ${e.message}</div>`; }
   };
 
   views.invoices=function(){
@@ -1752,14 +2124,9 @@ ensureV20Data();
         var linesHtml=typeof lineTotalsHtml==='function'?lineTotalsHtml('invoice',i.id):'';
         return `<tr class="${isArchivedLike(i)?'status-muted':''}"><td><strong>${i.id}</strong></td><td>${customerName(i.customerId)}</td><td>${i.date||''}</td><td>${i.due||''}</td><td>${safeStatusCell(i)}</td><td>${linesHtml}</td><td>${money(i.total||0)}</td><td>${money(typeof invoiceBalance==='function'?invoiceBalance(i):0)}</td><td>${i.memo||''}</td><td>${editBtn('invoices',i.id)} ${typeof openLines==='function'?`<button class="btn small secondary" onclick="openLines('invoice','${i.id}')">Lines</button>`:''} <button class="btn small secondary" onclick="docPreview('invoice','${i.id}')">PDF</button> <button class="btn small" onclick="openPayment('${i.id}')">Pay</button> <button class="btn small danger" onclick="voidInvoice('${i.id}')">Void</button> ${isArchivedLike(i)?`<button class="btn small" onclick="restoreRecord('invoices','${i.id}')">Restore</button>`:''}</td></tr>`;
       }));
-    }catch(e){ console.error(e); return `<div class="card">Invoices view error: ${e.message}</div>`; }
+    }catch(e){ return `<div class="card">Invoices view error: ${e.message}</div>`; }
   };
 })();
-
-
-/* =========================================================
-   v23 - Local Print + Email Draft Workflow
-   ========================================================= */
 
 (function(){
   function escEmail(v){return encodeURIComponent(v||'');}
@@ -1777,7 +2144,7 @@ ensureV20Data();
         window.print();
       }
     }catch(e){
-      console.warn(e);
+
       window.print();
     }
   };
@@ -1882,7 +2249,6 @@ ${getCompanyName()}`;
     }
   };
 
-  /* Override estimates and invoices to add Print + Email actions */
   views.estimates=function(){
     try{
       if(typeof ensureV20Data==='function') ensureV20Data();
@@ -1892,7 +2258,7 @@ ${getCompanyName()}`;
         var linesHtml=typeof lineTotalsHtml==='function'?lineTotalsHtml('estimate',e.id):'';
         return `<tr class="${typeof isArchivedLike==='function'&&isArchivedLike(e)?'status-muted':''}"><td><strong>${e.id}</strong></td><td>${customerName(e.customerId)}</td><td>${e.date||e.estimate_date||''}</td><td>${typeof safeStatusCell==='function'?safeStatusCell(e):badge(e.status||'Active')}</td><td>${linesHtml}</td><td>${money(e.total||0)}</td><td>${editBtn('estimates',e.id)} ${typeof openLines==='function'?`<button class="btn small secondary" onclick="openLines('estimate','${e.id}')">Lines</button>`:''} <button class="btn small secondary" onclick="printDocument('estimate','${e.id}')">Print</button> <button class="btn small secondary" onclick="openEmailComposer('estimate','${e.id}')">Email</button> <button class="btn small" onclick="convertEstimate('${e.id}')">Convert</button></td></tr>`;
       }));
-    }catch(e){console.error(e); return `<div class="card">Estimates view error: ${e.message}</div>`;}
+    }catch(e){return `<div class="card">Estimates view error: ${e.message}</div>`;}
   };
 
   views.invoices=function(){
@@ -1906,7 +2272,7 @@ ${getCompanyName()}`;
         var archived=typeof isArchivedLike==='function'&&isArchivedLike(i);
         return `<tr class="${archived?'status-muted':''}"><td><strong>${i.id}</strong></td><td>${customerName(i.customerId)}</td><td>${i.date||i.invoice_date||''}</td><td>${i.due||i.due_date||''}</td><td>${statusHtml}</td><td>${linesHtml}</td><td>${money(i.total||0)}</td><td>${money(typeof invoiceBalance==='function'?invoiceBalance(i):0)}</td><td>${i.memo||''}</td><td>${editBtn('invoices',i.id)} ${typeof openLines==='function'?`<button class="btn small secondary" onclick="openLines('invoice','${i.id}')">Lines</button>`:''} <button class="btn small secondary" onclick="printDocument('invoice','${i.id}')">Print</button> <button class="btn small secondary" onclick="openEmailComposer('invoice','${i.id}')">Email</button> <button class="btn small" onclick="openPayment('${i.id}')">Pay</button> <button class="btn small danger" onclick="voidInvoice('${i.id}')">Void</button> ${archived&&typeof restoreRecord==='function'?`<button class="btn small" onclick="restoreRecord('invoices','${i.id}')">Restore</button>`:''}</td></tr>`;
       }));
-    }catch(e){console.error(e); return `<div class="card">Invoices view error: ${e.message}</div>`;}
+    }catch(e){return `<div class="card">Invoices view error: ${e.message}</div>`;}
   };
 
   views.calendar=(function(originalCalendar){
@@ -1914,24 +2280,17 @@ ${getCompanyName()}`;
       try{
         var html=originalCalendar?originalCalendar():'';
         return emailActionBar()+html;
-      }catch(e){console.error(e); return `<div class="card">Calendar view error: ${e.message}</div>`;}
+      }catch(e){return `<div class="card">Calendar view error: ${e.message}</div>`;}
     }
   })(views.calendar);
 
 })();
 
-
-/* =========================================================
-   v24 - Dependency Drilldown
-   Deps now shows related records and lets user open/edit them.
-   ========================================================= */
-
 (function(){
-  function rows(name){ return Array.isArray(db && db[name]) ? db[name] : []; }
   function safeMoney(v){ try{return money(v||0)}catch(e){return '$'+(Number(v||0).toFixed(2))} }
   function safeCustomer(id){ try{return customerName(id)||id||''}catch(e){return id||''} }
   function safeService(id){ try{return serviceName(id)||id||''}catch(e){return id||''} }
-  function safeVendor(id){ 
+  function safeVendor(id){
     try{
       if(typeof vendorName==='function') return vendorName(id)||id||'';
       var v=rows('vendors').find(function(x){return x.id===id});
@@ -2055,7 +2414,7 @@ ${getCompanyName()}`;
         }]});
       }
     }catch(e){
-      console.error('Dependency detail build failed',e);
+
     }
     return groups;
   };
@@ -2123,17 +2482,12 @@ ${getCompanyName()}`;
         setTimeout(function(){ if(typeof openEdit==='function') openEdit(module,id); },150);
       },80);
     }catch(e){
-      console.error('Open dependency record failed',e);
+
       alert('Could not open dependency record: '+e.message);
     }
   };
 })();
 
-
-/* =========================================================
-   v25 - Home Command Center
-   First screen becomes operational control tower.
-   ========================================================= */
 (function(){
   function list(name){return Array.isArray(db&&db[name])?db[name]:[]}
   function todayIso(){try{return today(0)}catch(e){return new Date().toISOString().slice(0,10)}}
@@ -2144,7 +2498,7 @@ ${getCompanyName()}`;
   function active(r){return !(typeof isArchivedLike==='function'&&isArchivedLike(r)) && !isCancelled(r&&r.status)}
   function cust(id){try{return customerName(id)||id||''}catch(e){return id||''}}
   function svc(id){try{return serviceName(id)||id||''}catch(e){return id||''}}
-  function moneySafe(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
+  function money(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
   function smallBadge(text,color){return `<span class="badge ${color||'bg-blue'}">${text}</span>`}
   window.commandStats=function(){
     var invoices=list('invoices').filter(active);
@@ -2198,7 +2552,7 @@ ${getCompanyName()}`;
       var todayItems=s.todayEvents.slice(0,5).map(function(e){return itemRow(`${e.time||''} ${e.customer||'Customer'}`,`${e.service||''} · ${e.location||''}`,e.status||'Scheduled',`<button class="btn micro secondary" onclick="openCalendarForm('${e.id}')">Open</button>`,'bg-blue')});
       var todayJobItems=s.todayJobs.slice(0,5).map(function(j){return itemRow(`${cust(j.customerId)} · ${svc(j.serviceId)}`,`${j.date||j.job_date||''} ${j.time||j.scheduled_start||''} · ${j.team||j.assigned||''}`,j.status||'Job',`<button class="btn micro secondary" onclick="openDependencyRecord('jobs','${j.id}')">Open</button>`,'bg-green')});
       var notInvoiced=s.completedNotInvoiced.slice(0,6).map(function(j){return itemRow(`${cust(j.customerId)} · ${svc(j.serviceId)}`,`Completed ${j.date||j.job_date||''} · Job ${j.id}`,'Needs Invoice',`<button class="btn micro secondary" onclick="navigate('invoices')">Invoice</button>`,'bg-amber')});
-      var arItems=s.overdue.slice(0,6).map(function(i){return itemRow(`${i.id} · ${cust(i.customerId)}`,`Due ${i.due||i.due_date||''} · Balance ${moneySafe(safeBal(i))}`,'Overdue',`<button class="btn micro secondary" onclick="openDependencyRecord('invoices','${i.id}')">Open</button>`,'bg-red')});
+      var arItems=s.overdue.slice(0,6).map(function(i){return itemRow(`${i.id} · ${cust(i.customerId)}`,`Due ${i.due||i.due_date||''} · Balance ${money(safeBal(i))}`,'Overdue',`<button class="btn micro secondary" onclick="openDependencyRecord('invoices','${i.id}')">Open</button>`,'bg-red')});
       var stockItems=s.lowStock.slice(0,6).map(function(i){return itemRow(`${i.name||i.item_name||i.sku}`,`Qty ${i.qty||i.quantity||i.quantity_on_hand||0} · Reorder ${i.reorder||i.reorder_point||0}`,'Low Stock',`<button class="btn micro secondary" onclick="openDependencyRecord('inventory','${i.id}')">Open</button>`,'bg-amber')});
       var upcoming=s.upcomingEvents.slice(0,6).map(function(e){return itemRow(`${e.date} ${e.time||''} · ${e.customer||''}`,`${e.service||''} · ${e.assigned||'Field Team'}`,e.status||'Scheduled',`<button class="btn micro secondary" onclick="openCalendarForm('${e.id}')">Open</button>`,'bg-blue')});
       return `<div class="audit-ribbon">v25 audited delivery: Home Command Center added. Validate dashboard, quick actions, KPI navigation, and section drilldowns before moving to v26.</div>
@@ -2233,10 +2587,10 @@ ${getCompanyName()}`;
       </div>
 
       <div class="command-grid">
-        ${kpi('💰','Sales',moneySafe(s.sales),'Invoice total','invoices')}
-        ${kpi('✅','Collected',moneySafe(s.collected),'Payments received','payments')}
-        ${kpi('⏳','Open AR',moneySafe(s.ar),'Unpaid invoice balance','invoices')}
-        ${kpi('💳','Expenses',moneySafe(s.exp),'Posted/active expenses','expenses')}
+        ${kpi('💰','Sales',money(s.sales),'Invoice total','invoices')}
+        ${kpi('✅','Collected',money(s.collected),'Payments received','payments')}
+        ${kpi('⏳','Open AR',money(s.ar),'Unpaid invoice balance','invoices')}
+        ${kpi('💳','Expenses',money(s.exp),'Posted/active expenses','expenses')}
         ${kpi('🧾','Open Estimates',s.openEstimates.length,'Quotes not converted','estimates')}
         ${kpi('📅','Next 7 Days',s.upcomingEvents.length,'Scheduled events','calendar')}
         ${kpi('⚠️','Overdue',s.overdue.length,'Invoices past due','invoices')}
@@ -2250,23 +2604,18 @@ ${getCompanyName()}`;
         ${section('Inventory Risk / Riesgo de Inventario',stockItems,'No low stock alerts.')}
         ${section('Next 7 Days / Próximos 7 Días',upcoming,'No upcoming scheduled events.')}
         ${section('Quick Business Focus',[
-          itemRow('Review unpaid invoices',`${s.overdue.length} overdue · ${moneySafe(s.ar)} open AR`,'Finance',`<button class="btn micro secondary" onclick="navigate('invoices')">Open</button>`,'bg-red'),
+          itemRow('Review unpaid invoices',`${s.overdue.length} overdue · ${money(s.ar)} open AR`,'Finance',`<button class="btn micro secondary" onclick="navigate('invoices')">Open</button>`,'bg-red'),
           itemRow('Check field operations',`${s.todayEvents.length+s.todayJobs.length} items today · ${s.upcomingEvents.length} next 7 days`,'Ops',`<button class="btn micro secondary" onclick="navigate('calendar')">Open</button>`,'bg-blue'),
           itemRow('Control supplies',`${s.lowStock.length} inventory risks`,'Stock',`<button class="btn micro secondary" onclick="navigate('inventory')">Open</button>`,'bg-amber')
         ],'No focus items.')}
       </div>`;
     }catch(e){
-      console.error(e);
+
       return `<div class="card"><h3>Dashboard Error</h3><p>${e.message}</p></div>`;
     }
   };
 })();
 
-
-/* =========================================================
-   v25.1 - Customer Type Catalog Fix
-   Customer Type now uses catalog dropdown instead of free text.
-   ========================================================= */
 (function(){
   function ensureCustomerTypeCatalog(){
     if(!db.catalogs) db.catalogs={};
@@ -2329,14 +2678,12 @@ ${getCompanyName()}`;
     save(db); closeModal(); render();
   };
 
-  /* Patch openEdit for customers only, preserve existing generic openEdit for other modules. */
   var previousOpenEdit=window.openEdit;
   window.openEdit=function(module,id){
     if(module==='customers') return openCustomerForm(id);
     return previousOpenEdit(module,id);
   };
 
-  /* Patch quick customer from v25 */
   window.openQuickCustomer=function(){
     navigate('customers');
     setTimeout(function(){openCustomerForm('')},150);
@@ -2345,11 +2692,6 @@ ${getCompanyName()}`;
   ensureCustomerTypeCatalog();
 })();
 
-
-/* =========================================================
-   v25.2 - Catalog Dropdowns Fix
-   Type / Category / Pricing / Tax / Account / Status fields now use catalogs.
-   ========================================================= */
 (function(){
   function ensureOperationalCatalogs(){
     if(!db.catalogs) db.catalogs={};
@@ -2435,7 +2777,6 @@ ${getCompanyName()}`;
     return inputField(id,label,value,numberFields.includes(field)?'number':(dateFields.includes(field)?'date':'text'));
   };
 
-  /* Replace generic openForm so new records use dropdowns. Payments and invoices keep custom flows where needed. */
   var previousOpenForm=window.openForm;
   window.openForm=function(module){
     ensureOperationalCatalogs();
@@ -2460,7 +2801,6 @@ ${getCompanyName()}`;
     openModal(`${tr('new')} ${module}`,body,foot);
   };
 
-  /* Replace openEdit so edit forms also use dropdowns consistently. */
   var editConfig={
     customers:['name','type','contact','email','phone','address','terms','status','credit'],
     vendors:['name','category','email','phone','status','openBalance'],
@@ -2486,7 +2826,6 @@ ${getCompanyName()}`;
     openModal(`Edit ${tr(module)} / Editar ${tr(module)}`,body,`<button class="btn secondary" onclick="closeModal()">${tr('cancel')}</button><button class="btn" onclick="saveEdit('${module}','${id}')">Save Changes</button>`);
   };
 
-  /* Patch customer-specific form from v25.1 to reuse same source */
   window.openCustomerForm=function(id){
     ensureOperationalCatalogs();
     var rec=(db.customers||[]).find(c=>c.id===id)||null;
@@ -2520,14 +2859,8 @@ ${getCompanyName()}`;
   ensureOperationalCatalogs();
 })();
 
-
-/* =========================================================
-   v26 - Customer 360 View
-   Complete customer profile + financial + operational view.
-   ========================================================= */
 (function(){
-  function rows(name){return Array.isArray(db&&db[name])?db[name]:[]}
-  function moneySafe(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
+  function money(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
   function bal(i){try{return invoiceBalance(i)}catch(e){return +(i.balance||i.balanceDue||0)}}
   function active(r){return !(typeof isArchivedLike==='function'&&isArchivedLike(r))}
   function fmt(v){return v||'-'}
@@ -2595,13 +2928,13 @@ ${getCompanyName()}`;
     var locRows=locs.map(function(l){return row(l.locationName||l.id,`${l.locationType||'Service'} · ${l.address||''}`,l.isDefault?`<span class="badge bg-green">Default</span>`:'',`<button class="btn micro secondary" onclick="editCustomerLocation('${customerId}','${l.id}')">Edit</button>`)});
     var invRows=inv.slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))}).slice(0,6).map(function(i){
       var open=bal(i);
-      return row(i.id,`Date ${i.date||''} · Due ${i.due||''} · Total ${moneySafe(i.total||0)}`,statusBadgeHtml(i.status)+(open>0?`<span class="badge bg-amber">${moneySafe(open)} open</span>`:''),`<button class="btn micro secondary" onclick="openDependencyRecord('invoices','${i.id}')">Open</button>`);
+      return row(i.id,`Date ${i.date||''} · Due ${i.due||''} · Total ${money(i.total||0)}`,statusBadgeHtml(i.status)+(open>0?`<span class="badge bg-amber">${money(open)} open</span>`:''),`<button class="btn micro secondary" onclick="openDependencyRecord('invoices','${i.id}')">Open</button>`);
     });
     var payRows=pay.slice().sort(function(a,b){return String(b.date||b.payment_date||'').localeCompare(String(a.date||a.payment_date||''))}).slice(0,6).map(function(p){
-      return row(p.id,`Invoice ${p.invoiceId||''} · ${p.date||p.payment_date||''}`,`<span class="badge bg-green">${moneySafe(p.amount||p.payment_amount||0)}</span>`,typeof paymentLifecycleButtons==='function'?paymentLifecycleButtons(p.id):'');
+      return row(p.id,`Invoice ${p.invoiceId||''} · ${p.date||p.payment_date||''}`,`<span class="badge bg-green">${money(p.amount||p.payment_amount||0)}</span>`,typeof paymentLifecycleButtons==='function'?paymentLifecycleButtons(p.id):'');
     });
     var estRows=est.slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))}).slice(0,6).map(function(e){
-      return row(e.id,`Date ${e.date||''} · Total ${moneySafe(e.total||0)}`,statusBadgeHtml(e.status),`<button class="btn micro secondary" onclick="openDependencyRecord('estimates','${e.id}')">Open</button>`);
+      return row(e.id,`Date ${e.date||''} · Total ${money(e.total||0)}`,statusBadgeHtml(e.status),`<button class="btn micro secondary" onclick="openDependencyRecord('estimates','${e.id}')">Open</button>`);
     });
     var upcomingRows=upcoming.slice(0,6).map(function(e){
       return row(`${e.date} ${e.time||''}`,`${e.service||''} · ${e.location||''}`,statusBadgeHtml(e.status),`<button class="btn micro secondary" onclick="openCalendarForm('${e.id}')">Open</button>`);
@@ -2611,7 +2944,7 @@ ${getCompanyName()}`;
     });
     var riskRows=[
       completedNotInvoiced.length?row('Completed jobs not invoiced',`${completedNotInvoiced.length} job(s) need billing`,`<span class="badge bg-amber">Action</span>`,`<button class="btn micro secondary" onclick="navigate('invoices')">Create Invoice</button>`):'',
-      openBalance>0?row('Open balance',`${moneySafe(openBalance)} still unpaid`,`<span class="badge bg-red">AR</span>`,`<button class="btn micro secondary" onclick="navigate('payments')">Record Payment</button>`):'',
+      openBalance>0?row('Open balance',`${money(openBalance)} still unpaid`,`<span class="badge bg-red">AR</span>`,`<button class="btn micro secondary" onclick="navigate('payments')">Record Payment</button>`):'',
       upcoming.length?row('Upcoming service',`${upcoming[0].date} ${upcoming[0].time||''} · ${upcoming[0].service||''}`,`<span class="badge bg-blue">Scheduled</span>`,`<button class="btn micro secondary" onclick="openCalendarForm('${upcoming[0].id}')">Open</button>`):''
     ].filter(Boolean);
     var html=`<div class="customer360-hero">
@@ -2626,9 +2959,9 @@ ${getCompanyName()}`;
       </div>
     </div>
     <div class="customer360-kpis">
-      <div class="customer360-kpi"><div class="label">Total Revenue</div><div class="value">${moneySafe(totalRevenue)}</div></div>
-      <div class="customer360-kpi"><div class="label">Open Balance</div><div class="value">${moneySafe(openBalance)}</div></div>
-      <div class="customer360-kpi"><div class="label">Collected</div><div class="value">${moneySafe(collected)}</div></div>
+      <div class="customer360-kpi"><div class="label">Total Revenue</div><div class="value">${money(totalRevenue)}</div></div>
+      <div class="customer360-kpi"><div class="label">Open Balance</div><div class="value">${money(openBalance)}</div></div>
+      <div class="customer360-kpi"><div class="label">Collected</div><div class="value">${money(collected)}</div></div>
       <div class="customer360-kpi"><div class="label">Completed Jobs</div><div class="value">${completedJobs}</div></div>
       <div class="customer360-kpi"><div class="label">Next Service</div><div class="value">${dates.next}</div></div>
     </div>
@@ -2645,31 +2978,23 @@ ${getCompanyName()}`;
     openModal('Customer 360 / Vista 360 del Cliente',html,`<button class="btn secondary" onclick="closeModal()">Close</button><button class="btn" onclick="openCustomerForm('${customerId}')">Edit Customer</button>`);
   };
 
-  /* Patch customer view to include Customer 360 button */
   views.customers=function(){
     try{
       if(typeof ensureV20Data==='function') ensureV20Data();
-      var rows=(typeof filterRecords==='function')?filterRecords('customers',rowsSafe('customers')):rowsSafe('customers');
-      function locCount(id){return rowsSafe('customerLocations').filter(function(l){return l.customerId===id && active(l)}).length}
-      function rowsSafe(name){return Array.isArray(db&&db[name])?db[name]:[]}
+      var rows=(typeof filterRecords==='function')?filterRecords('customers',rows('customers')):rows('customers');
+      function locCount(id){return rows('customerLocations').filter(function(l){return l.customerId===id && active(l)}).length}
       return toolbar('customers')+((typeof moduleFilterBar==='function')?moduleFilterBar('customers'):'')+`<div class="supabase-note">v26 update: use Customer 360 to see profile, locations, invoices, payments, jobs, estimates and action items in one place.</div>`+
       table([tr('customer'),tr('type'),'Locations',tr('email'),tr('phone'),'Terms',tr('status'),tr('balance'),tr('actions')],rows.map(function(c){
-        var open=rowsSafe('invoices').filter(function(i){return i.customerId===c.id}).reduce(function(a,i){return a+bal(i)},0)-(c.credit||0);
-        return `<tr class="${(typeof isArchivedLike==='function'&&isArchivedLike(c))?'status-muted':''}"><td><strong>${c.name||c.customer_name||c.id}</strong><br><span class="role-note">${c.address||c.billing_address||''}</span></td><td>${c.type||c.customer_type||''}</td><td>${locCount(c.id)} location(s)<br><button class="btn micro secondary" onclick="openCustomerLocations('${c.id}')">Locations</button></td><td>${c.email||''}</td><td>${c.phone||''}</td><td>${c.terms||c.payment_terms||''}</td><td>${typeof safeStatusCell==='function'?safeStatusCell(c):statusBadgeHtml(c.status)}</td><td>${moneySafe(open)}</td><td><button class="btn small" onclick="openCustomer360('${c.id}')">360</button> ${editBtn('customers',c.id)} ${typeof lifecycleButtons==='function'?lifecycleButtons('customers',c.id):''}</td></tr>`;
+        var open=rows('invoices').filter(function(i){return i.customerId===c.id}).reduce(function(a,i){return a+bal(i)},0)-(c.credit||0);
+        return `<tr class="${(typeof isArchivedLike==='function'&&isArchivedLike(c))?'status-muted':''}"><td><strong>${c.name||c.customer_name||c.id}</strong><br><span class="role-note">${c.address||c.billing_address||''}</span></td><td>${c.type||c.customer_type||''}</td><td>${locCount(c.id)} location(s)<br><button class="btn micro secondary" onclick="openCustomerLocations('${c.id}')">Locations</button></td><td>${c.email||''}</td><td>${c.phone||''}</td><td>${c.terms||c.payment_terms||''}</td><td>${typeof safeStatusCell==='function'?safeStatusCell(c):statusBadgeHtml(c.status)}</td><td>${money(open)}</td><td><button class="btn small" onclick="openCustomer360('${c.id}')">360</button> ${editBtn('customers',c.id)} ${typeof lifecycleButtons==='function'?lifecycleButtons('customers',c.id):''}</td></tr>`;
       }));
-    }catch(e){console.error(e); return `<div class="card"><h3>Customers view error</h3><p>${e.message}</p></div>`}
+    }catch(e){return `<div class="card"><h3>Customers view error</h3><p>${e.message}</p></div>`}
   };
 
 })();
 
-
-/* =========================================================
-   v27 - Work Order / Job Detail
-   Professional job work order view for field operations.
-   ========================================================= */
 (function(){
-  function rows(name){return Array.isArray(db&&db[name])?db[name]:[]}
-  function moneySafe(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
+  function money(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
   function cust(id){try{return customerName(id)||id||''}catch(e){return id||''}}
   function svc(id){try{return serviceName(id)||id||''}catch(e){return id||''}}
   function badgeSafe(s){try{return badge(s||'Scheduled')}catch(e){return `<span class="badge bg-blue">${s||'Scheduled'}</span>`}}
@@ -2868,7 +3193,6 @@ ${getCompanyName()}`;
     save(db); openWorkOrder(jobId);
   };
 
-  /* Patch calendar job open to Work Order */
   var prevOpenCalendarJob=window.openCalendarJob;
   window.openCalendarJob=function(id){
     var job=jobById(id);
@@ -2876,14 +3200,12 @@ ${getCompanyName()}`;
     if(prevOpenCalendarJob)return prevOpenCalendarJob(id);
   };
 
-  /* Patch dependency opener for jobs */
   var prevOpenDependencyRecord=window.openDependencyRecord;
   window.openDependencyRecord=function(module,id){
     if(module==='jobs')return openWorkOrder(id);
     if(prevOpenDependencyRecord)return prevOpenDependencyRecord(module,id);
   };
 
-  /* Add Work Order entry points to Calendar by wrapping existing card function if available */
   var previousCalendarEntryCard=window.calendarEntryCard;
   if(previousCalendarEntryCard){
     window.calendarEntryCard=function(x){
@@ -2909,13 +3231,7 @@ ${getCompanyName()}`;
   }
 })();
 
-
-/* =========================================================
-   v29.1 - Command Center Charts FIXED
-   Built from stable v27. No v28 dependency. Syntax checked.
-   ========================================================= */
 (function(){
-  function rows(n){ return Array.isArray(db && db[n]) ? db[n] : []; }
   function money2(v){ try { return money(v||0); } catch(e) { return "$" + Number(v||0).toFixed(2); } }
   function tdy(){ try { return today(0); } catch(e) { return new Date().toISOString().slice(0,10); } }
   function addDays(days){ var d=new Date(); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); }
@@ -3111,17 +3427,12 @@ ${getCompanyName()}`;
         </div>
       </div>`;
     }catch(e){
-      console.error("v29.1 dashboard failed",e);
+
       return oldDashboard?oldDashboard():`<div class="card">Dashboard error: ${e.message}</div>`;
     }
   };
 })();
 
-
-/* =========================================================
-   v29.3 - Force Rich Demo Data
-   Ensures Sales / Collected / Open AR / Expenses have demo values.
-   ========================================================= */
 (function(){
   window.forceRichDemoData=function(){
     localStorage.setItem(storageKey, JSON.stringify(demoData()));
@@ -3142,7 +3453,7 @@ ${getCompanyName()}`;
         db=load();
       }
     }catch(e){
-      console.warn('ensureRichDemoData failed',e);
+
     }
   };
 
@@ -3162,19 +3473,13 @@ ${getCompanyName()}`;
       var strip='<div class="rich-data-strip"><div><strong>Demo data active:</strong> '+invoiceCount+' invoices · '+paymentCount+' payments · '+expenseCount+' expenses. Sales '+money(sales)+' · Collected '+money(collected)+' · Expenses '+money(expenses)+'</div><button class="btn secondary" onclick="forceRichDemoData()">Reload Rich Demo Data</button></div>';
       return strip+html;
     }catch(e){
-      console.error('v29.3 dashboard wrapper failed',e);
+
       return prevDashboard?prevDashboard():'<div class="card">Dashboard error: '+e.message+'</div>';
     }
   };
 })();
 
-
-/* =========================================================
-   v29.4 - Command Center Data FIX + No Reload Strip
-   Fixes KPI/charts reading from local db and removes Reload Rich Demo Data UI.
-   ========================================================= */
 (function(){
-  function rows29(n){ return Array.isArray(db && db[n]) ? db[n] : []; }
   function money29(v){ try { return money(v||0); } catch(e) { return "$" + Number(v||0).toFixed(2); } }
   function today29(){ try { return today(0); } catch(e) { return new Date().toISOString().slice(0,10); } }
   function addDays29(days){ var d=new Date(); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); }
@@ -3218,12 +3523,12 @@ ${getCompanyName()}`;
     return "#b42318";
   }
   function commandData29(){
-    var invoices=rows29("invoices").filter(function(x){return !inactive29(x);});
-    var payments=rows29("payments").filter(function(x){return !inactive29(x);});
-    var expenses=rows29("expenses").filter(function(x){return !inactive29(x);});
-    var jobs=rows29("jobs").filter(function(x){return !inactive29(x);});
-    var calendar=rows29("calendar").filter(function(x){return !inactive29(x);});
-    var inventory=rows29("inventory").filter(function(x){return !inactive29(x);});
+    var invoices=rows("invoices").filter(function(x){return !inactive29(x);});
+    var payments=rows("payments").filter(function(x){return !inactive29(x);});
+    var expenses=rows("expenses").filter(function(x){return !inactive29(x);});
+    var jobs=rows("jobs").filter(function(x){return !inactive29(x);});
+    var calendar=rows("calendar").filter(function(x){return !inactive29(x);});
+    var inventory=rows("inventory").filter(function(x){return !inactive29(x);});
     var todayStr=today29(), next7=addDays29(7);
     var sales=invoices.reduce(function(a,i){return a+(+i.total||0);},0);
     var collected=payments.reduce(function(a,p){return a+(+p.amount||+p.payment_amount||0);},0);
@@ -3234,7 +3539,7 @@ ${getCompanyName()}`;
     var lowStock=inventory.filter(function(i){return +(i.qty||i.quantity||i.quantity_on_hand||0) <= +(i.reorder||i.reorder_point||i.min||0);});
     var upcoming=calendar.filter(function(c){return c.date>=todayStr && c.date<=next7;});
     var todayEvents=calendar.filter(function(c){return c.date===todayStr;});
-    var openEstimates=rows29("estimates").filter(function(e){
+    var openEstimates=rows("estimates").filter(function(e){
       var s=String(e.status||"").toLowerCase();
       return !inactive29(e) && s.indexOf("convert")<0 && s.indexOf("accepted")<0 && s.indexOf("rejected")<0;
     });
@@ -3351,17 +3656,12 @@ ${getCompanyName()}`;
         '</div>'+
       '</div>';
     }catch(e){
-      console.error("v29.4 dashboard failed",e);
+
       return '<div class="card"><h3>Dashboard Error</h3><p>'+e.message+'</p></div>';
     }
   };
 })();
 
-
-/* =========================================================
-   v30 - Employees Module
-   Adds employee records, employee profile, teams summary and dashboard KPIs.
-   ========================================================= */
 (function(){
   function ensureEmployeeCatalogs(){
     if(!db.catalogs) db.catalogs={};
@@ -3378,7 +3678,6 @@ ${getCompanyName()}`;
     });
     save(db);
   }
-  function rows30(n){return Array.isArray(db&&db[n])?db[n]:[]}
   function money30(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
   function today30(){try{return today(0)}catch(e){return new Date().toISOString().slice(0,10)}}
   function empInitials(name){return String(name||'?').split(/\s+/).filter(Boolean).slice(0,2).map(function(x){return x[0].toUpperCase()}).join('')||'?'}
@@ -3403,7 +3702,7 @@ ${getCompanyName()}`;
   }
   function teamStats(){
     var map={};
-    rows30('employees').forEach(function(e){
+    rows('employees').forEach(function(e){
       var t=e.team||'Unassigned';
       if(!map[t]) map[t]={team:t,total:0,active:0,lead:''};
       map[t].total++;
@@ -3414,15 +3713,15 @@ ${getCompanyName()}`;
   }
   function assignedToday(){
     var todayStr=today30();
-    var jobs=rows30('jobs').filter(function(j){return j.date===todayStr && String(j.status||'').toLowerCase().indexOf('cancel')<0});
+    var jobs=rows('jobs').filter(function(j){return j.date===todayStr && String(j.status||'').toLowerCase().indexOf('cancel')<0});
     var teams={};
     jobs.forEach(function(j){if(j.team)teams[j.team]=true});
     return {jobs:jobs.length,teams:Object.keys(teams).length};
   }
   function openEmployeeProfile(id){
-    var e=rows30('employees').find(function(x){return x.id===id});
+    var e=rows('employees').find(function(x){return x.id===id});
     if(!e){alert('Employee not found');return}
-    var empJobs=rows30('jobs').filter(function(j){return j.team===e.team});
+    var empJobs=rows('jobs').filter(function(j){return j.team===e.team});
     var completed=empJobs.filter(function(j){return String(j.status||'').toLowerCase().indexOf('completed')>=0 || String(j.status||'').toLowerCase()==='invoiced'}).length;
     var scheduled=empJobs.filter(function(j){return String(j.status||'').toLowerCase()==='scheduled'}).length;
     var fields=[
@@ -3445,7 +3744,7 @@ ${getCompanyName()}`;
 
   window.openEmployeeForm=function(id){
     ensureEmployeeCatalogs();
-    var e=id?rows30('employees').find(function(x){return x.id===id}):null;
+    var e=id?rows('employees').find(function(x){return x.id===id}):null;
     var body='<div class="form-grid">'+
       field30('emp-name','Employee Name / Nombre',e&&e.name)+
       select30('emp-status','Status', 'employeeStatuses', e?(e.status||'Active'):'Active')+
@@ -3468,7 +3767,7 @@ ${getCompanyName()}`;
   };
   window.saveEmployeeForm=function(id){
     ensureEmployeeCatalogs();
-    var rec=id?rows30('employees').find(function(x){return x.id===id}):null;
+    var rec=id?rows('employees').find(function(x){return x.id===id}):null;
     var record={
       id:id||uid('EMP'),
       name:document.getElementById('emp-name').value||'New Employee',
@@ -3497,11 +3796,11 @@ ${getCompanyName()}`;
       db.employees.unshift(record);
       try{log('employees','Create',null,record)}catch(e){}
     }
-    save(db); closeModal(); navigate('employees', true);
+    save(db); closeModal(); requestAnimationFrame(()=>navigate('employees', true));
   };
 
   window.setEmployeeStatus=function(id,status){
-    var e=rows30('employees').find(function(x){return x.id===id});
+    var e=rows('employees').find(function(x){return x.id===id});
     if(!e)return;
     var before=JSON.parse(JSON.stringify(e));
     e.status=status;
@@ -3511,7 +3810,7 @@ ${getCompanyName()}`;
 
   views.employees=function(){
     ensureEmployeeCatalogs();
-    var employees=rows30('employees');
+    var employees=rows('employees');
     var active=employees.filter(isEmpActive).length;
     var teams=teamStats();
     var todayAssign=assignedToday();
@@ -3539,7 +3838,6 @@ ${getCompanyName()}`;
       '</div>';
   };
 
-  /* Add Employees safely to navigation and roles */
   try{
     if(!navItems.some(function(x){return x[0]==='employees'})){
       var idx=navItems.findIndex(function(x){return x[0]==='calendar'});
@@ -3558,9 +3856,8 @@ ${getCompanyName()}`;
       translations.es.employees='Empleados';
       translations.es.employeesSub='Personas, equipos, roles y preparación operativa';
     }
-  }catch(e){console.warn('Employees nav setup skipped',e)}
+  }catch(e){}
 
-  /* Intercept generic form/edit for employees */
   var prevOpenForm=window.openForm;
   window.openForm=function(module){
     if(module==='employees')return openEmployeeForm();
@@ -3572,13 +3869,12 @@ ${getCompanyName()}`;
     return prevOpenEdit(module,id);
   };
 
-  /* Add employee KPIs to Command Center safely */
   var prevDashboard30=views.dashboard;
   views.dashboard=function(){
     var html=prevDashboard30?prevDashboard30():'';
     try{
       ensureEmployeeCatalogs();
-      var employees=rows30('employees');
+      var employees=rows('employees');
       var active=employees.filter(isEmpActive).length;
       var teams=teamStats().length;
       var todayAssign=assignedToday();
@@ -3590,17 +3886,12 @@ ${getCompanyName()}`;
       '</div>';
       return html.replace('</div><div class="cc291-charts">','</div>'+extra+'<div class="cc291-charts">');
     }catch(e){
-      console.error('v30 dashboard employee KPI failed',e);
+
       return html;
     }
   };
 })();
 
-
-/* =========================================================
-   v30.1 FIXED - Employees Menu Fix
-   Adds Employees directly into rendered sidebar/menu after init.
-   ========================================================= */
 (function(){
   function addEmployeesToMenu(){
     try{
@@ -3651,13 +3942,10 @@ ${getCompanyName()}`;
         }
       }
     }catch(e){
-      console.warn('v30.1 addEmployeesToMenu failed',e);
+
     }
   }
-
-  var previousRender=window.render;
   if(typeof previousRender==='function'){
-    window.render=function(){ previousRender(); }; // simplified — sidebar handled by renderNav
   }
 
   document.addEventListener('DOMContentLoaded',function(){
@@ -3674,11 +3962,6 @@ ${getCompanyName()}`;
   };
 })();
 
-
-/* =========================================================
-   v30.2 - Employees Sidebar Fix
-   Directly patches the sidebar DOM used by the current layout.
-   ========================================================= */
 (function(){
   function findSidebar(){
     return document.querySelector('.sidebar') ||
@@ -3725,13 +4008,10 @@ ${getCompanyName()}`;
         side.appendChild(item);
       }
     }catch(e){
-      console.warn('v30.2 sidebar hard patch failed',e);
+
     }
   }
-
-  var oldRender=window.render;
   if(typeof oldRender==='function'){
-    window.render=function(){ oldRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var oldNavigate=window.navigate;
@@ -3751,13 +4031,7 @@ ${getCompanyName()}`;
   setTimeout(addEmployeesSidebarHard,300);
 })();
 
-
-/* =========================================================
-   v31 - Teams / Crews Module + Calendar / Work Order Integration
-   Built from stable v30.2.
-   ========================================================= */
 (function(){
-  function rows31(n){return Array.isArray(db&&db[n])?db[n]:[]}
   function today31(){try{return today(0)}catch(e){return new Date().toISOString().slice(0,10)}}
   function addDays31(days){var d=new Date();d.setDate(d.getDate()+days);return d.toISOString().slice(0,10)}
   function money31(v){try{return money(v||0)}catch(e){return '$'+Number(v||0).toFixed(2)}}
@@ -3797,16 +4071,16 @@ ${getCompanyName()}`;
   }
   function teamByName(name){
     ensureTeamsData();
-    return rows31('teams').find(function(t){return t.name===name || t.id===name})||null;
+    return rows('teams').find(function(t){return t.name===name || t.id===name})||null;
   }
   function teamMembers(teamName){
-    return rows31('employees').filter(function(e){return e.team===teamName && active31(e)});
+    return rows('employees').filter(function(e){return e.team===teamName && active31(e)});
   }
   function teamJobs(teamName){
-    return rows31('jobs').filter(function(j){return j.team===teamName});
+    return rows('jobs').filter(function(j){return j.team===teamName});
   }
   function teamCalendar(teamName){
-    return rows31('calendar').filter(function(c){return c.assigned===teamName || c.team===teamName});
+    return rows('calendar').filter(function(c){return c.assigned===teamName || c.team===teamName});
   }
   function jobDate(j){return j.date||j.job_date||''}
   function jobDone(j){
@@ -3828,7 +4102,7 @@ ${getCompanyName()}`;
 
   window.openTeamForm=function(id){
     ensureTeamsData();
-    var t=id?rows31('teams').find(function(x){return x.id===id}):null;
+    var t=id?rows('teams').find(function(x){return x.id===id}):null;
     var body='<div class="form-grid">'+
       field31('team-name','Team / Crew Name',t&&t.name)+
       select31('team-status','Status','teamStatuses',t?(t.status||'Active'):'Active')+
@@ -3845,7 +4119,7 @@ ${getCompanyName()}`;
   };
   window.saveTeamForm=function(id){
     ensureTeamsData();
-    var rec=id?rows31('teams').find(function(x){return x.id===id}):null;
+    var rec=id?rows('teams').find(function(x){return x.id===id}):null;
     var record={
       id:id||uid('TEAM'),
       name:document.getElementById('team-name').value||'New Team',
@@ -3867,10 +4141,10 @@ ${getCompanyName()}`;
       db.teams.unshift(record);
       try{log('teams','Create',null,record)}catch(e){}
     }
-    save(db);closeModal();navigate('teams', true);
+    save(db);closeModal();requestAnimationFrame(()=>navigate('teams', true));
   };
   window.setTeamStatus=function(id,status){
-    var t=rows31('teams').find(function(x){return x.id===id});
+    var t=rows('teams').find(function(x){return x.id===id});
     if(!t)return;
     var before=JSON.parse(JSON.stringify(t));
     t.status=status;
@@ -3893,7 +4167,7 @@ ${getCompanyName()}`;
 
   window.openTeamProfile=function(idOrName){
     ensureTeamsData();
-    var t=rows31('teams').find(function(x){return x.id===idOrName || x.name===idOrName});
+    var t=rows('teams').find(function(x){return x.id===idOrName || x.name===idOrName});
     if(!t){alert('Team not found');return}
     var members=teamMembers(t.name);
     var jobs=teamJobs(t.name);
@@ -3924,13 +4198,13 @@ ${getCompanyName()}`;
 
   views.teams=function(){
     ensureTeamsData();
-    var teams=rows31('teams');
+    var teams=rows('teams');
     var active=teams.filter(function(t){return String(t.status||'Active').toLowerCase()==='active'}).length;
-    var members=rows31('employees').filter(active31).length;
+    var members=rows('employees').filter(active31).length;
     var today=today31();
-    var jobsToday=rows31('jobs').filter(function(j){return jobDate(j)===today && active31(j)}).length;
+    var jobsToday=rows('jobs').filter(function(j){return jobDate(j)===today && active31(j)}).length;
     var teamNamesToday={};
-    rows31('jobs').forEach(function(j){if(jobDate(j)===today && j.team)teamNamesToday[j.team]=true});
+    rows('jobs').forEach(function(j){if(jobDate(j)===today && j.team)teamNamesToday[j.team]=true});
     var list=teams.map(function(t){
       var mem=teamMembers(t.name);
       var jobs=teamJobs(t.name);
@@ -3947,14 +4221,13 @@ ${getCompanyName()}`;
       '<div class="team31-card"><h3>Team / Crew Directory <button class="btn small secondary" onclick="openTeamForm()">+ New</button></h3><div class="team31-list">'+(list||'<div class="team31-empty">No teams found.</div>')+'</div></div>';
   };
 
-  // Integrate Work Order with Team profile button
   var prevOpenWorkOrder31=window.openWorkOrder;
   if(typeof prevOpenWorkOrder31==='function'){
     window.openWorkOrder=function(jobId){
       prevOpenWorkOrder31(jobId);
       setTimeout(function(){
         try{
-          var job=rows31('jobs').find(function(j){return j.id===jobId});
+          var job=rows('jobs').find(function(j){return j.id===jobId});
           if(!job || !job.team) return;
           var modal=document.querySelector('.modal, .modal-content, [class*="modal"]');
           var target=document.querySelector('.workorder-actions');
@@ -3970,7 +4243,6 @@ ${getCompanyName()}`;
     };
   }
 
-  // Add Teams to side navigation and role permissions safely
   try{
     if(typeof navItems!=='undefined' && Array.isArray(navItems) && !navItems.some(function(x){return x[0]==='teams'})){
       var idx=navItems.findIndex(function(x){return x[0]==='employees'});
@@ -3982,9 +4254,8 @@ ${getCompanyName()}`;
     });
     if(translations&&translations.en){translations.en.teams='Teams / Crews';translations.en.teamsSub='Crew capacity, routes and assignments';}
     if(translations&&translations.es){translations.es.teams='Equipos / Cuadrillas';translations.es.teamsSub='Capacidad, rutas y asignaciones';}
-  }catch(e){console.warn('v31 nav setup skipped',e)}
+  }catch(e){}
 
-  // Hard sidebar patch for Teams similar to v30.2
   function findSidebar31(){return document.querySelector('.sidebar')||document.querySelector('aside')||document.getElementById('sdsk')||document.querySelector('[class*="side"]')}
   function hasText31(root,labels){
     if(!root)return false;
@@ -4010,18 +4281,15 @@ ${getCompanyName()}`;
       });
       if(empNode&&empNode.parentNode)empNode.parentNode.insertBefore(item,empNode.nextSibling);
       else side.appendChild(item);
-    }catch(e){console.warn('v31 sidebar patch failed',e)}
+    }catch(e){}
   }
-  var prevRender31=window.render;
   if(typeof prevRender31==='function'){
-    window.render=function(){ prevRender31(); }; // simplified — sidebar handled by renderNav
   }
   document.addEventListener('DOMContentLoaded',function(){
     setTimeout(addTeamsSidebar,200);
     setTimeout(addTeamsSidebar,800);
   });
 
-  // Open forms through generic handlers
   var prevOpenForm31=window.openForm;
   window.openForm=function(module){
     if(module==='teams')return openTeamForm();
@@ -4033,17 +4301,16 @@ ${getCompanyName()}`;
     return prevOpenEdit31(module,id);
   };
 
-  // Add Teams to Command Center
   var prevDashboard31=views.dashboard;
   views.dashboard=function(){
     var html=prevDashboard31?prevDashboard31():'';
     try{
       ensureTeamsData();
-      var teams=rows31('teams');
+      var teams=rows('teams');
       var active=teams.filter(function(t){return String(t.status||'Active').toLowerCase()==='active'}).length;
       var today=today31();
       var teamNamesToday={};
-      rows31('jobs').forEach(function(j){if(jobDate(j)===today && j.team)teamNamesToday[j.team]=true});
+      rows('jobs').forEach(function(j){if(jobDate(j)===today && j.team)teamNamesToday[j.team]=true});
       var extra='<div class="team31-grid">'+
         '<div class="team31-kpi" onclick="navigate(\'teams\')" style="cursor:pointer"><div class="label">Active Crews</div><div class="value">'+active+'</div><div class="hint">Ready teams</div></div>'+
         '<div class="team31-kpi" onclick="navigate(\'teams\')" style="cursor:pointer"><div class="label">Crews Scheduled Today</div><div class="value">'+Object.keys(teamNamesToday).length+'</div><div class="hint">Teams with jobs today</div></div>'+
@@ -4051,17 +4318,12 @@ ${getCompanyName()}`;
         '<div class="team31-kpi" onclick="navigate(\'calendar\')" style="cursor:pointer"><div class="label">Route Review</div><div class="value">7d</div><div class="hint">Upcoming schedule</div></div>'+
       '</div>';
       return html.replace('<div class="cc291-charts">',extra+'<div class="cc291-charts">');
-    }catch(e){console.error('v31 dashboard failed',e);return html}
+    }catch(e){return html}
   };
 
   ensureTeamsData();
 })();
 
-
-/* =========================================================
-   v31.1 - Teams / Crews Persistent Menu Fix
-   Keeps Employees and Teams / Crews visible in the left sidebar after navigation.
-   ========================================================= */
 (function(){
   function getSidebarStable(){
     return document.getElementById('sdsk') ||
@@ -4124,13 +4386,10 @@ ${getCompanyName()}`;
         else el.classList.remove('active');
       });
     }catch(e){
-      console.warn('v31.1 persistent sidebar failed',e);
+
     }
   }
-
-  var prevRenderPersist=window.render;
   if(typeof prevRenderPersist==='function'){
-    window.render=function(){ prevRenderPersist(); }; // simplified — sidebar handled by renderNav
   }
 
   var prevNavigatePersist=window.navigate;
@@ -4152,11 +4411,6 @@ ${getCompanyName()}`;
   setTimeout(ensurePersistentSidebarMenus,300);
 })();
 
-
-/* =========================================================
-   v31.2 - Collapse Menu Persist Fix
-   Re-adds Employees and Teams / Crews after sidebar collapse/expand rebuilds.
-   ========================================================= */
 (function(){
   var menuPatchRunning=false;
 
@@ -4231,7 +4485,7 @@ ${getCompanyName()}`;
         else el.classList.remove('active');
       });
     }catch(e){
-      console.warn('v31.2 ensureMenuItems failed',e);
+
     }finally{
       menuPatchRunning=false;
     }
@@ -4243,10 +4497,7 @@ ${getCompanyName()}`;
     setTimeout(ensureMenuItems,200);
     setTimeout(ensureMenuItems,500);
   }
-
-  var prevRender=window.render;
   if(typeof prevRender==='function'){
-    window.render=function(){ prevRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var prevNavigate=window.navigate;
@@ -4257,7 +4508,6 @@ ${getCompanyName()}`;
     };
   }
 
-  // Capture collapse/expand clicks anywhere in the app.
   document.addEventListener('click',function(e){
     var txt=(e.target && e.target.textContent || '').toLowerCase();
     var cls=(e.target && e.target.className || '').toString().toLowerCase();
@@ -4277,7 +4527,6 @@ ${getCompanyName()}`;
     }
   },true);
 
-  // Watch the sidebar for rebuilds caused by collapse.
   function installObserver(){
     var side=getSidebar();
     if(!side) return;
@@ -4287,7 +4536,7 @@ ${getCompanyName()}`;
       });
       obs.observe(side,{childList:true,subtree:true,attributes:true,attributeFilter:['class','style']});
     }catch(e){
-      console.warn('v31.2 observer skipped',e);
+
     }
   }
 
@@ -4301,13 +4550,7 @@ ${getCompanyName()}`;
   setTimeout(installObserver,500);
 })();
 
-
-/* =========================================================
-   v32.3 Field Team View Clean
-   Rebuilt from v31.2 with template literals and data-action buttons.
-   ========================================================= */
 (function(){
-  function rows(n){ return Array.isArray(db && db[n]) ? db[n] : []; }
   function todayStr(){ try { return today(0); } catch(e) { return new Date().toISOString().slice(0,10); } }
   function addDays(days){ var d=new Date(); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); }
   function cname(id){ try { return customerName(id)||id||''; } catch(e) { return id||''; } }
@@ -4377,7 +4620,7 @@ ${getCompanyName()}`;
     return job.team===user.team;
   }
   function jobsFor(user,range){
-    var t=todayStr(), n7=addDays(7);
+    var t=today(0), n7=addDays(7);
     return rows('jobs').filter(function(j){
       if(!isActive(j)) return false;
       if(!visible(j,user)) return false;
@@ -4521,7 +4764,7 @@ ${getCompanyName()}`;
     var allUsers=users();
     var user=selected();
     var todayJobs=jobsFor(user,'today');
-    var nextJobs=jobsFor(user,'next7').filter(function(j){ return jdate(j)!==todayStr(); });
+    var nextJobs=jobsFor(user,'next7').filter(function(j){ return jdate(j)!==today(0); });
     var completed=todayJobs.filter(function(j){ return isDone(j.status); }).length;
     var inProgress=todayJobs.filter(function(j){ return String(j.status||'')==='In Progress'; }).length;
     var opts=allUsers.map(function(u){ return `<option value="${u.id}" ${u.id===user.id?'selected':''}>${u.label}</option>`; }).join('');
@@ -4574,11 +4817,8 @@ ${getCompanyName()}`;
     item.onclick=function(){ navigate('fieldTeam'); };
     side.appendChild(item);
   }
-  var oldRender=window.render;
   if(typeof oldRender==='function'){
-    // addSidebar render wrapper removed — handled by renderNav
   }
-  // addSidebar DOMContentLoaded listener removed
   setTimeout(addSidebar,400);
 
   var oldDash=views.dashboard;
@@ -4595,15 +4835,10 @@ ${getCompanyName()}`;
   };
 })();
 
-
-/* =========================================================
-   v32.4 - Field View Menu / Access Fix
-   Ensures Field Team View is always reachable.
-   ========================================================= */
 (function(){
   function ensureFtvView(){
     if(typeof views.fieldTeam === 'function') return true;
-    console.warn('Field Team View function not found.');
+
     return false;
   }
 
@@ -4673,7 +4908,7 @@ ${getCompanyName()}`;
 
       if(window.state && state.module==='fieldTeam') item.classList.add('active');
     }catch(e){
-      console.warn('v32.4 ensureFieldMenu failed',e);
+
     }
   }
 
@@ -4684,7 +4919,6 @@ ${getCompanyName()}`;
     setTimeout(ensureFieldMenu,700);
   }
 
-  // Ensure the module is known by role/menu logic where possible.
   try{
     if(typeof navItems!=='undefined' && Array.isArray(navItems) && !navItems.some(function(x){return x[0]==='fieldTeam'})){
       var idx=navItems.findIndex(function(x){return x[0]==='teams'});
@@ -4699,11 +4933,8 @@ ${getCompanyName()}`;
       if(translations.en){translations.en.fieldTeam='Field Team View';translations.en.fieldTeamSub='Mobile jobs, check-in, checklist and completion';}
       if(translations.es){translations.es.fieldTeam='Vista Equipo Campo';translations.es.fieldTeamSub='Trabajos móviles, check-in, checklist y cierre';}
     }
-  }catch(e){console.warn('v32.4 nav registration skipped',e);}
-
-  var prevRender=window.render;
+  }catch(e){}
   if(typeof prevRender==='function'){
-    window.render=function(){ prevRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var prevNavigate=window.navigate;
@@ -4714,12 +4945,10 @@ ${getCompanyName()}`;
     };
   }
 
-  // Collapse/expand and menu clicks rebuild sidebar in this app, so reinsert after any click.
   document.addEventListener('click',function(){
     scheduleFieldMenuPatch();
   },true);
 
-  // Observe sidebar changes.
   function installObserver(){
     var side=getSidebar();
     if(!side) return;
@@ -4729,7 +4958,6 @@ ${getCompanyName()}`;
     }catch(e){}
   }
 
-  // Command Center fallback access strip.
   var prevDashboard=views.dashboard;
   views.dashboard=function(){
     var html=prevDashboard?prevDashboard():'';
@@ -4746,13 +4974,7 @@ ${getCompanyName()}`;
   setTimeout(installObserver,500);
 })();
 
-
-/* =========================================================
-   v33 FIXED - Job Assignments + Employee-Level Field Access
-   Uses template literals to avoid broken inline HTML quoting.
-   ========================================================= */
 (function(){
-  function rows(n){ return Array.isArray(db && db[n]) ? db[n] : []; }
   function todayStr(){ try { return today(0); } catch(e) { return new Date().toISOString().slice(0,10); } }
   function addDays(days){ var d=new Date(); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); }
   function cname(id){ try { return customerName(id)||id||''; } catch(e) { return id||''; } }
@@ -4827,7 +5049,7 @@ ${getCompanyName()}`;
     return assignmentsForJob(job.id).some(function(a){ return a.employeeId===user.employeeId; });
   }
   function jobsForUser(user,range){
-    var t=todayStr(), n7=addDays(7);
+    var t=today(0), n7=addDays(7);
     return activeJobs().filter(function(j){
       if(!visibleToUser(j,user)) return false;
       var d=jdate(j);
@@ -4867,7 +5089,7 @@ ${getCompanyName()}`;
       var allUsers=fieldUsers();
       var user=selectedFieldUser();
       var todayJobs=jobsForUser(user,'today');
-      var nextJobs=jobsForUser(user,'next7').filter(function(j){ return jdate(j)!==todayStr(); });
+      var nextJobs=jobsForUser(user,'next7').filter(function(j){ return jdate(j)!==today(0); });
       var completed=todayJobs.filter(function(j){ return isDone(j.status); }).length;
       var inProgress=todayJobs.filter(function(j){ return String(j.status||'')==='In Progress'; }).length;
       var opts=allUsers.map(function(u){ return `<option value="${u.id}" ${u.id===user.id?'selected':''}>${u.label}</option>`; }).join('');
@@ -4964,8 +5186,8 @@ ${getCompanyName()}`;
     var jobs=activeJobs().sort(function(a,b){ return (jdate(a)+(a.time||'')).localeCompare(jdate(b)+(b.time||'')); });
     var assignedCount=rows('jobAssignments').filter(function(a){ return String(a.status||'Assigned')==='Assigned'; }).length;
     var unassigned=jobs.filter(function(j){ return assignmentsForJob(j.id).length===0; }).length;
-    var todayJobs=jobs.filter(function(j){ return jdate(j)===todayStr(); }).length;
-    var next7=jobs.filter(function(j){ var d=jdate(j); return d>=todayStr() && d<=addDays(7); }).length;
+    var todayJobs=jobs.filter(function(j){ return jdate(j)===today(0); }).length;
+    var next7=jobs.filter(function(j){ var d=jdate(j); return d>=today(0) && d<=addDays(7); }).length;
     var jobRows=jobs.map(function(j){
       var ass=assignmentsForJob(j.id);
       var pills=ass.map(function(a){ return `<span class="assign33-pill">👤 ${employeeName(a.employeeId)} · ${a.roleOnJob||'Assigned'}</span>`; }).join('') || '<span class="assign33-pill">⚠️ No employee assigned</span>';
@@ -4997,7 +5219,7 @@ ${getCompanyName()}`;
     <div class="assign33-card"><h3>Job Assignment Board</h3>${jobRows}</div>`;
   };
 
-  function addAssignmentSidebar(){ /* disabled — renderNav handles this via HR & Field group */ }
+  function addAssignmentSidebar(){  }
 
   try{
     if(typeof navItems!=='undefined' && Array.isArray(navItems) && !navItems.some(function(x){return x[0]==='jobAssignments'})){
@@ -5010,10 +5232,7 @@ ${getCompanyName()}`;
     if(translations&&translations.en){translations.en.jobAssignments='Job Assignments';translations.en.jobAssignmentsSub='Employee-level job access and scheduling';}
     if(translations&&translations.es){translations.es.jobAssignments='Asignaciones';translations.es.jobAssignmentsSub='Acceso por empleado y agenda';}
   }catch(e){}
-
-  var oldRender=window.render;
   if(typeof oldRender==='function'){
-    // addAssignmentSidebar render wrapper removed
   }
   document.addEventListener('DOMContentLoaded',function(){ setTimeout(addAssignmentSidebar,300); });
   document.addEventListener('click',function(){ setTimeout(addAssignmentSidebar,250); },true);
@@ -5040,13 +5259,7 @@ ${getCompanyName()}`;
   overrideFieldTeamView();
 })();
 
-
-/* =========================================================
-   v34 - New Job / Work Order Creation Flow
-   Creates job + calendar item + employee assignments in one flow.
-   ========================================================= */
 (function(){
-  function rows(n){ return Array.isArray(db && db[n]) ? db[n] : []; }
   function todayStr(){ try { return today(0); } catch(e) { return new Date().toISOString().slice(0,10); } }
   function cname(id){ try { return customerName(id)||id||''; } catch(e) { return id||''; } }
   function sname(id){ try { return serviceName(id)||id||''; } catch(e) { return id||''; } }
@@ -5111,7 +5324,7 @@ ${getCompanyName()}`;
       '<div class="form-grid">'+
         '<div class="fg"><label>Customer</label><select id="job34-customer">'+custOpts+'</select></div>'+
         '<div class="fg"><label>Service</label><select id="job34-service">'+svcOpts+'</select></div>'+
-        '<div class="fg"><label>Date</label><input id="job34-date" type="date" value="'+(defaults.date||todayStr())+'"></div>'+
+        '<div class="fg"><label>Date</label><input id="job34-date" type="date" value="'+(defaults.date||today(0))+'"></div>'+
         '<div class="fg"><label>Time</label><input id="job34-time" type="time" value="'+(defaults.time||'09:00')+'"></div>'+
         '<div class="fg"><label>Team / Crew</label><select id="job34-team" onchange="refreshNewJobEmployees()">'+teamOpts+'</select></div>'+
         '<div class="fg"><label>Status</label><select id="job34-status"><option>Scheduled</option><option>In Progress</option><option>Completed</option></select></div>'+
@@ -5131,7 +5344,7 @@ ${getCompanyName()}`;
 
     var customerId=document.getElementById('job34-customer').value;
     var serviceId=document.getElementById('job34-service').value;
-    var date=document.getElementById('job34-date').value || todayStr();
+    var date=document.getElementById('job34-date').value || today(0);
     var time=document.getElementById('job34-time').value || '09:00';
     var team=teamNameFromSelection(document.getElementById('job34-team').value);
     var status=document.getElementById('job34-status').value || 'Scheduled';
@@ -5215,7 +5428,6 @@ ${getCompanyName()}`;
 
   function addNewJobButtons(){
     try{
-      // Command Center strip
       var main=document.querySelector('main') || document.querySelector('.content') || document.body;
       if(main && !document.getElementById('job34-global-strip') && (state && state.module==='dashboard')){
         var strip=document.createElement('div');
@@ -5228,7 +5440,6 @@ ${getCompanyName()}`;
     }catch(e){}
   }
 
-  // Add + New Job to Job Assignments screen
   var oldJobAssignments=views.jobAssignments;
   if(typeof oldJobAssignments==='function'){
     views.jobAssignments=function(){
@@ -5237,7 +5448,6 @@ ${getCompanyName()}`;
     };
   }
 
-  // Add + New Job to Field Team View if available
   var oldFieldTeam=views.fieldTeam;
   if(typeof oldFieldTeam==='function'){
     views.fieldTeam=function(){
@@ -5246,7 +5456,6 @@ ${getCompanyName()}`;
     };
   }
 
-  // Add + New Job to Calendar through dashboard/global access only to avoid breaking calendar render.
   var oldDash=views.dashboard;
   if(typeof oldDash==='function'){
     views.dashboard=function(){
@@ -5255,18 +5464,10 @@ ${getCompanyName()}`;
       return strip+html;
     };
   }
-
-  var oldRender=window.render;
   if(typeof oldRender==='function'){
-    window.render=function(){ oldRender(); }; // simplified — sidebar handled by renderNav
   }
 })();
 
-
-/* =========================================================
-   v34.1 - New Job Visible Access Fix
-   Makes + New Job visible even if previous injection points fail.
-   ========================================================= */
 (function(){
   function canOpenNewJob(){
     return typeof window.openNewJobForm === 'function';
@@ -5301,7 +5502,7 @@ ${getCompanyName()}`;
       };
       document.body.appendChild(btn);
     }catch(e){
-      console.warn('v34.1 floating button failed',e);
+
     }
   }
 
@@ -5326,7 +5527,7 @@ ${getCompanyName()}`;
         main.insertBefore(strip,main.firstChild);
       }
     }catch(e){
-      console.warn('v34.1 top strip failed',e);
+
     }
   }
 
@@ -5338,10 +5539,7 @@ ${getCompanyName()}`;
     setTimeout(ensureTopStrip,0);
     setTimeout(ensureFloatingButton,0);
   }
-
-  var previousRender=window.render;
   if(typeof previousRender === 'function'){
-    window.render=function(){ previousRender(); }; // simplified — sidebar handled by renderNav
   }
 
   var previousNavigate=window.navigate;
@@ -5353,7 +5551,6 @@ ${getCompanyName()}`;
     };
   }
 
-  // If Job Assignments view exists, force button inside it as well.
   if(window.views && typeof views.jobAssignments === 'function'){
     var previousAssignments=views.jobAssignments;
     views.jobAssignments=function(){
@@ -5363,7 +5560,6 @@ ${getCompanyName()}`;
     };
   }
 
-  // If Field Team view exists, force button inside it as well.
   if(window.views && typeof views.fieldTeam === 'function'){
     var previousField=views.fieldTeam;
     views.fieldTeam=function(){
@@ -5386,14 +5582,8 @@ ${getCompanyName()}`;
   setTimeout(cleanupAndReadd,900);
 })();
 
-
-/* =========================================================
-   v35 FIXED - Contractor / 1099 Tracking
-   Uses data-action buttons to avoid inline quote issues.
-   ========================================================= */
 (function(){
-  function rows(n){ return Array.isArray(db && db[n]) ? db[n] : []; }
-  function moneySafe(v){ try { return money(v||0); } catch(e) { return '$'+Number(v||0).toFixed(2); } }
+  function money(v){ try { return money(v||0); } catch(e) { return '$'+Number(v||0).toFixed(2); } }
   function todayStr(){ try { return today(0); } catch(e) { return new Date().toISOString().slice(0,10); } }
   function active(r){
     var s=String((r&&r.status)||'').toLowerCase();
@@ -5429,8 +5619,8 @@ ${getCompanyName()}`;
       }
       if(!db.contractorPayments.some(function(p){return p.employeeId===e.id;})){
         var base=idx===0?725:idx===1?480:920;
-        db.contractorPayments.push({id:uid('CPAY'),employeeId:e.id,date:todayStr(),amount:base,method:e.payType||'Per Job',reference:'MOCK-'+e.id,notes:'Demo contractor payment'});
-        if(idx===1) db.contractorPayments.push({id:uid('CPAY'),employeeId:e.id,date:todayStr(),amount:165,method:e.payType||'Per Job',reference:'MOCK-2-'+e.id,notes:'Additional demo payment'});
+        db.contractorPayments.push({id:uid('CPAY'),employeeId:e.id,date:today(0),amount:base,method:e.payType||'Per Job',reference:'MOCK-'+e.id,notes:'Demo contractor payment'});
+        if(idx===1) db.contractorPayments.push({id:uid('CPAY'),employeeId:e.id,date:today(0),amount:165,method:e.payType||'Per Job',reference:'MOCK-2-'+e.id,notes:'Additional demo payment'});
         changed=true;
       }
     });
@@ -5444,11 +5634,11 @@ ${getCompanyName()}`;
     if(!e){alert('Contractor not found');return;}
     var p=e.contractorProfile||{}, paid=ytdPaid(e.id), status=contractorStatus(e);
     var payRows=rows('contractorPayments').filter(function(x){return x.employeeId===e.id;}).map(function(x){
-      return `<tr><td>${x.date}</td><td>${moneySafe(x.amount)}</td><td>${x.method||''}</td><td>${x.reference||''}</td><td>${x.notes||''}</td></tr>`;
+      return `<tr><td>${x.date}</td><td>${money(x.amount)}</td><td>${x.method||''}</td><td>${x.reference||''}</td><td>${x.notes||''}</td></tr>`;
     }).join('') || '<tr><td colspan="5">No contractor payments recorded.</td></tr>';
     var body=`<div class="c1099-note"><strong>Safety:</strong> This mockup stores only Tax ID last 4. Full SSN/EIN should never be stored in local HTML.</div>
       <div class="c1099-grid">
-        <div class="c1099-kpi"><div class="label">YTD Paid</div><div class="value">${moneySafe(paid)}</div><div class="hint">Demo contractor payments</div></div>
+        <div class="c1099-kpi"><div class="label">YTD Paid</div><div class="value">${money(paid)}</div><div class="hint">Demo contractor payments</div></div>
         <div class="c1099-kpi"><div class="label">W-9</div><div class="value">${p.w9Received?'Yes':'No'}</div><div class="hint">Document status</div></div>
         <div class="c1099-kpi"><div class="label">1099 Status</div><div class="value" style="font-size:18px">${status.label}</div><div class="hint">$600 threshold tracking</div></div>
         <div class="c1099-kpi"><div class="label">Tax ID Last 4</div><div class="value">${p.taxIdLast4||'Missing'}</div><div class="hint">Masked only</div></div>
@@ -5505,7 +5695,7 @@ ${getCompanyName()}`;
     var opts=contractors().map(function(c){return `<option value="${c.id}" ${id===c.id?'selected':''}>${c.name}</option>`;}).join('');
     var body=`<div class="form-grid">
       <div class="fg"><label>Contractor</label><select id="cpay-employee">${opts}</select></div>
-      <div class="fg"><label>Date</label><input id="cpay-date" type="date" value="${todayStr()}"></div>
+      <div class="fg"><label>Date</label><input id="cpay-date" type="date" value="${today(0)}"></div>
       <div class="fg"><label>Amount</label><input id="cpay-amount" type="number" step="0.01" value="0"></div>
       <div class="fg"><label>Method</label><input id="cpay-method" value="ACH / Check"></div>
       <div class="fg"><label>Reference</label><input id="cpay-ref" value=""></div>
@@ -5516,10 +5706,10 @@ ${getCompanyName()}`;
 
   window.saveContractorPayment=function(){
     if(!Array.isArray(db.contractorPayments))db.contractorPayments=[];
-    var rec={id:uid('CPAY'),employeeId:document.getElementById('cpay-employee').value,date:document.getElementById('cpay-date').value||todayStr(),amount:+document.getElementById('cpay-amount').value||0,method:document.getElementById('cpay-method').value||'',reference:document.getElementById('cpay-ref').value||'',notes:document.getElementById('cpay-notes').value||''};
+    var rec={id:uid('CPAY'),employeeId:document.getElementById('cpay-employee').value,date:document.getElementById('cpay-date').value||today(0),amount:+document.getElementById('cpay-amount').value||0,method:document.getElementById('cpay-method').value||'',reference:document.getElementById('cpay-ref').value||'',notes:document.getElementById('cpay-notes').value||''};
     db.contractorPayments.unshift(rec);
     try{log('contractorPayments','Create',null,rec);}catch(e){}
-    save(db);closeModal();navigate('contractors1099', true);
+    save(db);closeModal();requestAnimationFrame(()=>navigate('contractors1099', true));
   };
 
   window.exportContractor1099Mock=function(){
@@ -5538,11 +5728,11 @@ ${getCompanyName()}`;
     var list=contractors(), missing=list.filter(function(e){return !(e.contractorProfile&&e.contractorProfile.w9Received);}).length, threshold=list.filter(function(e){return ytdPaid(e.id)>=600;}).length, total=list.reduce(function(a,e){return a+ytdPaid(e.id);},0);
     var rowsHtml=list.map(function(e){
       var p=e.contractorProfile||{}, paid=ytdPaid(e.id), st=contractorStatus(e);
-      return `<div class="c1099-row"><div><strong>${p.legalName||e.name}</strong><div class="c1099-meta">${e.role||''} · ${e.team||''} · ${e.employmentType||'Contractor / 1099'}<br>Payment: ${p.paymentMethod||e.payType||''} · Tax ID Last 4: ${p.taxIdLast4||'Missing'}</div><div class="c1099-tags">${badgeH(st.label,st.cls)}${badgeH('YTD '+moneySafe(paid),'bg-blue')}${p.w9Received?badgeH('W-9 Received','bg-green'):badgeH('Missing W-9','bg-red')}</div></div><div class="c1099-buttons"><button class="btn small" onclick="openContractorProfile('${e.id}')">Profile</button><button class="btn small secondary" onclick="openContractorPaymentForm('${e.id}')">Add Payment</button></div></div>`;
+      return `<div class="c1099-row"><div><strong>${p.legalName||e.name}</strong><div class="c1099-meta">${e.role||''} · ${e.team||''} · ${e.employmentType||'Contractor / 1099'}<br>Payment: ${p.paymentMethod||e.payType||''} · Tax ID Last 4: ${p.taxIdLast4||'Missing'}</div><div class="c1099-tags">${badgeH(st.label,st.cls)}${badgeH('YTD '+money(paid),'bg-blue')}${p.w9Received?badgeH('W-9 Received','bg-green'):badgeH('Missing W-9','bg-red')}</div></div><div class="c1099-buttons"><button class="btn small" onclick="openContractorProfile('${e.id}')">Profile</button><button class="btn small secondary" onclick="openContractorPaymentForm('${e.id}')">Add Payment</button></div></div>`;
     }).join('') || '<div class="c1099-note">No 1099 contractors found. Set an employee Employment Type to Contractor / 1099.</div>';
     return `<div class="c1099-hero"><div class="c1099-top"><div><h2>Contractors / 1099</h2><p>Track contractors, W-9 status, YTD payments and 1099 threshold readiness without storing full sensitive tax IDs.</p></div><div class="c1099-actions"><button class="btn" onclick="openContractorPaymentForm()">+ Contractor Payment</button><button class="btn secondary" onclick="exportContractor1099Mock()">Export Mock CSV</button><button class="btn secondary" onclick="navigate('employees')">Employees</button></div></div></div>
       <div class="c1099-note"><strong>Important:</strong> This is tracking only. It does not replace accounting, payroll, tax filing, QuickBooks, Gusto, ADP or a CPA.</div>
-      <div class="c1099-grid"><div class="c1099-kpi"><div class="label">Active Contractors</div><div class="value">${list.length}</div><div class="hint">1099 records</div></div><div class="c1099-kpi"><div class="label">Missing W-9</div><div class="value">${missing}</div><div class="hint">Needs follow-up</div></div><div class="c1099-kpi"><div class="label">1099 Threshold Met</div><div class="value">${threshold}</div><div class="hint">$600+ paid YTD</div></div><div class="c1099-kpi"><div class="label">YTD Contractor Paid</div><div class="value">${moneySafe(total)}</div><div class="hint">Demo payments</div></div></div>
+      <div class="c1099-grid"><div class="c1099-kpi"><div class="label">Active Contractors</div><div class="value">${list.length}</div><div class="hint">1099 records</div></div><div class="c1099-kpi"><div class="label">Missing W-9</div><div class="value">${missing}</div><div class="hint">Needs follow-up</div></div><div class="c1099-kpi"><div class="label">1099 Threshold Met</div><div class="value">${threshold}</div><div class="hint">$600+ paid YTD</div></div><div class="c1099-kpi"><div class="label">YTD Contractor Paid</div><div class="value">${money(total)}</div><div class="hint">Demo payments</div></div></div>
       <div class="c1099-secure-note"><strong>Production security:</strong> Full SSN/EIN, W-9 documents and bank details must be stored only with real authentication, strict role access, encryption/storage controls and audit logging.</div>
       <div class="c1099-card"><h3>Contractor Tracking Board</h3>${rowsHtml}</div>`;
   };
@@ -5558,7 +5748,7 @@ ${getCompanyName()}`;
     if(action==='save-payment') saveContractorPayment();
   },true);
 
-  function addContractorSidebar(){ /* disabled — renderNav handles this via HR & Field group */ }
+  function addContractorSidebar(){  }
 
   try{
     if(typeof navItems!=='undefined'&&Array.isArray(navItems)&&!navItems.some(function(x){return x[0]==='contractors1099'})){
@@ -5568,9 +5758,6 @@ ${getCompanyName()}`;
     if(translations&&translations.en){translations.en.contractors1099='Contractors / 1099';translations.en.contractors1099Sub='W-9, YTD paid and 1099 tracking';}
     if(translations&&translations.es){translations.es.contractors1099='Contratistas / 1099';translations.es.contractors1099Sub='W-9, pagos YTD y seguimiento 1099';}
   }catch(e){}
-
-  var oldRender=window.render;
-  // addContractorSidebar render wrapper removed
   document.addEventListener('DOMContentLoaded',function(){setTimeout(addContractorSidebar,300);});
   document.addEventListener('click',function(){setTimeout(addContractorSidebar,250);},true);
 
@@ -5579,7 +5766,7 @@ ${getCompanyName()}`;
     views.dashboard=function(){
       ensureContractorData();
       var html=oldDash(), list=contractors(), missing=list.filter(function(e){return !(e.contractorProfile&&e.contractorProfile.w9Received);}).length, threshold=list.filter(function(e){return ytdPaid(e.id)>=600;}).length, total=list.reduce(function(a,e){return a+ytdPaid(e.id);},0);
-      var extra=`<div class="c1099-grid"><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">Active Contractors</div><div class="value">${list.length}</div><div class="hint">1099 tracked</div></div><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">Missing W-9</div><div class="value">${missing}</div><div class="hint">Needs follow-up</div></div><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">1099 Threshold Met</div><div class="value">${threshold}</div><div class="hint">$600+ YTD</div></div><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">Contractor YTD Paid</div><div class="value">${moneySafe(total)}</div><div class="hint">Demo tracking</div></div></div>`;
+      var extra=`<div class="c1099-grid"><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">Active Contractors</div><div class="value">${list.length}</div><div class="hint">1099 tracked</div></div><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">Missing W-9</div><div class="value">${missing}</div><div class="hint">Needs follow-up</div></div><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">1099 Threshold Met</div><div class="value">${threshold}</div><div class="hint">$600+ YTD</div></div><div class="c1099-kpi" onclick="navigate('contractors1099')" style="cursor:pointer"><div class="label">Contractor YTD Paid</div><div class="value">${money(total)}</div><div class="hint">Demo tracking</div></div></div>`;
       return html.replace('<div class="cc291-charts">',extra+'<div class="cc291-charts">');
     };
   }
