@@ -678,12 +678,16 @@ async function doLogin() {
 
     currentUser = user;
 
-    // Intentar cargar datos desde Supabase; si falla usar localStorage/demo
+    // Cargar datos desde Supabase
     btn.textContent = 'Loading data…';
     const cloudData = await loadFromSupabase();
-    if (cloudData) {
+    if (cloudData && cloudData.customers !== undefined) {
+      // Supabase respondió bien — usar esos datos
       db = cloudData;
+      // Actualizar localStorage con datos frescos de Supabase
+      try { localStorage.setItem(storageKey, JSON.stringify(db)); } catch(e) {}
     } else {
+      // Fallback a localStorage si Supabase falla completamente
       db = load();
     }
 
@@ -708,7 +712,7 @@ async function doLogin() {
       if (noteEl) noteEl.textContent = `${user.name} · ${user.role}`;
     }
 
-    const _req=['customers','addresses','vendors','services','stores','jobs','estimates','estimate_lines','invoices','invoice_lines','payments','expenses','bills','inventory','tasks','users','auditLog','audits','contractors'];
+    const _req=['customers','addresses','vendors','services','stores','jobs','estimates','estimate_lines','invoices','invoice_lines','payments','expenses','bills','inventory','tasks','users','auditLog','audits','contractors','employees','teams','calendar'];
     _req.forEach(k=>{if(!Array.isArray(db[k]))db[k]=[];});
     if(!db.company)db.company={};
     if(!db.catalogs)db.catalogs={};
@@ -762,6 +766,9 @@ function demoData(){return {
   auditLog:[],
   audits:[],
   contractors:[],
+  employees:[],
+  teams:[],
+  calendar:[],
   counter:{customer:1000,vendor:1000,service:1000,store:1000,job:1000,estimate:1000,invoice:1000,payment:1000,expense:1000,task:1000,inventory:1000}
 }}
 // load() — cache local; la fuente de verdad es Supabase (cargado en doLogin)
@@ -874,7 +881,22 @@ function expandGroupForView(view){
  const g=groups[view];
  if(g&&state.navCollapsed[g]){state.navCollapsed[g]=false;localStorage.setItem('bruno360-nav-collapsed',JSON.stringify(state.navCollapsed));}
 }
-function navigate(view){if(!allowed(view)) view='dashboard'; expandGroupForView(view); state.view=view; renderNav(); const title=tr(view), sub=tr(view+'Sub')||''; document.getElementById('pageTitle').textContent=title; document.getElementById('pageSub').textContent=sub; document.getElementById('content').innerHTML=views[view](); bindSearch(); if(window.innerWidth<1020)document.getElementById('sidebar').classList.remove('open')}
+function navigate(view, force=false){
+  if(!allowed(view)) view='dashboard';
+  expandGroupForView(view);
+  const sameView = (state.view === view);
+  state.view = view;
+  renderNav();
+  const title=tr(view), sub=tr(view+'Sub')||'';
+  document.getElementById('pageTitle').textContent=title;
+  document.getElementById('pageSub').textContent=sub;
+  // Only re-render content if view changed OR force=true
+  if(!sameView || force){
+    document.getElementById('content').innerHTML=views[view]?views[view]():'';
+    bindSearch();
+  }
+  if(window.innerWidth<1020)document.getElementById('sidebar').classList.remove('open');
+}
 function setRole(r){state.role=r; if(!allowed(state.view))state.view='dashboard'; navigate(state.view)}
 function toggleLang(){state.lang=state.lang==='en'?'es':'en'; document.documentElement.lang=state.lang; document.getElementById('langBtn').textContent=state.lang==='en'?'ES':'EN'; init()}
 function toggleMenu(){document.getElementById('sidebar').classList.toggle('open')}
@@ -979,7 +1001,10 @@ const views={
 function jobCards(jobs){return jobs.map(j=>`<div class="alert ${j.status==='Completed'&&!j.invoiceId?'red':''}"><div class="mark"></div><div><strong>${j.id} · ${customerName(j.customerId)}</strong><span>${j.date} ${j.time} · ${serviceName(j.serviceId)} · ${j.team} · ${badge(j.status)}</span><span>Check-in: ${j.checkIn||'-'} · Check-out: ${j.checkOut||'-'} · Photos: ${j.photos}</span></div></div>`).join('')||'<p class="role-note">No jobs.</p>'}
 function calendarDays(){let out=''; for(let i=0;i<14;i++){const d=today(i-3); const dayJobs=db.jobs.filter(j=>j.date===d); out+=`<div class="day"><div class="num">${new Date(d+'T00:00:00').getDate()}</div>${dayJobs.map(j=>`<div class="event">${j.time} ${customerName(j.customerId).split(' ')[0]}</div>`).join('')}</div>`} return out}
 function openModal(title,body,foot){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=body;document.getElementById('modalFoot').innerHTML=foot||`<button class="btn secondary" onclick="closeModal()">${tr('cancel')}</button>`;document.getElementById('modalBackdrop').classList.add('open')}
-function closeModal(){document.getElementById('modalBackdrop').classList.remove('open')}
+function closeModal(){
+  document.getElementById('modalBackdrop').classList.remove('open');
+  document.getElementById('modalBody').innerHTML='';
+}
 function customerOptions(){return db.customers.map(c=>`<option value="${c.name}">${c.id} · ${c.email||''}</option><option value="${c.id}">${c.name}</option>`).join('')}
 function resolveCustomerLookup(v){v=(v||'').trim(); if(!v)return null; return db.customers.find(c=>c.id.toLowerCase()===v.toLowerCase()||c.name.toLowerCase()===v.toLowerCase())||null}
 function quickAddCustomerFromInvoice(){const name=(document.getElementById('f-customerLookup')?.value||'').trim(); if(!name){alert('Type the customer name first. / Escribe primero el nombre del cliente.');return} let existing=resolveCustomerLookup(name); if(existing){document.getElementById('f-customerId').value=existing.id; document.getElementById('customer-found-msg').innerHTML='Selected / Seleccionado: '+existing.name; return} const c={id:uid('CUS'),name:name,type:'Commercial',email:'',phone:'',address:'',terms:'Net 15',language:state.lang.toUpperCase(),status:'Active',credit:0}; db.customers.unshift(c); log('Customers','Quick Create from Invoice',null,c); save(db); document.getElementById('f-customerId').value=c.id; document.getElementById('customer-found-msg').innerHTML='New customer added / Cliente agregado: '+c.name+' ('+c.id+')'}
@@ -1009,7 +1034,7 @@ function editFieldHtml(f,type,value){value=value??''; const label=f.replace(/([A
  const inputType=type==='number'?'number':type==='date'?'date':'text'; const step=type==='number'?' step="0.01"':''; return `<div class="fg"><label>${label}</label><input id="edit-${f}" type="${inputType}"${step} value="${String(value).replaceAll('"','&quot;')}"></div>`;
 }
 function openEdit(module,id){const list=module==='jobs'?'jobs':module; const rec=db[list]?.find(x=>x.id===id); if(!rec){alert('Record not found / Registro no encontrado');return} if(!canEditModule(module)){alert('You do not have permission to edit this record. / No tienes permiso para editar este registro.');return} const fields=editableMap[module]; if(!fields){alert('Edit not available for this module yet. / Edición no disponible para este módulo.');return} const body=`<p class="role-note">Editing / Editando: <strong>${id}</strong></p><div class="form-grid">${fields.map(([f,t])=>editFieldHtml(f,t,rec[f])).join('')}</div>`; openModal(`Edit ${tr(module)} / Editar ${tr(module)}`,body,`<button class="btn secondary" onclick="closeModal()">${tr('cancel')}</button><button class="btn" onclick="saveEdit('${module}','${id}')">Save Changes</button>`)}
-function saveEdit(module,id){const list=module==='jobs'?'jobs':module; const rec=db[list]?.find(x=>x.id===id); if(!rec)return; const before=JSON.parse(JSON.stringify(rec)); (editableMap[module]||[]).forEach(([f,t])=>{const el=document.getElementById('edit-'+f); if(!el)return; let val=el.value; if(t==='number')val=+val||0; rec[f]=val}); if(module==='invoices'||module==='estimates'){rec.subtotal=+rec.subtotal||0; rec.tax=+(rec.subtotal*db.company.taxRate/100).toFixed(2); rec.total=rec.subtotal+rec.tax; if(module==='invoices')recalcInvoicePaymentStatus(rec.id)} if(module==='stores')rec.price=+rec.price||0; if(module==='services')rec.price=+rec.price||0; log(module,'Edit',before,rec); save(db); closeModal(); navigate(state.view); const _syncTable=module==='jobs'?'jobs':module; dbCall('upsert',_syncTable,{data:rec}); }
+function saveEdit(module,id){const list=module==='jobs'?'jobs':module; const rec=db[list]?.find(x=>x.id===id); if(!rec)return; const before=JSON.parse(JSON.stringify(rec)); (editableMap[module]||[]).forEach(([f,t])=>{const el=document.getElementById('edit-'+f); if(!el)return; let val=el.value; if(t==='number')val=+val||0; rec[f]=val}); if(module==='invoices'||module==='estimates'){rec.subtotal=+rec.subtotal||0; rec.tax=+(rec.subtotal*db.company.taxRate/100).toFixed(2); rec.total=rec.subtotal+rec.tax; if(module==='invoices')recalcInvoicePaymentStatus(rec.id)} if(module==='stores')rec.price=+rec.price||0; if(module==='services')rec.price=+rec.price||0; log(module,'Edit',before,rec); save(db); closeModal(); navigate(state.view, true); const _syncTable=module==='jobs'?'jobs':module; dbCall('upsert',_syncTable,{data:rec}); }
 
 function openForm(module){const simple={customers:['name','type','email','phone','address'],vendors:['name','category','email','phone'],services:['name','type','pricing','price'],stores:['activeStatus','type','itemDescription','salesTaxCode','account','price'],jobs:['customerId','serviceId','date','time','team'],estimates:['customerId','subtotal','notes'],invoices:['customerId','subtotal','due','notes','memo'],payments:['invoiceId','date','origAmt','amountDue','amount','remaining','method','reference'],expenses:['vendorId','customerId','category','amount','notes'],inventory:['sku','name','category','type','qty','min','cost'],tasks:['title','desc','owner','due']};
  let body='';
@@ -1022,7 +1047,7 @@ function openForm(module){const simple={customers:['name','type','email','phone'
   const fields=simple[module]||['name']; body=`<div class="form-grid">${fields.map(f=>`<div class="fg"><label>${f}</label><input id="f-${f}" type="${['date','due'].includes(f)?'date':'text'}"></div>`).join('')}</div>`;
  }
  const foot=`<button class="btn secondary" onclick="closeModal()">${tr('cancel')}</button><button class="btn" onclick="saveSimple('${module}')">${tr('save')}</button>`; openModal(`${tr('new')} ${module}`,body,foot)}
-function saveSimple(module){const values={}; document.querySelectorAll('#modalBody input,#modalBody select,#modalBody textarea').forEach(i=>{if(i.id&&i.id.startsWith('f-'))values[i.id.replace('f-','')]=i.value}); const map={customers:'CUS',vendors:'VEN',services:'SVC',stores:'STORE',jobs:'JOB',estimates:'EST',invoices:'INV',payments:'PAY',expenses:'EXP',inventory:'INVITEM',tasks:'TASK'}; values.id=uid(map[module]||'REC'); if(module==='invoices'){let c=resolveCustomerLookup(values.customerLookup)||db.customers.find(x=>x.id===values.customerId); if(!c){alert('Customer not found. Add the customer before saving the invoice. / Cliente no encontrado. Agrega el cliente antes de guardar la factura.');return} values.customerId=c.id; delete values.customerLookup; values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax;values.paid=0;values.writeOff=0} if(module==='estimates'){values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax} if(module==='payments'){const inv=db.invoices.find(i=>i.id===document.getElementById('pay-invoice')?.value||values.invoiceId); if(!inv){alert('Select a valid invoice / Selecciona una factura válida');return} values.invoiceId=inv.id;values.customerId=inv.customerId;values.date=document.getElementById('pay-date')?.value||today(0);values.origAmt=+document.getElementById('pay-orig')?.value||(+inv.total||0);values.amountDue=+document.getElementById('pay-dueamt')?.value||invoiceBalance(inv);values.amount=+document.getElementById('pay-amount')?.value||0;values.remaining=+document.getElementById('pay-remaining')?.value||Math.max(0,values.amountDue-values.amount);values.method=document.getElementById('pay-method')?.value||values.method;values.reference=document.getElementById('pay-ref')?.value||values.reference;values.proof=document.getElementById('pay-proof')?.value||'';values.recon='Pending Review';} if(module==='inventory'){values.qty=+values.qty||0;values.min=+values.min||0;values.cost=+values.cost||0;values.status='Active'} if(module==='jobs'){values.status='Scheduled';values.invoiceId=null;values.checkIn=null;values.checkOut=null;values.photos=0} if(module==='expenses'){values.date=today(0);values.amount=+values.amount||0;values.status='Pending Review'} if(module==='stores'){values.price=+values.price||0; values.activeStatus=values.activeStatus||'Active'} if(module==='customers'||module==='vendors'||module==='services'){values.status='Active'} const list=module==='jobs'?'jobs':module; db[list].unshift(values); if(module==='payments')recalcInvoicePaymentStatus(values.invoiceId); log(module,'Create',null,values); save(db); closeModal(); navigate(state.view); dbCall('upsert', module==='jobs'?'jobs':module, { data: values }); }
+function saveSimple(module){const values={}; document.querySelectorAll('#modalBody input,#modalBody select,#modalBody textarea').forEach(i=>{if(i.id&&i.id.startsWith('f-'))values[i.id.replace('f-','')]=i.value}); const map={customers:'CUS',vendors:'VEN',services:'SVC',stores:'STORE',jobs:'JOB',estimates:'EST',invoices:'INV',payments:'PAY',expenses:'EXP',inventory:'INVITEM',tasks:'TASK'}; values.id=uid(map[module]||'REC'); if(module==='invoices'){let c=resolveCustomerLookup(values.customerLookup)||db.customers.find(x=>x.id===values.customerId); if(!c){alert('Customer not found. Add the customer before saving the invoice. / Cliente no encontrado. Agrega el cliente antes de guardar la factura.');return} values.customerId=c.id; delete values.customerLookup; values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax;values.paid=0;values.writeOff=0} if(module==='estimates'){values.date=today(0);values.status='Draft';values.subtotal=+values.subtotal||0;values.tax=+(values.subtotal*db.company.taxRate/100).toFixed(2);values.total=values.subtotal+values.tax} if(module==='payments'){const inv=db.invoices.find(i=>i.id===document.getElementById('pay-invoice')?.value||values.invoiceId); if(!inv){alert('Select a valid invoice / Selecciona una factura válida');return} values.invoiceId=inv.id;values.customerId=inv.customerId;values.date=document.getElementById('pay-date')?.value||today(0);values.origAmt=+document.getElementById('pay-orig')?.value||(+inv.total||0);values.amountDue=+document.getElementById('pay-dueamt')?.value||invoiceBalance(inv);values.amount=+document.getElementById('pay-amount')?.value||0;values.remaining=+document.getElementById('pay-remaining')?.value||Math.max(0,values.amountDue-values.amount);values.method=document.getElementById('pay-method')?.value||values.method;values.reference=document.getElementById('pay-ref')?.value||values.reference;values.proof=document.getElementById('pay-proof')?.value||'';values.recon='Pending Review';} if(module==='inventory'){values.qty=+values.qty||0;values.min=+values.min||0;values.cost=+values.cost||0;values.status='Active'} if(module==='jobs'){values.status='Scheduled';values.invoiceId=null;values.checkIn=null;values.checkOut=null;values.photos=0} if(module==='expenses'){values.date=today(0);values.amount=+values.amount||0;values.status='Pending Review'} if(module==='stores'){values.price=+values.price||0; values.activeStatus=values.activeStatus||'Active'} if(module==='customers'||module==='vendors'||module==='services'){values.status='Active'} const list=module==='jobs'?'jobs':module; db[list].unshift(values); if(module==='payments')recalcInvoicePaymentStatus(values.invoiceId); log(module,'Create',null,values); save(db); closeModal(); navigate(state.view, true); dbCall('upsert', module==='jobs'?'jobs':module, { data: values }); }
 function paymentFormHtml(invId='',p=null){
  const selectedId=p?.invoiceId||invId||'';
  const opts=db.invoices.map(i=>`<option value="${i.id}" ${i.id===selectedId?'selected':''}>${i.id} · ${customerName(i.customerId)} · Open ${money(invoiceBalance(i))}</option>`).join('');
@@ -1035,7 +1060,7 @@ function savePayment(){
  if(amount<=0){alert('Enter a payment amount greater than zero. / Ingresa un pago mayor a cero.');return;}
  if(amount>amountDue){if(!confirm('Payment is greater than amount due. Continue? / El pago es mayor al saldo. ¿Continuar?'))return;}
  const p={id:uid('PAY'),invoiceId:inv.id,customerId:inv.customerId,date:document.getElementById('pay-date').value||today(0),origAmt:+document.getElementById('pay-orig').value||(+inv.total||0),amountDue,amount,remaining:Math.max(0,amountDue-amount),method:document.getElementById('pay-method').value,reference:document.getElementById('pay-ref').value,recon:'Pending Review',proof:document.getElementById('pay-proof').value};
- db.payments.unshift(p); recalcInvoicePaymentStatus(inv.id); log('Payments','Create',null,p); log('Invoices','Apply Payment',before,inv); save(db); closeModal(); navigate('payments')
+ db.payments.unshift(p); recalcInvoicePaymentStatus(inv.id); log('Payments','Create',null,p); log('Invoices','Apply Payment',before,inv); save(db); closeModal(); navigate('payments', true)
 }
 function editPayment(id){
  const p=db.payments.find(x=>x.id===id); if(!p)return; const inv=db.invoices.find(i=>i.id===p.invoiceId);
@@ -1049,7 +1074,7 @@ function savePaymentEdit(id){
  if(amount<=0){alert('Enter a payment amount greater than zero. / Ingresa un pago mayor a cero.');return;}
  if(amount>amountDue){if(!confirm('Payment is greater than amount due. Continue? / El pago es mayor al saldo. ¿Continuar?'))return;}
  p.date=document.getElementById('pay-date').value||p.date; p.origAmt=+document.getElementById('pay-orig').value||p.origAmt; p.amountDue=amountDue; p.amount=amount; p.remaining=Math.max(0,amountDue-p.amount); p.method=document.getElementById('pay-method').value; p.reference=document.getElementById('pay-ref').value; p.proof=document.getElementById('pay-proof').value; p.recon='Pending Review';
- recalcInvoicePaymentStatus(p.invoiceId); log('Payments','Edit',before,p); save(db); closeModal(); navigate('payments')
+ recalcInvoicePaymentStatus(p.invoiceId); log('Payments','Edit',before,p); save(db); closeModal(); navigate('payments', true)
 }
 function convertEstimate(id){const e=db.estimates.find(x=>x.id===id); if(!e)return; const inv={id:uid('INV'),customerId:e.customerId,date:today(0),due:today(15),status:'Draft',subtotal:e.subtotal,tax:e.tax,total:e.total,paid:0,writeOff:0,notes:'Converted from '+e.id,memo:'Created from accepted estimate '+e.id}; const before={...e}; e.status='Converted to Invoice'; db.invoices.unshift(inv); log('Estimates','Convert to Invoice',before,e); save(db); navigate('invoices')}
 function simulateCheckin(){const j=db.jobs.find(x=>x.status==='Scheduled'); if(!j)return alert('No scheduled jobs'); const before={...j}; j.status='Completed'; j.checkIn='09:03'; j.checkOut='11:18'; j.photos=6; log('Calendar','Check-in/out',before,j); save(db); navigate('calendar')}
@@ -1402,7 +1427,7 @@ function saveCalendarEvent(id=''){
   if(!rec.customer || !rec.date){alert('Customer and date are required / Cliente y fecha son requeridos');return}
   if(id){const idx=db.calendar.findIndex(x=>x.id===id); if(idx>=0){const before={...db.calendar[idx]}; db.calendar[idx]=rec; log('Calendar','Edit',before,rec);}}
   else{db.calendar.unshift(rec); log('Calendar','Create',null,rec);}
-  ensureV20Data(); save(db); closeModal(); navigate('calendar');
+  ensureV20Data(); save(db); closeModal(); navigate('calendar', true);
 }
 
 views.customers=function(){ensureV20Data(); return toolbar('customers')+`<div class="supabase-note">v20 update: customer locations were added to prepare the future customer_locations table.</div>`+table([tr('customer'),tr('type'),'Locations',tr('email'),tr('phone'),'Terms',tr('status'),tr('balance'),tr('actions')],db.customers.map(c=>`<tr><td><strong>${c.name}</strong><br><span class="role-note">${c.address}</span></td><td>${c.type}</td><td>${customerLocations(c.id).length} location(s)<br><button class="btn micro secondary" onclick="openCustomerLocations('${c.id}')">Locations</button></td><td>${c.email}</td><td>${c.phone}</td><td>${c.terms}</td><td>${badge(c.status)}</td><td>${money(db.invoices.filter(i=>i.customerId===c.id).reduce((a,i)=>a+invoiceBalance(i),0)-c.credit)}</td><td>${editBtn('customers',c.id)}</td></tr>`))};
@@ -3459,7 +3484,7 @@ ${getCompanyName()}`;
       db.employees.unshift(record);
       try{log('employees','Create',null,record)}catch(e){}
     }
-    save(db); closeModal(); navigate('employees');
+    save(db); closeModal(); navigate('employees', true);
   };
 
   window.setEmployeeStatus=function(id,status){
@@ -3836,7 +3861,7 @@ ${getCompanyName()}`;
       db.teams.unshift(record);
       try{log('teams','Create',null,record)}catch(e){}
     }
-    save(db);closeModal();navigate('teams');
+    save(db);closeModal();navigate('teams', true);
   };
   window.setTeamStatus=function(id,status){
     var t=rows31('teams').find(function(x){return x.id===id});
@@ -4557,9 +4582,9 @@ ${getCompanyName()}`;
   }
   var oldRender=window.render;
   if(typeof oldRender==='function'){
-    window.render=function(){ oldRender(); setTimeout(addSidebar,0); setTimeout(addSidebar,150); };
+    // addSidebar render wrapper removed — handled by renderNav
   }
-  document.addEventListener('DOMContentLoaded',function(){ setTimeout(addSidebar,150); setTimeout(addSidebar,700); });
+  // addSidebar DOMContentLoaded listener removed
   setTimeout(addSidebar,400);
 
   var oldDash=views.dashboard;
@@ -4997,7 +5022,7 @@ ${getCompanyName()}`;
 
   var oldRender=window.render;
   if(typeof oldRender==='function'){
-    window.render=function(){ oldRender(); setTimeout(addAssignmentSidebar,0); setTimeout(addAssignmentSidebar,200); };
+    // addAssignmentSidebar render wrapper removed
   }
   document.addEventListener('DOMContentLoaded',function(){ setTimeout(addAssignmentSidebar,300); });
   document.addEventListener('click',function(){ setTimeout(addAssignmentSidebar,250); },true);
@@ -5510,7 +5535,7 @@ ${getCompanyName()}`;
     var rec={id:uid('CPAY'),employeeId:document.getElementById('cpay-employee').value,date:document.getElementById('cpay-date').value||todayStr(),amount:+document.getElementById('cpay-amount').value||0,method:document.getElementById('cpay-method').value||'',reference:document.getElementById('cpay-ref').value||'',notes:document.getElementById('cpay-notes').value||''};
     db.contractorPayments.unshift(rec);
     try{log('contractorPayments','Create',null,rec);}catch(e){}
-    save(db);closeModal();navigate('contractors1099');
+    save(db);closeModal();navigate('contractors1099', true);
   };
 
   window.exportContractor1099Mock=function(){
@@ -5561,7 +5586,7 @@ ${getCompanyName()}`;
   }catch(e){}
 
   var oldRender=window.render;
-  if(typeof oldRender==='function'){window.render=function(){oldRender();setTimeout(addContractorSidebar,0);setTimeout(addContractorSidebar,200);};}
+  // addContractorSidebar render wrapper removed
   document.addEventListener('DOMContentLoaded',function(){setTimeout(addContractorSidebar,300);});
   document.addEventListener('click',function(){setTimeout(addContractorSidebar,250);},true);
 
