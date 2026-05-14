@@ -807,6 +807,8 @@ let db=load();
 // ── Global helper functions (used by all modules) ──────────
 function rows(name){ return Array.isArray(db && db[name]) ? db[name] : []; }
 function arr(name){ return rows(name); }
+window.rows = rows;
+window.arr = arr;
 
 function tr(k){return (T[state.lang]&&T[state.lang][k])||k}
 function tStatus(s){const map={'Partially Paid':'partial','Written Off':'writeoff','In Progress':'inprogress','Converted to Invoice':'converted','Pending Review':'open','Requires Review':'open'};return tr(map[s]||String(s).toLowerCase().replaceAll(' ','').replaceAll('/',''))||s}
