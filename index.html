@@ -883,7 +883,13 @@ function expandGroupForView(view){
 }
 function updateNavActive(view){
   // Just update active class — much faster than full renderNav()
-  document.querySelectorAll('#nav button[data-key]').forEach(btn=>{
+  const btns = document.querySelectorAll('#nav button[data-key]');
+  if(!btns.length){
+    // Nav not built yet — do full renderNav
+    renderNav();
+    return;
+  }
+  btns.forEach(btn=>{
     btn.classList.toggle('active', btn.dataset.key === view);
   });
 }
@@ -896,9 +902,10 @@ function navigate(view, force=false){
   const title=tr(view), sub=tr(view+'Sub')||'';
   document.getElementById('pageTitle').textContent=title;
   document.getElementById('pageSub').textContent=sub;
-  // Only re-render content if view changed OR force=true
-  if(!sameView || force){
-    document.getElementById('content').innerHTML=views[view]?views[view]():'';
+  // Only re-render content if view changed OR force=true OR content is empty
+  const contentEl = document.getElementById('content');
+  if(!sameView || force || !contentEl.innerHTML.trim()){
+    contentEl.innerHTML = views[view] ? views[view]() : '';
     bindSearch();
   }
   if(window.innerWidth<1020)document.getElementById('sidebar').classList.remove('open');
