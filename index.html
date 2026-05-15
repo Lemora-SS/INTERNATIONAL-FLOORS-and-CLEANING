@@ -575,13 +575,13 @@ body.collapsed .ftv-menu-persist span:last-child,
   <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="brand-top">
-        <img class="mascot" src="https://i.ibb.co/NgvDHJt/bruno360-mascot.png" onerror="this.style.display='none'" alt="BRUNO360"/>
+        <div style="font-size:48px;text-align:center;padding:8px">🧹</div>
       </div>
     </div>
     <nav class="nav" id="nav"></nav>
     <div class="sidebar-footer">
       <div class="powered-wrap">
-        <img class="powered-logo" src="https://i.ibb.co/4Z8QZQV/lemora-logo.png" onerror="this.style.display='none'" alt="Lemora Solutions"/>
+        <span style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);letter-spacing:.05em">LEMORA SOLUTIONS</span>
       </div>
       <div class="footer-note" id="user-info">BRUNO360 v2</div>
     </div>
@@ -931,8 +931,24 @@ function initDbArrays() {
   }
 }
 
+// Module → Supabase table name mapping
+const _tableMap = {
+  contractors1099: 'contractors',
+  jobAssignments:  'jobs',
+  audits:          'audits',
+  fieldTeam:       null,   // no table — read-only view
+  modules:         null,   // no table
+  dashboard:       null,   // no table
+  reports:         null,   // no table
+  devCatalog:      null,   // no table
+  auditoria:       null    // uses audit_log
+};
+
 // Sync a record to Supabase in background (fire and forget)
-function syncToCloud(table, record) {
+function syncToCloud(module, record) {
+  if (!record || !record.id) return;
+  const table = _tableMap.hasOwnProperty(module) ? _tableMap[module] : module;
+  if (!table) return; // view-only module
   dbCall('upsert', table, { data: record });
 }
 
@@ -1417,6 +1433,11 @@ function saveNew(module) {
   log(module, 'Create', null, values);
   save(db);
 
+  // Clean numeric fields before sync — empty string → 0
+  const numericFields = ['credit','price','basePrice','subtotal','tax','total','paid','writeOff',
+    'amount','cost','qty','min','payRate','rate','ytdPaid','openBalance','pricePerCleaning'];
+  numericFields.forEach(f => { if (values[f] === '' || values[f] === undefined) values[f] = 0; });
+
   // Sync to Supabase in background
   syncToCloud(module, values);
 
@@ -1447,6 +1468,10 @@ function saveEdit(module, id) {
 
   log(module, 'Edit', before, rec);
   save(db);
+  // Clean numeric fields before sync
+  const _numFields = ['credit','price','basePrice','subtotal','tax','total','paid','writeOff',
+    'amount','cost','qty','min','payRate','rate','ytdPaid','openBalance','pricePerCleaning'];
+  _numFields.forEach(f => { if (rec[f] === '' || rec[f] === undefined) rec[f] = 0; });
   syncToCloud(module, rec);
   closeModal();
   navigate(state.view, true);
@@ -2175,7 +2200,7 @@ const views = {
         <h3>Company Settings / Configuración de Empresa</h3>
         <div class="form-grid">
           ${fields.map(k=>`<div class="fg"><label>${k}</label>
-            <input value="${co[k]||''}" onchange="db.company['${k}']=this.value;save(db);syncToCloud('company',db.company)">
+            <input value="${co[k]||''}" onchange="db.company['${k}']=this.value;save(db);dbCall('updateCompany',null,{data:db.company})">
           </div>`).join('')}
           <div class="fg"><label>Default Language</label>
             <select onchange="db.company.defaultLang=this.value;save(db)">
@@ -2793,6 +2818,8 @@ function removeCatalogItem(k, idx) {
   db.catalogs[k].splice(idx, 1);
   log('Catalogs','Remove item',k,idx);
   save(db);
+  // Sync catalogs to Supabase
+  dbCall('updateCatalogs', null, { data: db.catalogs });
   navigate('catalogs', true);
 }
 
@@ -2803,6 +2830,8 @@ function addCatalogItem(k) {
   db.catalogs[k].push(el.value.trim());
   log('Catalogs','Add item',k,el.value.trim());
   save(db);
+  // Sync catalogs to Supabase
+  dbCall('updateCatalogs', null, { data: db.catalogs });
   el.value = '';
   navigate('catalogs', true);
 }
