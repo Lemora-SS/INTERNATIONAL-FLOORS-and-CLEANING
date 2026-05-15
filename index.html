@@ -1433,10 +1433,17 @@ function saveNew(module) {
   log(module, 'Create', null, values);
   save(db);
 
-  // Clean numeric fields before sync — empty string → 0
-  const numericFields = ['credit','price','basePrice','subtotal','tax','total','paid','writeOff',
-    'amount','cost','qty','min','payRate','rate','ytdPaid','openBalance','pricePerCleaning'];
-  numericFields.forEach(f => { if (values[f] === '' || values[f] === undefined) values[f] = 0; });
+  // Clean numeric fields — only fix fields that already exist in the record
+  Object.keys(values).forEach(f => {
+    if (typeof values[f] === 'string' && values[f] === '') {
+      // Check if this field should be numeric based on formFields definition
+      const fieldDef = (formFields[module]||[]).find(([name])=>name===f);
+      if (fieldDef && (fieldDef[1]==='number' || fieldDef[1].startsWith('catalog:'))) {
+        // Only zero out if the field type is number
+        if (fieldDef[1]==='number') values[f] = 0;
+      }
+    }
+  });
 
   // Sync to Supabase in background
   syncToCloud(module, values);
@@ -1468,10 +1475,13 @@ function saveEdit(module, id) {
 
   log(module, 'Edit', before, rec);
   save(db);
-  // Clean numeric fields before sync
-  const _numFields = ['credit','price','basePrice','subtotal','tax','total','paid','writeOff',
-    'amount','cost','qty','min','payRate','rate','ytdPaid','openBalance','pricePerCleaning'];
-  _numFields.forEach(f => { if (rec[f] === '' || rec[f] === undefined) rec[f] = 0; });
+  // Clean numeric fields — only fix fields defined as number in formFields
+  Object.keys(rec).forEach(f => {
+    if (rec[f] === '' || rec[f] === undefined) {
+      const fieldDef = (formFields[module]||[]).find(([name])=>name===f);
+      if (fieldDef && fieldDef[1]==='number') rec[f] = 0;
+    }
+  });
   syncToCloud(module, rec);
   closeModal();
   navigate(state.view, true);
