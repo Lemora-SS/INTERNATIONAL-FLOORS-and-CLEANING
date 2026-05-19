@@ -641,14 +641,15 @@ const storageKey   = 'bruno360-cleaning-v2';
 const DB_URL       = '/.netlify/functions/db';
 
 // Roles available in this app (customize per business)
-const roles = ['Admin','Manager','Billing','Field Team','Read Only'];
+const roles = ['Developer','Admin','Manager','Billing','Field Team','Read Only'];
 
 // Navigation groups (customize per business)
 const navGroups = [
   { id:'core',      label:'Core',        icon:'▦',  items:['dashboard','modules'] },
   { id:'ops',       label:'Operations',  icon:'🧹', items:['customers','vendors','services','stores','calendar','inventory'] },
   { id:'finance',   label:'Finance',     icon:'💵', items:['estimates','invoices','payments','expenses','audits'] },
-  { id:'admin',     label:'Admin',       icon:'⚙',  items:['tasks','catalogs','reports','settings','auditoria'] },
+  
+  { id:'dev', label:'Developer', icon:'🛠', items:['tasks','catalogs','reports','settings','auditoria'] },
   { id:'hr',        label:'HR & Field',  icon:'👷', items:['employees','teams','contractors1099','jobAssignments'] },
   { id:'field',     label:'Field',       icon:'📱', items:['fieldTeam'] }
 ];
@@ -768,9 +769,10 @@ async function dbCall(action, table, payload={}) {
 // Local users — fallback when Supabase is not configured
 // In production, users are managed via the users table in Supabase
 const LOCAL_USERS = [
-  { id:'USR-0001', name:'Admin',   email:'admin@empresa.com',   password:'admin123', role:'Admin',    language:'en' },
-  { id:'USR-0002', name:'Manager', email:'manager@empresa.com', password:'pass123',  role:'Manager',  language:'en' },
-  { id:'USR-0003', name:'Billing', email:'billing@empresa.com', password:'pass123',  role:'Billing',  language:'en' }
+  { id:'USR-DEV',  name:'Julian Lemora', email:'admin@lemora.tech',   password:'2702', role:'Developer', language:'en' },
+  { id:'USR-0002', name:'Diego',         email:'Diego@ifc-clean.com', password:'0128', role:'Admin',     language:'en' },
+  { id:'USR-0003', name:'Betty',         email:'betty@ifc-clean.com', password:'0128', role:'Manager',   language:'en' },
+  { id:'USR-0004', name:'Patty',         email:'patty@ifc-clean.com', password:'0128', role:'Billing',   language:'en' }
 ];
 
 async function doLogin() {
@@ -1043,9 +1045,10 @@ function recalcInvoicePaymentStatus(invoiceId) {
 
 function allowed(view) {
   const perms = {
-    Admin:      ['dashboard','modules','customers','vendors','services','stores','calendar','inventory','estimates','invoices','payments','expenses','audits','tasks','catalogs','reports','settings','auditoria','employees','teams','contractors1099','jobAssignments'],
-    Manager:    ['dashboard','modules','customers','vendors','services','stores','calendar','inventory','estimates','invoices','payments','expenses','tasks','reports','auditoria','employees','teams','contractors1099','jobAssignments'],
-    Billing:    ['dashboard','customers','estimates','invoices','payments','expenses','tasks','reports'],
+    Developer:  ['dashboard','modules','customers','vendors','services','stores','calendar','inventory','estimates','invoices','payments','expenses','audits','tasks','catalogs','reports','settings','auditoria','employees','teams','contractors1099','jobAssignments','fieldTeam'],
+    Admin:      ['dashboard','modules','customers','vendors','services','stores','calendar','inventory','estimates','invoices','payments','expenses','audits','employees','teams','contractors1099','jobAssignments'],
+    Manager:    ['dashboard','modules','customers','vendors','services','stores','calendar','inventory','estimates','invoices','payments','expenses','employees','teams','contractors1099','jobAssignments'],
+    Billing:    ['dashboard','customers','estimates','invoices','payments','expenses'],
     'Field Team':['dashboard','fieldTeam','calendar','tasks','jobAssignments'],
     'Read Only': ['dashboard','reports']
   };
